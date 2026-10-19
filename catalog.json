@@ -264,45 +264,45 @@
       ]
     },
     {
-      "id": "fuego",
-      "name": "Fuego",
+      "id": "margarita",
+      "name": "Margarita",
       "category": "pampa",
-      "photo": "/assets/obras/fuego-original.jpg",
+      "photo": "/assets/obras/margarita-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/fuego-ambiente-1.jpg"
+        "/assets/obras/margarita-ambiente-1.jpg"
       ]
     },
     {
-      "id": "tormenta",
-      "name": "Tormenta",
+      "id": "zaino",
+      "name": "Zaino",
       "category": "pampa",
-      "photo": "/assets/obras/tormenta-original.jpg",
+      "photo": "/assets/obras/zaino-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/tormenta-ambiente-1.jpg"
+        "/assets/obras/zaino-ambiente-1.jpg"
       ]
     },
     {
-      "id": "girasol",
-      "name": "Girasol",
+      "id": "girasol-i",
+      "name": "Girasol I",
       "category": "pampa",
-      "photo": "/assets/obras/girasol-original.jpg",
+      "photo": "/assets/obras/girasol-i-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/girasol-ambiente-1.jpg"
+        "/assets/obras/girasol-i-ambiente-1.jpg"
       ]
     },
     {
@@ -320,45 +320,45 @@
       ]
     },
     {
-      "id": "sonrisa",
-      "name": "Sonrisa",
+      "id": "girasol-iii",
+      "name": "Girasol III",
       "category": "pampa",
-      "photo": "/assets/obras/sonrisa-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "negro",
-        "terminacion": "paspartu-blanco"
-      },
-      "ambientes": [
-        "/assets/obras/sonrisa-ambiente-1.jpg"
-      ]
-    },
-    {
-      "id": "ramas",
-      "name": "Ramas",
-      "category": "pampa",
-      "photo": "/assets/obras/ramas-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "negro",
-        "terminacion": "paspartu-blanco"
-      },
-      "ambientes": [
-        "/assets/obras/ramas-ambiente-1.jpg"
-      ]
-    },
-    {
-      "id": "perfil",
-      "name": "Perfil",
-      "category": "pampa",
-      "photo": "/assets/obras/perfil-original.jpg",
+      "photo": "/assets/obras/girasol-iii-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/perfil-ambiente-1.jpg"
+        "/assets/obras/girasol-iii-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "whisky",
+      "name": "Whisky",
+      "category": "pampa",
+      "photo": "/assets/obras/whisky-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/whisky-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "invierno",
+      "name": "Invierno",
+      "category": "pampa",
+      "photo": "/assets/obras/invierno-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/invierno-ambiente-1.jpg"
       ]
     }
   ],
