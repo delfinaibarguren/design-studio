@@ -109,6 +109,30 @@
       },
       "ambientes": [
         "/assets/obras/criollo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              182,
+              82
+            ],
+            [
+              892,
+              82
+            ],
+            [
+              892,
+              562
+            ],
+            [
+              182,
+              562
+            ]
+          ],
+          "luz": "/assets/obras/criollo-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -122,6 +146,30 @@
       },
       "ambientes": [
         "/assets/obras/curioso-ambiente-2.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              254,
+              58
+            ],
+            [
+              866,
+              56
+            ],
+            [
+              872,
+              892
+            ],
+            [
+              266,
+              890
+            ]
+          ],
+          "luz": "/assets/obras/curioso-ambiente-2-luz.png",
+          "apoyado": true
+        }
       ]
     },
     {
@@ -136,6 +184,30 @@
       },
       "ambientes": [
         "/assets/obras/mirada-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              258,
+              140
+            ],
+            [
+              814,
+              140
+            ],
+            [
+              814,
+              530
+            ],
+            [
+              258,
+              530
+            ]
+          ],
+          "luz": "/assets/obras/mirada-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -150,6 +222,30 @@
       },
       "ambientes": [
         "/assets/obras/potrero-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              262,
+              108
+            ],
+            [
+              864,
+              108
+            ],
+            [
+              864,
+              530
+            ],
+            [
+              262,
+              530
+            ]
+          ],
+          "luz": "/assets/obras/potrero-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -164,6 +260,30 @@
       },
       "ambientes": [
         "/assets/obras/primavera-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              236,
+              166
+            ],
+            [
+              846,
+              166
+            ],
+            [
+              846,
+              546
+            ],
+            [
+              236,
+              546
+            ]
+          ],
+          "luz": "/assets/obras/primavera-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -178,6 +298,30 @@
       },
       "ambientes": [
         "/assets/obras/huella-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              316,
+              128
+            ],
+            [
+              864,
+              128
+            ],
+            [
+              864,
+              512
+            ],
+            [
+              316,
+              512
+            ]
+          ],
+          "luz": "/assets/obras/huella-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -192,6 +336,30 @@
       },
       "ambientes": [
         "/assets/obras/tapera-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              342,
+              194
+            ],
+            [
+              798,
+              194
+            ],
+            [
+              798,
+              504
+            ],
+            [
+              342,
+              504
+            ]
+          ],
+          "luz": "/assets/obras/tapera-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -206,6 +374,30 @@
       },
       "ambientes": [
         "/assets/obras/mate-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              278,
+              120
+            ],
+            [
+              914,
+              88
+            ],
+            [
+              916,
+              596
+            ],
+            [
+              278,
+              592
+            ]
+          ],
+          "luz": "/assets/obras/mate-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -220,6 +412,30 @@
       },
       "ambientes": [
         "/assets/obras/gaucho-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              388,
+              152
+            ],
+            [
+              808,
+              152
+            ],
+            [
+              808,
+              442
+            ],
+            [
+              388,
+              442
+            ]
+          ],
+          "luz": "/assets/obras/gaucho-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -234,6 +450,30 @@
       },
       "ambientes": [
         "/assets/obras/molino-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              322,
+              138
+            ],
+            [
+              812,
+              138
+            ],
+            [
+              812,
+              488
+            ],
+            [
+              322,
+              488
+            ]
+          ],
+          "luz": "/assets/obras/molino-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -248,6 +488,30 @@
       },
       "ambientes": [
         "/assets/obras/tordillo-i-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              250,
+              120
+            ],
+            [
+              902,
+              120
+            ],
+            [
+              902,
+              550
+            ],
+            [
+              250,
+              550
+            ]
+          ],
+          "luz": "/assets/obras/tordillo-i-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -262,6 +526,30 @@
       },
       "ambientes": [
         "/assets/obras/tordillo-ii-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              296,
+              116
+            ],
+            [
+              988,
+              116
+            ],
+            [
+              988,
+              556
+            ],
+            [
+              296,
+              556
+            ]
+          ],
+          "luz": "/assets/obras/tordillo-ii-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -276,6 +564,30 @@
       },
       "ambientes": [
         "/assets/obras/margarita-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              280,
+              172
+            ],
+            [
+              822,
+              172
+            ],
+            [
+              822,
+              578
+            ],
+            [
+              280,
+              578
+            ]
+          ],
+          "luz": "/assets/obras/margarita-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -290,6 +602,30 @@
       },
       "ambientes": [
         "/assets/obras/zaino-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              306,
+              116
+            ],
+            [
+              908,
+              116
+            ],
+            [
+              908,
+              522
+            ],
+            [
+              306,
+              522
+            ]
+          ],
+          "luz": "/assets/obras/zaino-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -304,6 +640,30 @@
       },
       "ambientes": [
         "/assets/obras/girasol-i-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              238,
+              240
+            ],
+            [
+              938,
+              240
+            ],
+            [
+              938,
+              748
+            ],
+            [
+              238,
+              748
+            ]
+          ],
+          "luz": "/assets/obras/girasol-i-ambiente-1-luz.png",
+          "apoyado": true
+        }
       ]
     },
     {
@@ -318,6 +678,30 @@
       },
       "ambientes": [
         "/assets/obras/girasol-ii-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              204,
+              200
+            ],
+            [
+              904,
+              200
+            ],
+            [
+              904,
+              742
+            ],
+            [
+              204,
+              742
+            ]
+          ],
+          "luz": "/assets/obras/girasol-ii-ambiente-1-luz.png",
+          "apoyado": true
+        }
       ]
     },
     {
@@ -332,6 +716,30 @@
       },
       "ambientes": [
         "/assets/obras/girasol-iii-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              312,
+              96
+            ],
+            [
+              910,
+              78
+            ],
+            [
+              906,
+              1000
+            ],
+            [
+              278,
+              1012
+            ]
+          ],
+          "luz": "/assets/obras/girasol-iii-ambiente-1-luz.png",
+          "apoyado": true
+        }
       ]
     },
     {
@@ -346,6 +754,30 @@
       },
       "ambientes": [
         "/assets/obras/whisky-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              254,
+              128
+            ],
+            [
+              968,
+              128
+            ],
+            [
+              968,
+              600
+            ],
+            [
+              254,
+              600
+            ]
+          ],
+          "luz": "/assets/obras/whisky-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -360,6 +792,30 @@
       },
       "ambientes": [
         "/assets/obras/invierno-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              134,
+              86
+            ],
+            [
+              950,
+              86
+            ],
+            [
+              950,
+              648
+            ],
+            [
+              134,
+              648
+            ]
+          ],
+          "luz": "/assets/obras/invierno-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -377,6 +833,30 @@
       },
       "ambientes": [
         "/assets/obras/chimango-i-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              318,
+              134
+            ],
+            [
+              812,
+              134
+            ],
+            [
+              812,
+              484
+            ],
+            [
+              318,
+              484
+            ]
+          ],
+          "luz": "/assets/obras/chimango-i-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -394,6 +874,30 @@
       },
       "ambientes": [
         "/assets/obras/chimango-ii-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              310,
+              228
+            ],
+            [
+              772,
+              228
+            ],
+            [
+              772,
+              560
+            ],
+            [
+              310,
+              560
+            ]
+          ],
+          "luz": "/assets/obras/chimango-ii-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -411,6 +915,30 @@
       },
       "ambientes": [
         "/assets/obras/lantana-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              272,
+              192
+            ],
+            [
+              822,
+              192
+            ],
+            [
+              822,
+              610
+            ],
+            [
+              272,
+              610
+            ]
+          ],
+          "luz": "/assets/obras/lantana-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -428,6 +956,30 @@
       },
       "ambientes": [
         "/assets/obras/calandria-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              214,
+              146
+            ],
+            [
+              946,
+              146
+            ],
+            [
+              946,
+              652
+            ],
+            [
+              214,
+              652
+            ]
+          ],
+          "luz": "/assets/obras/calandria-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -445,6 +997,30 @@
       },
       "ambientes": [
         "/assets/obras/hibiscus-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              258,
+              212
+            ],
+            [
+              792,
+              212
+            ],
+            [
+              792,
+              598
+            ],
+            [
+              258,
+              598
+            ]
+          ],
+          "luz": "/assets/obras/hibiscus-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -462,6 +1038,30 @@
       },
       "ambientes": [
         "/assets/obras/ponis-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              206,
+              160
+            ],
+            [
+              940,
+              160
+            ],
+            [
+              940,
+              646
+            ],
+            [
+              206,
+              646
+            ]
+          ],
+          "luz": "/assets/obras/ponis-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -476,6 +1076,30 @@
       },
       "ambientes": [
         "/assets/obras/regreso-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              246,
+              130
+            ],
+            [
+              846,
+              130
+            ],
+            [
+              846,
+              512
+            ],
+            [
+              246,
+              512
+            ]
+          ],
+          "luz": "/assets/obras/regreso-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -490,6 +1114,30 @@
       },
       "ambientes": [
         "/assets/obras/girasoles-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              254,
+              154
+            ],
+            [
+              834,
+              154
+            ],
+            [
+              834,
+              540
+            ],
+            [
+              254,
+              540
+            ]
+          ],
+          "luz": "/assets/obras/girasoles-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -504,6 +1152,30 @@
       },
       "ambientes": [
         "/assets/obras/poste-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              268,
+              176
+            ],
+            [
+              806,
+              176
+            ],
+            [
+              806,
+              542
+            ],
+            [
+              268,
+              542
+            ]
+          ],
+          "luz": "/assets/obras/poste-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -518,6 +1190,30 @@
       },
       "ambientes": [
         "/assets/obras/nube-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              250,
+              148
+            ],
+            [
+              890,
+              148
+            ],
+            [
+              890,
+              546
+            ],
+            [
+              250,
+              546
+            ]
+          ],
+          "luz": "/assets/obras/nube-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -532,6 +1228,30 @@
       },
       "ambientes": [
         "/assets/obras/trigal-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              256,
+              148
+            ],
+            [
+              840,
+              148
+            ],
+            [
+              840,
+              546
+            ],
+            [
+              256,
+              546
+            ]
+          ],
+          "luz": "/assets/obras/trigal-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     },
     {
@@ -546,6 +1266,30 @@
       },
       "ambientes": [
         "/assets/obras/tobiano-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              256,
+              134
+            ],
+            [
+              908,
+              134
+            ],
+            [
+              908,
+              568
+            ],
+            [
+              256,
+              568
+            ]
+          ],
+          "luz": "/assets/obras/tobiano-ambiente-1-luz.png",
+          "apoyado": false
+        }
       ]
     }
   ],

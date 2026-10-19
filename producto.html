@@ -17,7 +17,7 @@
 <main class="pdp" id="pdp">
   <div class="gallery single" id="gallery">
     <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas" hidden></div>
-    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><img id="amb" alt="" hidden><button class="zoom-hint" id="zoomBtn" aria-label="Ver más grande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21M11 8v6M8 11h6"/></svg></button></div>
+    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><canvas id="sc" role="img" aria-label="El cuadro en un ambiente" hidden></canvas><button class="zoom-hint" id="zoomBtn" aria-label="Ver más grande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21M11 8v6M8 11h6"/></svg></button></div>
     <div class="pdesc">
       <h3>Descripción del producto:</h3>
       <p id="pDesc"></p>
@@ -123,7 +123,6 @@
     const b = e.target.closest("[data-g]"); if (!b) return;
     const visual = b.dataset.g !== "size";
     state[b.dataset.g] = b.dataset.v; $("added").hidden = true;
-    if (visual) showView(0);
     update(visual);
   });
   $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(false); };
@@ -139,7 +138,7 @@
     $("pInst").textContent = DS.instText(total);
     $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
     $("qVal").textContent = state.qty;
-    if (redraw) DSFrame.draw($("cv"), p.photo, state).then(() => { document.body.dataset.ready = "1"; mirror(); });
+    if (redraw) render();
     const url = new URL(location.href);
     const qs = { id: p.id, medida: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion };
     if (state.terminacion === "arpillera") qs.fondo = state.fondo;
@@ -151,17 +150,32 @@
     $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
   }
   const amb = p.ambientes || [];
+  const esc = amb.map((src, i) => (p.escenas && p.escenas[i] ? { src, ...p.escenas[i] } : null));
+  let tok = 0;
+  async function render() {
+    const my = ++tok;
+    const jobs = [DSFrame.draw($("cv"), p.photo, state)];
+    if (cur > 0 && esc[cur - 1]) jobs.push(DSFrame.scene($("sc"), p.photo, state, esc[cur - 1]));
+    await Promise.all(jobs);
+    if (my !== tok) return;
+    document.body.dataset.ready = "1"; mirror();
+  }
   let cur = 0, lbI = 0;
   function mirror() {
     const t = document.querySelector("#thumbs canvas"); if (!t) return;
     const src = $("cv"); t.width = 160; t.height = 160;
     t.getContext("2d").drawImage(src, 0, 0, 160, 160);
   }
+  async function drawImg(cv, src) {
+    const im = new Image(); im.src = src; await im.decode();
+    const dpr = Math.min(devicePixelRatio || 1, 2); cv.width = (cv.clientWidth || 600) * dpr; cv.height = cv.width * im.naturalHeight / im.naturalWidth;
+    cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+  }
   function showView(i) {
     cur = i;
     document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
-    $("cv").hidden = i !== 0; $("amb").hidden = i === 0;
-    if (i > 0) { $("amb").src = amb[i - 1]; $("amb").alt = `${p.name} en un ambiente`; }
+    $("cv").hidden = i !== 0; $("sc").hidden = i === 0;
+    if (i > 0) { if (esc[i - 1]) DSFrame.scene($("sc"), p.photo, state, esc[i - 1]); else drawImg($("sc"), amb[i - 1]); }
   }
   if (amb.length) {
     $("gallery").classList.remove("single"); $("thumbs").hidden = false;
@@ -179,7 +193,12 @@
       const side = Math.min(innerWidth, innerHeight) * 0.92;
       cvs.style.width = cvs.style.height = side + "px";
       DSFrame.draw(cvs, p.photo, state);
-    } else { img.src = amb[lbI - 1]; img.alt = `${p.name} en un ambiente`; }
+    } else {
+      cvs.hidden = false; img.hidden = true;
+      const side = Math.min(innerWidth, innerHeight) * 0.92;
+      cvs.style.width = cvs.style.height = side + "px";
+      if (esc[lbI - 1]) DSFrame.scene(cvs, p.photo, state, esc[lbI - 1]); else drawImg(cvs, amb[lbI - 1]);
+    }
     $("lbPrev").hidden = $("lbNext").hidden = nViews < 2;
   }
   function lbOpen() { $("lb").hidden = false; document.body.style.overflow = "hidden"; lbShow(cur); $("lbX").focus(); }

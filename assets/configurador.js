@@ -37,45 +37,61 @@ window.DSFrame = (() => {
   // números pseudoaleatorios estables (la imagen no "tiembla" entre redibujos)
   function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
 
-  async function draw(canvas, photoSrc, opts) {
+  async function prep(photoSrc, opts) {
     const o = Object.assign({ tipo: "chato", color: "negro", terminacion: "paspartu-blanco", fondo: "negro" }, opts);
     const [photo, wood, burlapImg] = await Promise.all([loadImg(photoSrc), loadImg(TEX[o.color]), loadImg(TEX.arpillera)]);
-
     // ---- geometría en cm (la foto nunca se recorta ni se estira) ----
     const ratio = photo.naturalWidth / photo.naturalHeight;
     const pw = ratio >= 1 ? CM.photoLong : CM.photoLong * ratio;
     const ph = ratio >= 1 ? CM.photoLong / ratio : CM.photoLong;
     const inset = o.terminacion.startsWith("paspartu") ? CM.mat : o.terminacion === "arpillera" ? CM.burlap + CM.burlapBg : 0;
     const F = CM.frame;
-    const W = pw + 2 * (inset + F), H = ph + 2 * (inset + F);
-    const box = o.tipo === "box";
+    return { o, photo, wood, burlapImg, pw, ph, inset, F, W: pw + 2 * (inset + F), H: ph + 2 * (inset + F), box: o.tipo === "box" };
+  }
 
+  async function draw(canvas, photoSrc, opts) {
+    const g = await prep(photoSrc, opts);
     // ---- lienzo cuadrado, el cuadro ocupa ~78% ----
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssSize = canvas.clientWidth || 600;
     canvas.width = Math.round(cssSize * dpr); canvas.height = canvas.width;
     const ctx = canvas.getContext("2d");
-    const s = (canvas.width * 0.78) / Math.max(W, H);          // px por cm
-    const X0 = (canvas.width - W * s) / 2, Y0 = (canvas.height - H * s) / 2 - s * 0.6;
-    const R = (x, y, w, h) => [X0 + x * s, Y0 + y * s, w * s, h * s];
+    const s = (canvas.width * 0.78) / Math.max(g.W, g.H);          // px por cm
+    const X0 = (canvas.width - g.W * s) / 2, Y0 = (canvas.height - g.H * s) / 2 - s * 0.6;
 
     // pared
-    const g = ctx.createRadialGradient(canvas.width * .4, canvas.height * .3, 0, canvas.width * .5, canvas.height * .5, canvas.width * .8);
-    g.addColorStop(0, "#fbfaf7"); g.addColorStop(1, "#ecebe6");
-    ctx.fillStyle = o.pared === "blanco" ? "#ffffff" : g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const wg = ctx.createRadialGradient(canvas.width * .4, canvas.height * .3, 0, canvas.width * .5, canvas.height * .5, canvas.width * .8);
+    wg.addColorStop(0, "#fbfaf7"); wg.addColorStop(1, "#ecebe6");
+    ctx.fillStyle = g.o.pared === "blanco" ? "#ffffff" : wg; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // sombra del cuadro sobre la pared: box más profundo que chato
-    const depth = box ? 2.5 : 1.5;
+    const depth = g.box ? 2.5 : 1.5;
+    const R = (x, y, w, h) => [X0 + x * s, Y0 + y * s, w * s, h * s];
     ctx.save();
-    ctx.shadowColor = `rgba(40,32,24,${box ? .4 : .26})`;
+    ctx.shadowColor = `rgba(40,32,24,${g.box ? .4 : .26})`;
     ctx.shadowBlur = depth * 1.1 * s; ctx.shadowOffsetX = depth * .22 * s; ctx.shadowOffsetY = depth * .5 * s;
-    ctx.fillStyle = "#000"; ctx.fillRect(...R(0, 0, W, H));
+    ctx.fillStyle = "#000"; ctx.fillRect(...R(0, 0, g.W, g.H));
     ctx.restore();
     ctx.save(); // sombra de contacto, corta y oscura
     ctx.shadowColor = "rgba(20,16,12,.35)"; ctx.shadowBlur = .35 * s; ctx.shadowOffsetY = .12 * s;
-    ctx.fillStyle = "#000"; ctx.fillRect(...R(0, 0, W, H));
+    ctx.fillStyle = "#000"; ctx.fillRect(...R(0, 0, g.W, g.H));
     ctx.restore();
+    paint(ctx, g, X0, Y0, s);
+  }
 
+  // el cuadro solo (sin pared ni sombra), sobre fondo transparente
+  async function layer(photoSrc, opts, longPx) {
+    const g = await prep(photoSrc, opts);
+    const s = longPx / Math.max(g.W, g.H);
+    const c = document.createElement("canvas");
+    c.width = Math.max(2, Math.round(g.W * s)); c.height = Math.max(2, Math.round(g.H * s));
+    paint(c.getContext("2d"), g, 0, 0, s);
+    return { canvas: c, W: g.W, H: g.H, box: g.box };
+  }
+
+  function paint(ctx, g, X0, Y0, s) {
+    const { o, photo, wood, burlapImg, pw, ph, inset, F, W, H, box } = g;
+    const R = (x, y, w, h) => [X0 + x * s, Y0 + y * s, w * s, h * s];
     // ---- interior ----
     const ix = F, iy = F, iw = W - 2 * F, ih = H - 2 * F;   // hueco del marco
     const px = F + inset, py = F + inset;                   // foto
@@ -110,6 +126,89 @@ window.DSFrame = (() => {
 
     // ---- marco por segmentos ----
     frame(ctx, s, wood, X0, Y0, W * s, H * s, F * s, o.color, box);
+  }
+
+  // ---- el cuadro elegido, puesto en la foto de ambiente ----
+  // sc = { src, quad: [[x,y]x4] (TL,TR,BR,BL en px de la foto), luz, apoyado }
+  async function scene(canvas, photoSrc, opts, sc) {
+    const [amb, luz] = await Promise.all([loadImg(sc.src), sc.luz ? loadImg(sc.luz).catch(() => null) : null]);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 600;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(canvas.width * amb.naturalHeight / amb.naturalWidth);
+    const ctx = canvas.getContext("2d");
+    const k = canvas.width / amb.naturalWidth;
+    ctx.drawImage(amb, 0, 0, canvas.width, canvas.height);
+
+    const q = sc.quad.map(([x, y]) => [x * k, y * k]);
+    const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+    const qw = (dist(q[0], q[1]) + dist(q[3], q[2])) / 2, qh = (dist(q[0], q[3]) + dist(q[1], q[2])) / 2;
+    const L = await layer(photoSrc, opts, Math.max(qw, qh) * 1.06);
+    const ac = L.W / L.H, aq = qw / qh;
+    // el cuadro nuevo tapa por completo al original: se agranda en el sentido que haga falta
+    let u0 = 0, u1 = 1, v0 = 0, v1 = 1;
+    if (ac > aq) { const e = (ac / aq - 1) / 2; u0 -= e; u1 += e; }
+    else { const e = (aq / ac - 1); if (sc.apoyado) v0 -= e; else { v0 -= e / 2; v1 += e / 2; } }
+    const mu = 0.012 * (u1 - u0), mv = 0.012 * (u1 - u0) * (qw / qh);
+    u0 -= mu; u1 += mu; v1 += sc.apoyado ? 0 : mv; v0 -= sc.apoyado ? 2 * mv : mv;
+    const bil = (u, v) => [0, 1].map((i) => (1 - u) * (1 - v) * q[0][i] + u * (1 - v) * q[1][i] + u * v * q[2][i] + (1 - u) * v * q[3][i]);
+    const T = [bil(u0, v0), bil(u1, v0), bil(u1, v1), bil(u0, v1)];
+
+    // capa del cuadro, del tamaño de la escena
+    const t = document.createElement("canvas"); t.width = canvas.width; t.height = canvas.height;
+    const tx = t.getContext("2d");
+    warp(tx, L.canvas, T, u1 - u0, v1 - v0);
+
+    // luz del ambiente (manchas de sol, penumbra) sobre el cuadro
+    if (luz) {
+      const m = document.createElement("canvas"); m.width = t.width; m.height = t.height;
+      const mx = m.getContext("2d");
+      mx.drawImage(luz, 0, 0, m.width, m.height);
+      mx.globalCompositeOperation = "destination-in"; mx.drawImage(t, 0, 0);
+      tx.globalCompositeOperation = "soft-light"; tx.drawImage(m, 0, 0);
+      tx.globalCompositeOperation = "source-over";
+    }
+
+    // sombra sobre la pared
+    const poly = (c2, P) => { c2.beginPath(); P.forEach(([a, b], i) => i ? c2.lineTo(a, b) : c2.moveTo(a, b)); c2.closePath(); };
+    const sz = Math.max(qw, qh) / 60;
+    ctx.save();
+    ctx.shadowColor = `rgba(35,25,15,${L.box ? .42 : .3})`;
+    ctx.shadowBlur = sz * (L.box ? 2.6 : 1.6); ctx.shadowOffsetX = sz * .35; ctx.shadowOffsetY = sz * (L.box ? 1.2 : .8);
+    poly(ctx, T); ctx.fillStyle = "#000"; ctx.fill();
+    ctx.restore();
+    ctx.drawImage(t, 0, 0);
+  }
+
+  // dibuja img dentro del cuadrilátero P (TL,TR,BR,BL); si es paralelogramo, con una sola transformación
+  function warp(ctx, img, P) {
+    const w = img.width, h = img.height;
+    const par = Math.hypot(P[0][0] + P[2][0] - P[1][0] - P[3][0], P[0][1] + P[2][1] - P[1][1] - P[3][1]) < 1.5;
+    const tri = (s0, s1, s2, d0, d1, d2, clip) => {
+      const den = (s1[0] - s0[0]) * (s2[1] - s0[1]) - (s2[0] - s0[0]) * (s1[1] - s0[1]);
+      const a = ((d1[0] - d0[0]) * (s2[1] - s0[1]) - (d2[0] - d0[0]) * (s1[1] - s0[1])) / den;
+      const b = ((d1[1] - d0[1]) * (s2[1] - s0[1]) - (d2[1] - d0[1]) * (s1[1] - s0[1])) / den;
+      const c = ((d2[0] - d0[0]) * (s1[0] - s0[0]) - (d1[0] - d0[0]) * (s2[0] - s0[0])) / den;
+      const d = ((d2[1] - d0[1]) * (s1[0] - s0[0]) - (d1[1] - d0[1]) * (s2[0] - s0[0])) / den;
+      const e = d0[0] - a * s0[0] - c * s0[1], f = d0[1] - b * s0[0] - d * s0[1];
+      ctx.save();
+      if (clip) {
+        const cx = (d0[0] + d1[0] + d2[0]) / 3, cy = (d0[1] + d1[1] + d2[1]) / 3;
+        const g = (p) => { const dx = p[0] - cx, dy = p[1] - cy, l = Math.hypot(dx, dy) || 1; return [p[0] + dx / l * .7, p[1] + dy / l * .7]; };
+        ctx.beginPath(); [d0, d1, d2].map(g).forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.clip();
+      }
+      ctx.setTransform(a, b, c, d, e, f); ctx.drawImage(img, 0, 0); ctx.restore();
+    };
+    if (par) return tri([0, 0], [w, 0], [0, h], P[0], P[1], P[3], false);
+    const N = 14;
+    const bil = (u, v) => [0, 1].map((i) => (1 - u) * (1 - v) * P[0][i] + u * (1 - v) * P[1][i] + u * v * P[2][i] + (1 - u) * v * P[3][i]);
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+      const u0 = i / N, u1 = (i + 1) / N, v0 = j / N, v1 = (j + 1) / N;
+      const s00 = [u0 * w, v0 * h], s10 = [u1 * w, v0 * h], s01 = [u0 * w, v1 * h], s11 = [u1 * w, v1 * h];
+      const d00 = bil(u0, v0), d10 = bil(u1, v0), d01 = bil(u0, v1), d11 = bil(u1, v1);
+      tri(s00, s10, s01, d00, d10, d01, true);
+      tri(s10, s11, s01, d10, d11, d01, true);
+    }
   }
 
   function matGrain(ctx, [x, y, w, h], a) {
@@ -257,5 +356,5 @@ window.DSFrame = (() => {
     ctx.restore();
   }
 
-  return { draw, preload, CM };
+  return { draw, scene, layer, preload, CM };
 })();
