@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Studio — Láminas y cuadros enmarcados</title>
+  <meta name="description" content="Design Studio: láminas y cuadros enmarcados en distintas medidas y marcos. Pagá en 3 cuotas sin interés o con transferencia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='none' stroke='%231c1b19' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23b4532a'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="ds-header"></div>
+
+<main>
+  <section class="hero hero-v2">
+    <div>
+      <h1><span class="h-light">Enmarcados</span><span class="h-bold">personalizados.</span></h1>
+      <p class="hero-sub">Elegí la obra, la medida y el color de marco.<br><strong>Te la enviamos lista para colgar.</strong></p>
+      <a href="#colecciones" class="hero-btn">Ver colecciones</a>
+    </div>
+    <div class="hero-img"><img src="/assets/home-girasol.jpg" alt="Cuadro con fotografía de un girasol en blanco y negro, con marco de madera, apoyado junto a una ventana"></div>
+  </section>
+
+  <div class="perks3">
+    <div><strong>3 cuotas sin interés</strong><span>Con todas las tarjetas</span></div>
+    <div><strong>10% Off</strong><span>Pagando por transferencia</span></div>
+    <div><strong>Envíos</strong><span>A todo el país</span></div>
+  </div>
+
+  <section class="section" id="colecciones">
+    <div class="section-head"><h2>Colecciones</h2></div>
+    <div class="col-grid" id="colGrid"></div>
+  </section>
+</main>
+
+<div id="ds-footer"></div>
+
+<!-- Definición del formulario de suscripción para Netlify Forms -->
+<form name="novedades" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input type="email" name="email">
+</form>
+
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  const c = await DS.init();
+  // enlaces viejos ?categoria=x → página de la colección
+  const old = new URLSearchParams(location.search).get("categoria");
+  if (old && DS.category(old)) { location.replace(`/coleccion.html?c=${old}`); return; }
+  document.getElementById("colGrid").innerHTML = c.categories.map(DS.collectionCard).join("");
+})();
+</script>
+</body>
+</html>

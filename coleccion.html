@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colección — Dsgn. Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="ds-header"></div>
+<nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
+<main class="section col-page">
+  <header class="col-head">
+    <h1 id="cTitle"></h1>
+    <p class="hero-sub" id="cDesc"></p>
+  </header>
+  <div class="grid" id="grid"></div>
+  <div class="col-others" id="others"></div>
+</main>
+<div id="ds-footer"></div>
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  const c = await DS.init();
+  const col = DS.category(new URLSearchParams(location.search).get("c")) || c.categories[0];
+  document.title = `Colección ${col.label} — Dsgn. Studio`;
+  document.getElementById("crumbs").innerHTML = `<a href="/">Inicio</a> / <a href="/#colecciones">Colecciones</a> / <span>${DS.esc(col.label)}</span>`;
+  document.getElementById("cTitle").innerHTML = `<span class="h-light">Colección</span><span class="h-bold">${DS.esc(col.label)}.</span>`;
+  document.getElementById("cDesc").textContent = col.description || "";
+  const items = c.products.filter((p) => p.category === col.id);
+  document.getElementById("grid").innerHTML = items.map(DS.productCard).join("") ||
+    `<p class="muted">Estamos preparando esta colección. Muy pronto vas a ver las obras acá.</p>`;
+  const rest = c.categories.filter((k) => k.id !== col.id);
+  if (rest.length) document.getElementById("others").innerHTML =
+    `<h2>Otras colecciones</h2><div class="col-grid">${rest.map(DS.collectionCard).join("")}</div>`;
+})();
+</script>
+</body>
+</html>

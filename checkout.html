@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finalizar compra — Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='none' stroke='%231c1b19' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23b4532a'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="ds-header"></div>
+
+<main class="checkout" id="checkout">
+  <form id="orderForm" name="pedido" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <h1>Finalizar compra</h1>
+    <input type="hidden" name="form-name" value="pedido">
+    <p hidden><label>No completar: <input name="bot-field"></label></p>
+    <input type="hidden" name="orden" id="fOrden">
+    <input type="hidden" name="detalle" id="fDetalle">
+    <input type="hidden" name="total" id="fTotal">
+
+    <div class="box">
+      <h2><span class="step">1</span> Datos de contacto</h2>
+      <div class="fields">
+        <label class="f full">Email<input type="email" name="email" required autocomplete="email"></label>
+        <label class="f">Nombre y apellido<input name="nombre" required autocomplete="name"></label>
+        <label class="f">Teléfono<input type="tel" name="telefono" required autocomplete="tel"></label>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><span class="step">2</span> Entrega</h2>
+      <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span id="shipNote"></span></span></label>
+      <label class="choice"><input type="radio" name="entrega" value="Retiro por el estudio"><span><b>Retiro por el estudio</b><span>Sin cargo. Coordinamos día y horario.</span></span></label>
+      <div class="fields" id="addr">
+        <label class="f full">Calle y número<input name="direccion" autocomplete="street-address"></label>
+        <label class="f">Piso / depto (opcional)<input name="depto"></label>
+        <label class="f">Código postal<input name="cp" autocomplete="postal-code"></label>
+        <label class="f">Ciudad<input name="ciudad" autocomplete="address-level2"></label>
+        <label class="f">Provincia
+          <select name="provincia" autocomplete="address-level1">
+            <option value="">Elegí…</option>
+            <option>CABA</option><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><span class="step">3</span> Pago</h2>
+      <label class="choice"><input type="radio" name="pago" value="Mercado Pago" checked><span><b>Mercado Pago</b><span>Tarjetas de crédito, débito o dinero en cuenta. <span id="maxInst"></span>.</span></span></label>
+      <label class="choice"><input type="radio" name="pago" value="Transferencia"><span><b>Transferencia bancaria <span class="tag-ok" id="trTag"></span></b><span>Te enviamos los datos para transferir al confirmar el pedido.</span></span></label>
+      <label class="f">Comentarios (opcional)<textarea name="comentarios" rows="2"></textarea></label>
+    </div>
+
+    <button class="btn btn-dark btn-block" type="submit" id="payBtn">Continuar al pago</button>
+    <p class="error" id="err" hidden></p>
+    <p class="secure">🔒 Pago procesado de forma segura por Mercado Pago</p>
+  </form>
+
+  <aside class="summary box" id="summary">
+    <h2>Tu pedido</h2>
+    <div id="sumLines"></div>
+    <div class="sum-rows">
+      <div class="row"><span>Subtotal</span><span id="sSub"></span></div>
+      <div class="row discount" id="sDiscRow" hidden><span>Descuento transferencia</span><span id="sDisc"></span></div>
+      <div class="row"><span>Envío</span><span id="sShip"></span></div>
+      <div class="row total"><span>Total</span><strong id="sTotal"></strong></div>
+    </div>
+  </aside>
+</main>
+
+<section class="done" id="done" hidden>
+  <h1 id="dTitle">¡Gracias por tu compra!</h1>
+  <p id="dText"></p>
+  <div class="bank" id="dBank" hidden></div>
+  <a class="btn btn-dark" href="/">Volver a la tienda</a>
+</section>
+
+<div id="ds-footer"></div>
+
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  const c = await DS.init();
+  const st = c.store;
+  const $ = (id) => document.getElementById(id);
+  const form = $("orderForm");
+  const pct = Math.round(st.transferDiscount * 100);
+
+  $("maxInst").textContent = `Hasta ${st.interestFree} cuotas sin interés`;
+  $("trTag").textContent = pct ? `${pct}% OFF` : "";
+  $("shipNote").textContent = st.shippingText;
+
+  const val = (n) => (form.querySelector(`[name="${n}"]:checked`) || form.elements[n]).value;
+
+  function render() {
+    const cart = DS.getCart();
+    if (!cart.length && $("done").hidden) {
+      $("checkout").innerHTML = `<div class="done" style="grid-column:1/-1"><h1>Tu carrito está vacío</h1><p>Elegí una obra para empezar.</p><a class="btn btn-dark" href="/#obras">Ver la colección</a></div>`;
+      return;
+    }
+    $("sumLines").innerHTML = cart.map((l) => {
+      const p = DS.product(l.productId);
+      return `<div class="line"><div class="line-thumb">${DS.framed(p, l)}</div><div class="line-info"><h4>${DS.esc(p.name)}</h4><small>${DS.esc(DS.variantText(l))}</small><small>Cantidad: ${l.qty}</small></div><div class="line-right">${DS.money(DS.unitPrice(l) * l.qty)}</div></div>`;
+    }).join("");
+    const sub = DS.cartTotal(cart);
+    const transfer = val("pago") === "Transferencia";
+    const disc = transfer ? sub * st.transferDiscount : 0;
+    $("sSub").textContent = DS.money(sub);
+    $("sDiscRow").hidden = !transfer;
+    $("sDisc").textContent = "−" + DS.money(disc);
+    $("sShip").textContent = val("entrega") === "Retiro por el estudio" ? "Gratis" : "A coordinar";
+    $("sTotal").textContent = DS.money(sub - disc);
+    $("addr").hidden = val("entrega") !== "Envío a domicilio";
+    $("payBtn").textContent = transfer ? "Confirmar pedido" : "Continuar al pago";
+  }
+  form.addEventListener("change", render);
+  form.addEventListener("input", (e) => { e.target.style.borderColor = ""; });
+  render();
+  // el carrito lateral también puede cambiar el pedido
+  new MutationObserver(render).observe($("cartBody"), { childList: true });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("err"); err.hidden = true;
+    const required = ["email", "nombre", "telefono"];
+    if (val("entrega") === "Envío a domicilio") required.push("direccion", "cp", "ciudad", "provincia");
+    const missing = required.filter((n) => !form.elements[n].value.trim());
+    required.forEach((n) => form.elements[n].style.borderColor = missing.includes(n) ? "#a12d1c" : "");
+    if (missing.length || !form.elements.email.checkValidity()) {
+      err.textContent = "Completá los campos marcados para continuar."; err.hidden = false; return;
+    }
+    const cart = DS.getCart(); if (!cart.length) return;
+    const transfer = val("pago") === "Transferencia";
+    const sub = DS.cartTotal(cart);
+    const total = transfer ? sub * (1 - st.transferDiscount) : sub;
+    const orden = "DS-" + Date.now().toString(36).toUpperCase();
+    $("fOrden").value = orden;
+    $("fDetalle").value = cart.map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
+    $("fTotal").value = DS.money(total) + (transfer ? ` (con ${pct}% OFF transferencia)` : "");
+
+    const btn = $("payBtn"); btn.disabled = true; btn.textContent = "Procesando…";
+    try {
+      await DS.submitForm("pedido", new FormData(form));
+      if (!transfer) {
+        const r = await fetch("/api/checkout", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: cart, orderId: orden, buyer: { name: form.elements.nombre.value, email: form.elements.email.value } }),
+        });
+        const data = await r.json().catch(() => ({}));
+        if (data.mode === "mercadopago" && data.url) { location.href = data.url; return; }
+        if (data.mode !== "manual") throw new Error(data.error || "pago");
+      }
+      DS.setCart([]);
+      $("checkout").hidden = true; $("done").hidden = false; window.scrollTo(0, 0);
+      $("dTitle").textContent = "¡Recibimos tu pedido!";
+      if (transfer) {
+        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Para confirmarlo, transferí <b>${DS.money(total)}</b> y envianos el comprobante.` + (st.transferInfo ? "" : " En breve te mandamos los datos bancarios por email.");
+        if (st.transferInfo) { $("dBank").hidden = false; $("dBank").textContent = st.transferInfo; }
+      } else {
+        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Te vamos a escribir a la brevedad con el link de pago.`;
+      }
+    } catch (x) {
+      err.textContent = "No pudimos iniciar el pago. Probá de nuevo en un momento o elegí transferencia."; err.hidden = false;
+    } finally {
+      btn.disabled = false; render();
+    }
+  });
+})();
+</script>
+</body>
+</html>

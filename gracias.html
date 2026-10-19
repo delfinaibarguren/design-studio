@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gracias — Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="ds-header"></div>
+<main class="done" style="min-height:60vh">
+  <h1 id="t">¡Gracias por tu compra!</h1>
+  <p id="m">Tu pago fue aprobado. Te vamos a escribir para coordinar el envío de tu cuadro.</p>
+  <a class="btn btn-dark" href="/">Volver a la tienda</a>
+</main>
+<div id="ds-footer"></div>
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  const e = new URLSearchParams(location.search).get("estado");
+  await DS.init();
+  if (e === "ok") DS.setCart([]);
+  const t = document.getElementById("t"), m = document.getElementById("m");
+  if (e === "pendiente") { t.textContent = "Tu pago está en proceso"; m.textContent = "Cuando Mercado Pago lo confirme te avisamos por email para coordinar el envío."; DS.setCart([]); }
+  if (e === "error") { t.textContent = "El pago no se completó"; m.textContent = "No se realizó ningún cobro. Tu carrito sigue guardado: podés intentarlo de nuevo."; }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ayuda — Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div id="ds-header"></div>
+<main class="help">
+  <p class="eyebrow">Ayuda</p>
+  <h1>Preguntas frecuentes</h1>
+
+  <h2 id="compra">¿Cómo compro?</h2>
+  <p>Elegí la obra, la medida, si la querés solo lámina o con marco, y el color del marco. Agregala al carrito y tocá <b>Iniciar compra</b>. Completás tus datos y pagás con Mercado Pago o por transferencia.</p>
+
+  <h2 id="pagos">Medios de pago</h2>
+  <ul>
+    <li><b>Mercado Pago:</b> tarjetas de crédito en hasta 3 cuotas sin interés, débito y dinero en cuenta.</li>
+    <li><b>Transferencia bancaria:</b> 10% de descuento. Al confirmar el pedido te enviamos los datos.</li>
+  </ul>
+
+  <h2 id="envios">Envíos</h2>
+  <p>Enviamos a todo el país. Cada cuadro viaja con esquineros y doble cartón. El costo de envío se coordina después de la compra según tu ubicación. También podés retirar sin cargo por el estudio.</p>
+  <p>Los cuadros se preparan a pedido: el plazo de producción es de 5 a 10 días hábiles antes del despacho.</p>
+
+  <h2 id="devoluciones">Cambios y devoluciones</h2>
+  <p>Si tu cuadro llega dañado, escribinos dentro de las 48 horas con fotos del paquete y de la obra, y lo reponemos sin costo. Al ser productos hechos a pedido, no aceptamos cambios por gusto de medida o marco, salvo lo previsto en el derecho de arrepentimiento.</p>
+
+  <h2 id="arrepentimiento">Botón de arrepentimiento</h2>
+  <p>Podés revocar tu compra dentro de los 10 días corridos desde que recibiste el producto. Completá el formulario y te respondemos con los pasos a seguir.</p>
+  <form class="box" id="arrForm" name="arrepentimiento" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="arrepentimiento">
+    <p hidden><label>No completar: <input name="bot-field"></label></p>
+    <div class="fields">
+      <label class="f">Nombre y apellido<input name="nombre" required></label>
+      <label class="f">Email<input type="email" name="email" required></label>
+      <label class="f full">Número de pedido<input name="orden" placeholder="DS-…" required></label>
+      <label class="f full">Motivo (opcional)<textarea name="motivo" rows="2"></textarea></label>
+    </div>
+    <button class="btn btn-dark" style="margin-top:1rem" type="submit">Enviar solicitud</button>
+    <p class="added" hidden>✓ Recibimos tu solicitud. Te escribimos a la brevedad.</p>
+  </form>
+
+  <h2 id="contacto">Contacto</h2>
+  <p>¿Tenés una consulta o querés una medida especial? Escribinos.</p>
+  <form class="box" id="contactForm" name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contacto">
+    <p hidden><label>No completar: <input name="bot-field"></label></p>
+    <div class="fields">
+      <label class="f">Nombre<input name="nombre" required></label>
+      <label class="f">Email<input type="email" name="email" required></label>
+      <label class="f full">Mensaje<textarea name="mensaje" rows="4" required></textarea></label>
+    </div>
+    <button class="btn btn-dark" style="margin-top:1rem" type="submit">Enviar mensaje</button>
+    <p class="added" hidden>✓ ¡Gracias! Te respondemos pronto.</p>
+  </form>
+</main>
+<div id="ds-footer"></div>
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  await DS.init();
+  for (const id of ["arrForm", "contactForm"]) {
+    const f = document.getElementById(id);
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try { await DS.submitForm(f.getAttribute("name"), new FormData(f)); f.querySelector(".added").hidden = false; f.querySelector("button").hidden = true; }
+      catch { DS.toast("No se pudo enviar. Probá de nuevo."); }
+    });
+  }
+  if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

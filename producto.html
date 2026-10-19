@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obra — Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='none' stroke='%231c1b19' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23b4532a'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="ds-header"></div>
+
+<nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
+
+<main class="pdp" id="pdp">
+  <div class="gallery">
+    <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas"></div>
+    <div class="stage" id="stage"></div>
+  </div>
+
+  <div class="pinfo">
+    <h1 id="pName"></h1>
+    <p class="price" id="pPrice"></p>
+    <p class="inst-line muted" id="pInst"></p>
+    <p class="transfer-line" id="pTransfer"></p>
+
+    <fieldset class="opt"><legend>Medida: <b id="lSize"></b></legend><div class="pills" id="oSize" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="styleSet" hidden><legend>Enmarcado: <b id="lStyle"></b></legend><div class="styles" id="oStyle" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="finishSet"><legend>Terminación: <b id="lFinish"></b></legend><div class="pills" id="oFinish" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="frameSet"><legend>Color del marco: <b id="lFrame"></b></legend><div class="pills" id="oFrame" role="radiogroup"></div></fieldset>
+
+    <div class="buy-row">
+      <div class="qty" aria-label="Cantidad"><button id="qMinus" aria-label="Restar">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Sumar">+</button></div>
+      <button class="btn btn-outline btn-block" id="addBtn">Agregar al carrito</button>
+    </div>
+    <button class="btn btn-dark btn-block buy-now" id="buyBtn">Comprar ahora</button>
+    <p class="added" id="added" hidden>✓ Ya agregaste este producto. <a href="#" id="seeCart">Ver carrito</a></p>
+
+    <div class="pay-box">
+      <div><span class="ic">💳</span><span><b>Mercado Pago</b><br><span id="mpText"></span></span></div>
+      <div><span class="ic">🏦</span><span><b>Transferencia bancaria</b><br><span id="transferText"></span></span></div>
+      <div><span class="ic">📦</span><span><b>Envíos a todo el país</b><br><span id="shipText"></span></span></div>
+    </div>
+
+    <div class="details">
+      <details open><summary>Descripción</summary><p id="pDesc"></p></details>
+      <details><summary>Materiales y terminación</summary>
+        <ul>
+          <li>Impresión fine art sobre papel de algodón 300 g, tintas pigmentadas.</li>
+          <li>Marcos de madera con vidrio o acrílico protector y paspartú.</li>
+          <li>Se entrega con sistema de colgado instalado.</li>
+          <li>La medida indicada corresponde a la lámina.</li>
+        </ul>
+      </details>
+      <details><summary>Envío y cambios</summary>
+        <p>Embalamos cada cuadro con esquineros y doble cartón. Si llega dañado, lo reponemos sin costo. <a href="/ayuda.html#devoluciones">Ver política de cambios</a>.</p>
+      </details>
+    </div>
+
+    <div class="share">Compartir:
+      <a id="shWa" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp">WA</a>
+      <a id="shFb" target="_blank" rel="noopener" aria-label="Compartir en Facebook">f</a>
+      <a id="shPin" target="_blank" rel="noopener" aria-label="Guardar en Pinterest">P</a>
+      <button id="shCopy" aria-label="Copiar link">🔗</button>
+    </div>
+  </div>
+</main>
+
+<section class="section" style="padding-top:0">
+  <div class="section-head"><h2>Productos similares</h2></div>
+  <div class="grid" id="similar"></div>
+</section>
+
+<div id="ds-footer"></div>
+
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  const c = await DS.init();
+  const q = new URLSearchParams(location.search);
+  const p = DS.product(q.get("id")) || c.products[0];
+  const st = c.store;
+  const state = {
+    size: DS.size(q.get("medida")) ? q.get("medida") : c.sizes[1].id,
+    finish: q.get("terminacion") === "lamina" ? "lamina" : "marco",
+    frame: DS.frame(q.get("marco")) ? q.get("marco") : "negro",
+    style: p.styles ? (DS.style(p, q.get("estilo")) || p.styles[0]).id : null,
+    qty: 1, view: 0,
+  };
+  const hasStyles = !!p.styles;
+  // galería: todas las fotos de todos los enmarcados, en orden
+  const gal = hasStyles ? p.styles.flatMap((x) => x.images.map((_, i) => ({ style: x.id, img: i, label: x.label }))) : [];
+  const $ = (id) => document.getElementById(id);
+  const cat = DS.category(p.category);
+
+  document.title = `${p.name} — Design Studio`;
+  $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
+  $("pName").textContent = p.name;
+  $("pDesc").textContent = p.description;
+  $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
+  $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
+  $("shipText").textContent = st.shippingText;
+
+  const pill = (group, id, label, extra = "") => `<button class="pill" role="radio" data-g="${group}" data-v="${id}" ${extra}>${DS.esc(label)}</button>`;
+  $("oSize").innerHTML = c.sizes.map((s) => pill("size", s.id, DS.sizeLabel(p, s))).join("");
+  if (hasStyles) {
+    $("styleSet").hidden = false; $("finishSet").hidden = true; $("frameSet").hidden = true;
+    $("oStyle").innerHTML = p.styles.map((x) => `<button class="style-opt" role="radio" data-g="style" data-v="${x.id}"><img src="${DS.esc(x.images[0])}" alt="" loading="lazy">${DS.esc(x.label)}</button>`).join("");
+  }
+  $("oFinish").innerHTML = c.finishes.map((f) => pill("finish", f.id, f.label)).join("");
+  $("oFrame").innerHTML = c.frames.map((f) => `<button class="swatch" role="radio" data-g="frame" data-v="${f.id}" style="background:${f.color}" title="${DS.esc(f.label)}" aria-label="${DS.esc(f.label)}"></button>`).join("");
+
+  document.querySelector(".pinfo").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-g]"); if (!b) return;
+    state[b.dataset.g] = b.dataset.v; $("added").hidden = true; update();
+  });
+  $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(); };
+  $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(); };
+
+  const views = ["Frente", "En ambiente", "Detalle"];
+  function stageHTML(v, forThumb) {
+    if (hasStyles) { const g = gal[v]; return DS.framed(p, { style: g.style, img: g.img }); }
+    const opts = { size: state.size, finish: state.finish, frame: state.frame };
+    if (v === 0) return `<div class="${forThumb ? "mini" : "front"}">${DS.framed(p, opts)}</div>`;
+    if (v === 1) {
+      const s = DS.size(state.size);
+      const w = (p.orientation === "horizontal" ? s.h : s.w) / 220 * 100;
+      return `<div class="room"><div class="wall-art" style="width:${w}%">${DS.framed(p, opts)}</div><div class="sofa"></div><div class="plant"></div></div>${forThumb ? "" : `<span class="stage-note">Escala aproximada · ${DS.esc(s.label)}</span>`}`;
+    }
+    return `<div class="detail">${DS.framed(p, opts)}</div>`;
+  }
+  function update() {
+    const s = DS.size(state.size), unit = DS.unitPrice({ ...state, productId: p.id }), total = unit * state.qty;
+    document.querySelectorAll("[data-g]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.g] === b.dataset.v));
+    if (!hasStyles) $("frameSet").hidden = state.finish !== "marco";
+    else { $("lStyle").textContent = DS.style(p, state.style).label; if (!gal[state.view] || gal[state.view].style !== state.style) state.view = gal.findIndex((g) => g.style === state.style); }
+    $("lSize").textContent = DS.sizeLabel(p, s);
+    $("lFinish").textContent = c.finishes.find((f) => f.id === state.finish).label;
+    $("lFrame").textContent = DS.frame(state.frame).label;
+    $("pPrice").textContent = DS.money(total);
+    $("pInst").textContent = DS.instText(total);
+    $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
+    $("qVal").textContent = state.qty;
+    $("thumbs").innerHTML = (hasStyles ? gal.map((g) => g.label) : views).map((name, i) => `<button role="tab" aria-label="${name}" aria-current="${i === state.view}" data-view="${i}">${stageHTML(i, true)}</button>`).join("");
+    $("stage").innerHTML = stageHTML(state.view, false);
+    const url = new URL(location.href);
+    url.search = new URLSearchParams(hasStyles ? { id: p.id, medida: state.size, estilo: state.style } : { id: p.id, medida: state.size, terminacion: state.finish, marco: state.frame }).toString();
+    history.replaceState(null, "", url);
+    const link = encodeURIComponent(url.href), text = encodeURIComponent(`${p.name} — Design Studio`);
+    $("shWa").href = `https://wa.me/?text=${text}%20${link}`;
+    $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+    $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
+  }
+  $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("[data-view]"); if (b) { state.view = Number(b.dataset.view); if (hasStyles) state.style = gal[state.view].style; update(); } });
+  $("shCopy").onclick = async () => { try { await navigator.clipboard.writeText(location.href); DS.toast("Link copiado"); } catch { DS.toast(location.href); } };
+
+  const line = () => hasStyles
+    ? { productId: p.id, size: state.size, style: state.style, finish: DS.style(p, state.style).finish, qty: state.qty }
+    : { productId: p.id, size: state.size, finish: state.finish, frame: state.frame, qty: state.qty };
+  $("addBtn").onclick = () => {
+    DS.addToCart(line());
+    const b = $("addBtn"); b.textContent = "¡Listo!"; b.classList.add("btn-ok");
+    setTimeout(() => { b.textContent = "Agregar al carrito"; b.classList.remove("btn-ok"); }, 1600);
+    $("added").hidden = false;
+  };
+  $("seeCart").onclick = (e) => { e.preventDefault(); DS.openCart(); };
+  $("buyBtn").onclick = () => { DS.addToCart(line()); location.href = "/checkout.html"; };
+
+  const frames = ["negro", "natural", "blanco", "oscura"];
+  const sim = c.products.filter((x) => x.id !== p.id).sort((a, b) => (b.category === p.category) - (a.category === p.category)).slice(0, 4);
+  $("similar").innerHTML = sim.map((x, i) => `
+    <a class="card" href="/producto.html?id=${x.id}">
+      <div class="card-wall${x.styles ? " photo" : ""}">${DS.framed(x, { frame: frames[i % 4], size: "40x50" })}</div>
+      <h3>${DS.esc(x.name)}</h3><div class="from"><small>Desde</small> ${DS.money(DS.fromPrice(x))}</div>
+    </a>`).join("");
+  if (!sim.length) $("similar").closest("section").hidden = true;
+  update();
+})();
+</script>
+</body>
+</html>

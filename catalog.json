@@ -1,0 +1,179 @@
+{
+  "store": {
+    "name": "Design Studio",
+    "announcement": "3 cuotas sin interés · 10% OFF pagando con transferencia · Envíos a todo el país",
+    "transferDiscount": 0.1,
+    "maxInstallments": 3,
+    "shippingText": "Envío a coordinar según tu ubicación",
+    "whatsapp": "",
+    "instagram": "",
+    "email": "",
+    "transferInfo": "",
+    "interestFree": 3,
+    "interestFreeMin": 50000
+  },
+  "sizes": [
+    {
+      "id": "30x40",
+      "label": "30 x 40 cm",
+      "w": 30,
+      "h": 40,
+      "lamina": 50000,
+      "marco": 87000
+    },
+    {
+      "id": "50x70",
+      "label": "50 x 70 cm",
+      "w": 50,
+      "h": 70,
+      "lamina": 83000,
+      "marco": 147000
+    },
+    {
+      "id": "70x100",
+      "label": "100 x 70 cm",
+      "w": 70,
+      "h": 100,
+      "lamina": 125000,
+      "marco": 225000
+    }
+  ],
+  "finishes": [
+    {
+      "id": "marco",
+      "label": "Lámina y marco"
+    },
+    {
+      "id": "lamina",
+      "label": "Solo lámina"
+    }
+  ],
+  "frames": [
+    {
+      "id": "negro",
+      "label": "Negro",
+      "color": "#22201d"
+    },
+    {
+      "id": "blanco",
+      "label": "Blanco",
+      "color": "#f6f4ef"
+    },
+    {
+      "id": "natural",
+      "label": "Madera natural",
+      "color": "#c9a77c"
+    },
+    {
+      "id": "oscura",
+      "label": "Madera oscura",
+      "color": "#5b3d27"
+    }
+  ],
+  "categories": [
+    {
+      "id": "campo",
+      "label": "Campo",
+      "description": "Caballos, hacienda y paisajes del campo argentino."
+    },
+    {
+      "id": "playa",
+      "label": "Playa",
+      "description": "Mar, arena y luz de verano."
+    }
+  ],
+  "products": [
+    {
+      "id": "criollo",
+      "name": "Criollo",
+      "category": "campo",
+      "orientation": "horizontal",
+      "description": "Retrato de un caballo criollo ensillado con su pelego, con la hacienda y una cortina de árboles de fondo. Fotografía de campo argentino, impresa en papel fine art.",
+      "styles": [
+        {
+          "id": "negro-paspartu-negro",
+          "label": "Marco negro · Paspartú negro",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-negro-paspartu-negro-principal-v2.jpg",
+            "/assets/obras/criollo-negro-paspartu-negro.jpg"
+          ]
+        },
+        {
+          "id": "negro-paspartu-blanco",
+          "label": "Marco negro · Paspartú blanco",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-negro-paspartu-blanco.jpg"
+          ]
+        },
+        {
+          "id": "madera-paspartu-negro",
+          "label": "Marco madera · Paspartú negro",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-madera-paspartu-negro.jpg"
+          ]
+        },
+        {
+          "id": "madera-paspartu-blanco",
+          "label": "Marco madera · Paspartú blanco",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-madera-paspartu-blanco.jpg"
+          ]
+        },
+        {
+          "id": "negro-arpillera",
+          "label": "Marco negro · Paspartú arpillera",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-negro-arpillera-v2.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curioso",
+      "name": "Curioso",
+      "category": "campo",
+      "orientation": "vertical",
+      "description": "Un caballo blanco que se acerca al alambrado y mira de frente a la cámara. Fotografía en blanco y negro del campo argentino, impresa en papel fine art.",
+      "styles": [
+        {
+          "id": "madera-sin-paspartu",
+          "label": "Marco madera · Sin paspartú",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/blanco-madera-sin-paspartu-principal.jpg",
+            "/assets/obras/blanco-madera-sin-paspartu.jpg"
+          ]
+        },
+        {
+          "id": "madera-paspartu-blanco",
+          "label": "Marco madera · Paspartú blanco",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/blanco-madera-paspartu-blanco.jpg"
+          ]
+        },
+        {
+          "id": "negro-sin-paspartu",
+          "label": "Marco negro · Sin paspartú",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/blanco-negro-sin-paspartu.jpg"
+          ]
+        },
+        {
+          "id": "negro-paspartu-blanco",
+          "label": "Marco negro · Paspartú blanco",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/blanco-negro-paspartu-blanco.jpg"
+          ]
+        }
+      ]
+    }
+  ]
+}
