@@ -17,7 +17,7 @@ window.DS = (() => {
   const frame = (id) => catalog.frames.find((f) => f.id === id);
   const category = (id) => catalog.categories.find((c) => c.id === id);
   const fromPrice = (p) => {
-    if (p && p.photo) return Math.min(...catalog.sizes.map((s) => s.marco)) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
+    if (p && p.photo) return Math.min(...catalog.sizes.filter((s) => !p.sizes || p.sizes.includes(s.id)).map((s) => s.marco)) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
     const fin = p && p.styles ? [...new Set(p.styles.map((x) => x.finish))] : ["lamina", "marco"];
     return Math.min(...catalog.sizes.flatMap((s) => fin.map((f) => s[f])));
   };

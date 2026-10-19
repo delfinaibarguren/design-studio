@@ -360,6 +360,108 @@
       "ambientes": [
         "/assets/obras/invierno-ambiente-1.jpg"
       ]
+    },
+    {
+      "id": "chimango-i",
+      "name": "Chimango I",
+      "category": "pampa",
+      "photo": "/assets/obras/chimango-i-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/chimango-i-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "lantana",
+      "name": "Lantana",
+      "category": "pampa",
+      "photo": "/assets/obras/lantana-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/lantana-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "chimango-ii",
+      "name": "Chimango II",
+      "category": "pampa",
+      "photo": "/assets/obras/chimango-ii-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/chimango-ii-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "alambre",
+      "name": "Alambre",
+      "category": "pampa",
+      "photo": "/assets/obras/alambre-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-negro"
+      },
+      "ambientes": [
+        "/assets/obras/alambre-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "rosa-china",
+      "name": "Rosa china",
+      "category": "pampa",
+      "photo": "/assets/obras/rosa-china-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "blanco",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/rosa-china-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "petisos",
+      "name": "Petisos",
+      "category": "pampa",
+      "photo": "/assets/obras/petisos-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/petisos-ambiente-1.jpg"
+      ]
     }
   ],
   "frameTypes": [

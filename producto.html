@@ -94,11 +94,12 @@
   const p = DS.product(q.get("id")) || c.products[0];
   const st = c.store;
   const $ = (id) => document.getElementById(id);
-  const lists = { size: c.sizes, tipo: c.frameTypes, color: c.frameColors, terminacion: c.terminaciones, fondo: c.fondos };
+  const sizesFor = c.sizes.filter((s) => !p.sizes || p.sizes.includes(s.id));
+  const lists = { size: sizesFor, tipo: c.frameTypes, color: c.frameColors, terminacion: c.terminaciones, fondo: c.fondos };
   const pick = (k, v, def) => (lists[k].some((x) => x.id === v) ? v : def);
   const d = p.defaults || {};
   const state = {
-    size: pick("size", q.get("medida"), (c.sizes[1] || c.sizes[0]).id),
+    size: pick("size", q.get("medida"), (sizesFor[1] || sizesFor[0]).id),
     tipo: pick("tipo", q.get("tipo"), d.tipo || c.frameTypes[0].id),
     color: pick("color", q.get("color"), d.color || "negro"),
     terminacion: pick("terminacion", q.get("terminacion"), d.terminacion || "paspartu-blanco"),
