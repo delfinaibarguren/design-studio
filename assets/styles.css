@@ -418,3 +418,16 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .cfg-stage { background: #f3f1ec; aspect-ratio: 1; position: relative; }
 .cfg-stage #cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .swatch-row { display: flex; gap: .8rem; }
+
+.cfg-stage { cursor: zoom-in; }
+.zoom-hint { position: absolute; right: .7rem; bottom: .7rem; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); color: #1e1d1c; display: grid; place-items: center; cursor: zoom-in; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.lb { position: fixed; inset: 0; z-index: 200; background: rgba(20,19,18,.92); display: flex; align-items: center; justify-content: center; }
+.lb[hidden] { display: none; }
+.lb-body { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.lb-body [hidden] { display: none !important; }
+.lb-body img { max-width: 92vw; max-height: 92vh; object-fit: contain; display: block; }
+.lb-body canvas { display: block; }
+.lb-x { position: absolute; top: .6rem; right: .8rem; background: none; border: 0; color: #fff; font-size: 2.4rem; line-height: 1; cursor: pointer; z-index: 2; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.12); border: 0; color: #fff; font-size: 2.4rem; width: 48px; height: 64px; cursor: pointer; z-index: 2; }
+.lb-nav[hidden] { display: none; }
+.lb-prev { left: .6rem; } .lb-next { right: .6rem; }

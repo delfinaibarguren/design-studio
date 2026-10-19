@@ -17,7 +17,7 @@
 <main class="pdp" id="pdp">
   <div class="gallery single" id="gallery">
     <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas" hidden></div>
-    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><img id="amb" alt="" hidden></div>
+    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><img id="amb" alt="" hidden><button class="zoom-hint" id="zoomBtn" aria-label="Ver más grande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21M11 8v6M8 11h6"/></svg></button></div>
     <div class="pdesc">
       <h3>Descripción del producto:</h3>
       <p id="pDesc"></p>
@@ -80,6 +80,12 @@
 <div id="ds-footer"></div>
 
 <script src="/assets/store.js"></script>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="lb-x" id="lbX" aria-label="Cerrar">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
+  <div class="lb-body" id="lbBody"><canvas id="lbCv"></canvas><img id="lbImg" alt=""></div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Siguiente">&#8250;</button>
+</div>
 <script src="/assets/configurador.js"></script>
 <script>
 (async () => {
@@ -144,12 +150,14 @@
     $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
   }
   const amb = p.ambientes || [];
+  let cur = 0, lbI = 0;
   function mirror() {
     const t = document.querySelector("#thumbs canvas"); if (!t) return;
     const src = $("cv"); t.width = 160; t.height = 160;
     t.getContext("2d").drawImage(src, 0, 0, 160, 160);
   }
   function showView(i) {
+    cur = i;
     document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
     $("cv").hidden = i !== 0; $("amb").hidden = i === 0;
     if (i > 0) { $("amb").src = amb[i - 1]; $("amb").alt = `${p.name} en un ambiente`; }
@@ -161,6 +169,32 @@
     $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showView([...b.parentNode.children].indexOf(b)); });
     showView(0);
   }
+  const nViews = 1 + amb.length;
+  function lbShow(i) {
+    lbI = (i + nViews) % nViews;
+    const cvs = $("lbCv"), img = $("lbImg");
+    cvs.hidden = lbI !== 0; img.hidden = lbI === 0;
+    if (lbI === 0) {
+      const side = Math.min(innerWidth, innerHeight) * 0.92;
+      cvs.style.width = cvs.style.height = side + "px";
+      DSFrame.draw(cvs, p.photo, state);
+    } else { img.src = amb[lbI - 1]; img.alt = `${p.name} en un ambiente`; }
+    $("lbPrev").hidden = $("lbNext").hidden = nViews < 2;
+  }
+  function lbOpen() { $("lb").hidden = false; document.body.style.overflow = "hidden"; lbShow(cur); $("lbX").focus(); }
+  function lbClose() { $("lb").hidden = true; document.body.style.overflow = ""; }
+  $("stage").addEventListener("click", lbOpen);
+  $("lbX").onclick = lbClose;
+  $("lbPrev").onclick = (e) => { e.stopPropagation(); lbShow(lbI - 1); };
+  $("lbNext").onclick = (e) => { e.stopPropagation(); lbShow(lbI + 1); };
+  $("lb").addEventListener("click", (e) => { if (e.target.id === "lb" || e.target.id === "lbBody") lbClose(); });
+  addEventListener("keydown", (e) => {
+    if ($("lb").hidden) return;
+    if (e.key === "Escape") lbClose(); else if (e.key === "ArrowLeft") lbShow(lbI - 1); else if (e.key === "ArrowRight") lbShow(lbI + 1);
+  });
+  let tx = null;
+  $("lb").addEventListener("touchstart", (e) => (tx = e.touches[0].clientX), { passive: true });
+  $("lb").addEventListener("touchend", (e) => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) lbShow(lbI + (dx < 0 ? 1 : -1)); tx = null; });
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => update(true), 150); });
   $("shCopy").onclick = async () => { try { await navigator.clipboard.writeText(location.href); DS.toast("Link copiado"); } catch { DS.toast(location.href); } };
   $("addBtn").onclick = () => {
