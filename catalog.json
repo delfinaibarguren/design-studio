@@ -493,17 +493,17 @@
       ]
     },
     {
-      "id": "postes",
-      "name": "Postes",
+      "id": "poste",
+      "name": "Poste",
       "category": "pampa",
-      "photo": "/assets/obras/postes-original.jpg",
+      "photo": "/assets/obras/poste-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/postes-ambiente-1.jpg"
+        "/assets/obras/poste-ambiente-1.jpg"
       ]
     },
     {
@@ -521,31 +521,31 @@
       ]
     },
     {
-      "id": "trigo",
-      "name": "Trigo",
+      "id": "trigal",
+      "name": "Trigal",
       "category": "pampa",
-      "photo": "/assets/obras/trigo-original.jpg",
+      "photo": "/assets/obras/trigal-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/trigo-ambiente-1.jpg"
+        "/assets/obras/trigal-ambiente-1.jpg"
       ]
     },
     {
-      "id": "overo",
-      "name": "Overo",
+      "id": "tobiano",
+      "name": "Tobiano",
       "category": "pampa",
-      "photo": "/assets/obras/overo-original.jpg",
+      "photo": "/assets/obras/tobiano-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/overo-ambiente-1.jpg"
+        "/assets/obras/tobiano-ambiente-1.jpg"
       ]
     }
   ],
