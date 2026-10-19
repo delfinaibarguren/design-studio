@@ -379,23 +379,6 @@
       ]
     },
     {
-      "id": "lantana",
-      "name": "Lantana",
-      "category": "pampa",
-      "photo": "/assets/obras/lantana-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
-      "defaults": {
-        "tipo": "chato",
-        "color": "negro",
-        "terminacion": "paspartu-blanco"
-      },
-      "ambientes": [
-        "/assets/obras/lantana-ambiente-1.jpg"
-      ]
-    },
-    {
       "id": "chimango-ii",
       "name": "Chimango II",
       "category": "pampa",
@@ -413,10 +396,27 @@
       ]
     },
     {
-      "id": "alambre",
-      "name": "Alambre",
+      "id": "lantana",
+      "name": "Lantana",
       "category": "pampa",
-      "photo": "/assets/obras/alambre-original.jpg",
+      "photo": "/assets/obras/lantana-original.jpg",
+      "sizes": [
+        "30x40"
+      ],
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/lantana-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "calandria",
+      "name": "Calandria",
+      "category": "pampa",
+      "photo": "/assets/obras/calandria-original.jpg",
       "sizes": [
         "30x40"
       ],
@@ -426,14 +426,14 @@
         "terminacion": "paspartu-negro"
       },
       "ambientes": [
-        "/assets/obras/alambre-ambiente-1.jpg"
+        "/assets/obras/calandria-ambiente-1.jpg"
       ]
     },
     {
-      "id": "rosa-china",
-      "name": "Rosa china",
+      "id": "hibiscus",
+      "name": "Hibiscus",
       "category": "pampa",
-      "photo": "/assets/obras/rosa-china-original.jpg",
+      "photo": "/assets/obras/hibiscus-original.jpg",
       "sizes": [
         "30x40"
       ],
@@ -443,7 +443,7 @@
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/rosa-china-ambiente-1.jpg"
+        "/assets/obras/hibiscus-ambiente-1.jpg"
       ]
     },
     {
