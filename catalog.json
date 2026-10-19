@@ -262,6 +262,104 @@
       "ambientes": [
         "/assets/obras/tordillo-ii-ambiente-1.jpg"
       ]
+    },
+    {
+      "id": "fuego",
+      "name": "Fuego",
+      "category": "pampa",
+      "photo": "/assets/obras/fuego-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/fuego-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "tormenta",
+      "name": "Tormenta",
+      "category": "pampa",
+      "photo": "/assets/obras/tormenta-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tormenta-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "girasol",
+      "name": "Girasol",
+      "category": "pampa",
+      "photo": "/assets/obras/girasol-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/girasol-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "girasol-ii",
+      "name": "Girasol II",
+      "category": "pampa",
+      "photo": "/assets/obras/girasol-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/girasol-ii-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "sonrisa",
+      "name": "Sonrisa",
+      "category": "pampa",
+      "photo": "/assets/obras/sonrisa-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/sonrisa-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "ramas",
+      "name": "Ramas",
+      "category": "pampa",
+      "photo": "/assets/obras/ramas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/ramas-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "perfil",
+      "name": "Perfil",
+      "category": "pampa",
+      "photo": "/assets/obras/perfil-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/perfil-ambiente-1.jpg"
+      ]
     }
   ],
   "frameTypes": [
