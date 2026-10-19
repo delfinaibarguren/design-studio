@@ -166,7 +166,7 @@ window.DS = (() => {
         <div class="footer2-cols">
           <div><h4>Categorías</h4><a href="/">Inicio</a><a href="/ayuda.html#envios">Envíos</a><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Contacto</a><a href="/enmarcado-a-medida.html">Enmarcado a medida</a></div>
           <div><h4>Ayuda</h4><a href="/ayuda.html">Preguntas frecuentes</a><a href="/ayuda.html#devoluciones">Política de devolución</a><a href="/ayuda.html#compra">Cómo comprar</a></div>
-          <div><h4>Contacto</h4><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Whatsapp</a><a href="https://www.instagram.com/_designstu?psln=MThpOHZrcGxvcGh1Mg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a><span>Buenos Aires, Argentina</span></div>
+          <div><h4>Contacto</h4><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Whatsapp</a><a href="https://www.instagram.com/_designstu?psln=MThpOHZrcGxvcGh1Mg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a><a href="mailto:designstudioenmarcados@gmail.com">designstudioenmarcados@gmail.com</a><span>Buenos Aires, Argentina</span></div>
         </div>
         <div class="footer2-bottom"><span>© ${new Date().getFullYear()} Dsgn. Studio</span><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Botón de arrepentimiento</a></div>
       </footer>
