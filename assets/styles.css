@@ -440,3 +440,4 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .hero-img { aspect-ratio: 980 / 1080; }
 .hero-img img { object-position: 50% 50%; }
 @media (max-width: 900px) { .hero-v2 { grid-template-columns: 1fr; } }
+@media (min-width: 901px) { .hero-v2 { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); } }
