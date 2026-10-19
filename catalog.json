@@ -138,17 +138,17 @@
       ]
     },
     {
-      "id": "trigal",
-      "name": "Trigal",
+      "id": "potrero",
+      "name": "Potrero",
       "category": "pampa",
-      "photo": "/assets/obras/trigal-original.jpg",
+      "photo": "/assets/obras/potrero-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/trigal-ambiente-1.jpg"
+        "/assets/obras/potrero-ambiente-1.jpg"
       ]
     },
     {
@@ -166,17 +166,17 @@
       ]
     },
     {
-      "id": "anillos",
-      "name": "Anillos",
+      "id": "huella",
+      "name": "Huella",
       "category": "pampa",
-      "photo": "/assets/obras/anillos-original.jpg",
+      "photo": "/assets/obras/huella-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-negro"
       },
       "ambientes": [
-        "/assets/obras/anillos-ambiente-1.jpg"
+        "/assets/obras/huella-ambiente-1.jpg"
       ]
     },
     {
@@ -194,31 +194,31 @@
       ]
     },
     {
-      "id": "alfalfa",
-      "name": "Alfalfa",
+      "id": "primavera",
+      "name": "Primavera",
       "category": "pampa",
-      "photo": "/assets/obras/alfalfa-original.jpg",
+      "photo": "/assets/obras/primavera-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/alfalfa-ambiente-1.jpg"
+        "/assets/obras/primavera-ambiente-1.jpg"
       ]
     },
     {
-      "id": "paisano",
-      "name": "Paisano",
+      "id": "gaucho",
+      "name": "Gaucho",
       "category": "pampa",
-      "photo": "/assets/obras/paisano-original.jpg",
+      "photo": "/assets/obras/gaucho-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/paisano-ambiente-1.jpg"
+        "/assets/obras/gaucho-ambiente-1.jpg"
       ]
     },
     {
@@ -236,31 +236,31 @@
       ]
     },
     {
-      "id": "apero",
-      "name": "Apero",
+      "id": "tordillo-i",
+      "name": "Tordillo I",
       "category": "pampa",
-      "photo": "/assets/obras/apero-original.jpg",
+      "photo": "/assets/obras/tordillo-i-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/apero-ambiente-1.jpg"
+        "/assets/obras/tordillo-i-ambiente-1.jpg"
       ]
     },
     {
-      "id": "trenza",
-      "name": "Trenza",
+      "id": "tordillo-ii",
+      "name": "Tordillo II",
       "category": "pampa",
-      "photo": "/assets/obras/trenza-original.jpg",
+      "photo": "/assets/obras/tordillo-ii-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/trenza-ambiente-1.jpg"
+        "/assets/obras/tordillo-ii-ambiente-1.jpg"
       ]
     }
   ],
