@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Prueba configurador — Dsgn. Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <style>
+    .cfg-stage { background: #f3f1ec; aspect-ratio: 1; }
+    .cfg-stage canvas { width: 100%; height: 100%; display: block; }
+    .swatch-row { display: flex; gap: .7rem; }
+    .swatch.natural { background: #d9b88f; } .swatch.negro { background: #1e1d1c; } .swatch.blanco { background: #f3f1ec; }
+  </style>
+</head>
+<body>
+<div id="ds-header"></div>
+<main class="pdp">
+  <div class="gallery" style="grid-template-columns:1fr">
+    <div class="cfg-stage"><canvas id="cv"></canvas></div>
+  </div>
+  <div class="pinfo">
+    <p class="eyebrow">Prueba del configurador</p>
+    <h1>Criollo</h1>
+    <fieldset class="opt"><legend>Medida: <b id="lSize">50 x 70 cm</b></legend><div class="pills">
+      <button class="pill" data-g="medida" data-v="30 x 40 cm">30 x 40 cm</button><button class="pill" data-g="medida" data-v="50 x 70 cm">50 x 70 cm</button><button class="pill" data-g="medida" data-v="70 x 100 cm">70 x 100 cm</button></div></fieldset>
+    <fieldset class="opt"><legend>Tipo de marco: <b id="l-tipo"></b></legend><div class="pills">
+      <button class="pill" data-g="tipo" data-v="chato">Chato</button><button class="pill" data-g="tipo" data-v="box">Box</button></div></fieldset>
+    <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row">
+      <button class="swatch negro" data-g="color" data-v="negro" title="Negro" aria-label="Negro"></button>
+      <button class="swatch natural" data-g="color" data-v="natural" title="Natural" aria-label="Natural"></button>
+      <button class="swatch blanco" data-g="color" data-v="blanco" title="Blanco" aria-label="Blanco"></button></div></fieldset>
+    <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills">
+      <button class="pill" data-g="terminacion" data-v="paspartu-blanco">Paspartú blanco</button>
+      <button class="pill" data-g="terminacion" data-v="paspartu-negro">Paspartú negro</button>
+      <button class="pill" data-g="terminacion" data-v="sin">Sin paspartú</button>
+      <button class="pill" data-g="terminacion" data-v="arpillera">Arpillera</button></div></fieldset>
+    <fieldset class="opt" id="fondoSet" hidden><legend>Fondo de la arpillera: <b id="l-fondo"></b></legend><div class="pills">
+      <button class="pill" data-g="fondo" data-v="negro">Negro</button><button class="pill" data-g="fondo" data-v="blanco">Blanco</button></div></fieldset>
+  </div>
+</main>
+<div id="ds-footer"></div>
+<script src="/assets/store.js"></script>
+<script src="/assets/configurador.js"></script>
+<script>
+(async () => {
+  await DS.init();
+  const labels = { chato: "Chato", box: "Box", negro: "Negro", natural: "Natural", blanco: "Blanco",
+    "paspartu-blanco": "Paspartú blanco", "paspartu-negro": "Paspartú negro", sin: "Sin paspartú", arpillera: "Arpillera" };
+  const q = new URLSearchParams(location.search);
+  const st = { medida: "50 x 70 cm", tipo: q.get("tipo") || "chato", color: q.get("color") || "negro",
+    terminacion: q.get("terminacion") || "paspartu-blanco", fondo: q.get("fondo") || "negro" };
+  const cv = document.getElementById("cv");
+  async function update() {
+    document.querySelectorAll("[data-g]").forEach((b) => b.setAttribute("aria-checked", st[b.dataset.g] === b.dataset.v));
+    for (const k of ["tipo", "color", "terminacion", "fondo"]) document.getElementById("l-" + k).textContent = labels[st[k]];
+    document.getElementById("lSize").textContent = st.medida;
+    document.getElementById("fondoSet").hidden = st.terminacion !== "arpillera";
+    await DSFrame.draw(cv, q.get("foto") || "/assets/obras/criollo-original.jpg", st);
+    document.body.dataset.ready = "1";
+  }
+  document.querySelector(".pinfo").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-g]"); if (!b) return;
+    st[b.dataset.g] = b.dataset.v; update();
+  });
+  addEventListener("resize", update);
+  await DSFrame.preload(); update();
+})();
+</script>
+</body>
+</html>
