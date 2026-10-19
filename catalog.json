@@ -122,6 +122,146 @@
       "ambientes": [
         "/assets/obras/curioso-ambiente-2.jpg"
       ]
+    },
+    {
+      "id": "mirada",
+      "name": "Mirada",
+      "category": "pampa",
+      "photo": "/assets/obras/mirada-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/mirada-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "trigal",
+      "name": "Trigal",
+      "category": "pampa",
+      "photo": "/assets/obras/trigal-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/trigal-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "mate",
+      "name": "Mate",
+      "category": "pampa",
+      "photo": "/assets/obras/mate-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-negro"
+      },
+      "ambientes": [
+        "/assets/obras/mate-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "anillos",
+      "name": "Anillos",
+      "category": "pampa",
+      "photo": "/assets/obras/anillos-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-negro"
+      },
+      "ambientes": [
+        "/assets/obras/anillos-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "tapera",
+      "name": "Tapera",
+      "category": "pampa",
+      "photo": "/assets/obras/tapera-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tapera-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "alfalfa",
+      "name": "Alfalfa",
+      "category": "pampa",
+      "photo": "/assets/obras/alfalfa-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/alfalfa-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "paisano",
+      "name": "Paisano",
+      "category": "pampa",
+      "photo": "/assets/obras/paisano-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/paisano-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "molino",
+      "name": "Molino",
+      "category": "pampa",
+      "photo": "/assets/obras/molino-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/molino-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "apero",
+      "name": "Apero",
+      "category": "pampa",
+      "photo": "/assets/obras/apero-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/apero-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "trenza",
+      "name": "Trenza",
+      "category": "pampa",
+      "photo": "/assets/obras/trenza-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/trenza-ambiente-1.jpg"
+      ]
     }
   ],
   "frameTypes": [
