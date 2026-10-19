@@ -62,7 +62,7 @@ window.DSFrame = (() => {
     // pared
     const g = ctx.createRadialGradient(canvas.width * .4, canvas.height * .3, 0, canvas.width * .5, canvas.height * .5, canvas.width * .8);
     g.addColorStop(0, "#fbfaf7"); g.addColorStop(1, "#ecebe6");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = o.pared === "blanco" ? "#ffffff" : g; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // sombra del cuadro sobre la pared: box más profundo que chato
     const depth = box ? 2.5 : 1.5;

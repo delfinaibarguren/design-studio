@@ -120,7 +120,7 @@ window.DS = (() => {
   function framed(p, opts = {}) {
     if (p.photo) {
       const o = Object.assign({ tipo: (catalog.frameTypes || [])[0]?.id || "chato", color: "negro", terminacion: "paspartu-blanco", fondo: "negro" }, p.defaults || {}, opts);
-      return `<canvas class="cfg" role="img" aria-label="${esc(p.name)}" data-photo="${esc(p.photo)}" data-tipo="${esc(o.tipo)}" data-color="${esc(o.color)}" data-terminacion="${esc(o.terminacion)}" data-fondo="${esc(o.fondo)}"></canvas>`;
+      return `<canvas class="cfg" role="img" aria-label="${esc(p.name)}" data-photo="${esc(p.photo)}" data-tipo="${esc(o.tipo)}" data-color="${esc(o.color)}" data-terminacion="${esc(o.terminacion)}" data-fondo="${esc(o.fondo)}"${o.pared ? ` data-pared="${esc(o.pared)}"` : ""}></canvas>`;
     }
     if (p.styles) {
       const st = style(p, opts.style);
@@ -255,7 +255,7 @@ window.DS = (() => {
 
   function productCard(p) {
     return `<a class="card" href="/producto.html?id=${p.id}">
-        <div class="card-wall${p.styles || p.photo ? " photo" : ""}${p.ambientes && p.ambientes.length ? " has-amb" : ""}">${framed(p, { frame: "negro" })}${p.ambientes && p.ambientes.length ? `<img class="amb" src="${esc(p.ambientes[0])}" alt="${esc(p.name)} en un ambiente" loading="lazy">` : ""}</div>
+        <div class="card-wall${p.styles || p.photo ? " photo" : ""}${p.ambientes && p.ambientes.length ? " has-amb" : ""}">${framed(p, { frame: "negro", pared: "blanco" })}${p.ambientes && p.ambientes.length ? `<img class="amb" src="${esc(p.ambientes[0])}" alt="${esc(p.name)} en un ambiente" loading="lazy">` : ""}</div>
         <h3>${esc(p.name)}</h3>
         <div class="from"><small>Desde</small> ${money(fromPrice(p))}</div>
         <div class="inst">${catalog.store.interestFree} cuotas sin interés · ${Math.round(catalog.store.transferDiscount * 100)}% OFF por transferencia</div>
