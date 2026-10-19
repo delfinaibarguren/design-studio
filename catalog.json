@@ -10,7 +10,8 @@
     "email": "",
     "transferInfo": "",
     "interestFree": 3,
-    "interestFreeMin": 50000
+    "interestFreeMin": 50000,
+    "productDescription": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo."
   },
   "sizes": [
     {
@@ -88,7 +89,7 @@
       "name": "Criollo",
       "category": "campo",
       "orientation": "horizontal",
-      "description": "Retrato de un caballo criollo ensillado con su pelego, con la hacienda y una cortina de árboles de fondo. Fotografía de campo argentino, impresa en papel fine art.",
+      "description": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
       "styles": [
         {
           "id": "negro-paspartu-negro",
@@ -154,7 +155,7 @@
       "name": "Curioso",
       "category": "campo",
       "orientation": "vertical",
-      "description": "Un caballo blanco que se acerca al alambrado y mira de frente a la cámara. Fotografía en blanco y negro del campo argentino, impresa en papel fine art.",
+      "description": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
       "styles": [
         {
           "id": "madera-sin-paspartu",
