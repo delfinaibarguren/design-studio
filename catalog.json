@@ -78,9 +78,16 @@
       "description": "Flora y fauna del campo argentino"
     },
     {
-      "id": "mar",
-      "label": "Mar",
-      "description": "Mar, arena y luz de verano."
+      "id": "terra",
+      "label": "Terra"
+    },
+    {
+      "id": "origen",
+      "label": "Origen"
+    },
+    {
+      "id": "isla",
+      "label": "Isla"
     }
   ],
   "products": [

@@ -392,3 +392,6 @@ img.photo { width: 100%; height: 100%; object-fit: cover; display: block; }
 .help a { color: var(--ink); text-decoration: underline; }
 .help h2 { font-size: 1.5rem; margin-top: 2.2rem; }
 .help ul { padding-left: 1.2rem; }
+
+.grid > p.muted { grid-column: 1 / -1; }
+.col-head .hero-sub:empty { display: none; }
