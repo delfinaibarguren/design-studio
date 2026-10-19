@@ -255,7 +255,7 @@ window.DS = (() => {
 
   function productCard(p) {
     return `<a class="card" href="/producto.html?id=${p.id}">
-        <div class="card-wall${p.styles || p.photo ? " photo" : ""}">${framed(p, { frame: "negro" })}</div>
+        <div class="card-wall${p.styles || p.photo ? " photo" : ""}${p.ambientes && p.ambientes.length ? " has-amb" : ""}">${framed(p, { frame: "negro" })}${p.ambientes && p.ambientes.length ? `<img class="amb" src="${esc(p.ambientes[0])}" alt="${esc(p.name)} en un ambiente" loading="lazy">` : ""}</div>
         <h3>${esc(p.name)}</h3>
         <div class="from"><small>Desde</small> ${money(fromPrice(p))}</div>
         <div class="inst">${catalog.store.interestFree} cuotas sin interés · ${Math.round(catalog.store.transferDiscount * 100)}% OFF por transferencia</div>
@@ -264,7 +264,7 @@ window.DS = (() => {
   function collectionCard(col) {
     const items = catalog.products.filter((p) => p.category === col.id);
     const cover = items[0];
-    const img = col.cover ? `<img class="photo" src="${esc(col.cover)}" alt="" loading="lazy">` : cover ? framed(cover) : `<span class="soon">Próximamente</span>`;
+    const img = col.cover ? `<img class="photo" src="${esc(col.cover)}" alt="" loading="lazy">` : cover ? (cover.ambientes && cover.ambientes.length ? `<img class="photo" src="${esc(cover.ambientes[0])}" alt="" loading="lazy">` : framed(cover)) : `<span class="soon">Próximamente</span>`;
     return `<a class="col-card" href="/coleccion.html?c=${col.id}">
         <div class="col-img">${img}</div>
         <div class="col-meta"><h3><span>Colección</span> ${esc(col.label)}</h3><small>${items.length ? items.length + (items.length === 1 ? " obra" : " obras") : "Próximamente"}</small></div>
