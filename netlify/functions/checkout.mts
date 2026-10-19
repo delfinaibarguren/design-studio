@@ -1,7 +1,7 @@
 import type { Config, Context } from "@netlify/functions"
 import catalog from "../../catalog.json" with { type: "json" }
 
-type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; qty: number }
+type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; qty: number }
 
 const products = new Map(catalog.products.map((p) => [p.id, p]))
 const sizes = new Map(catalog.sizes.map((s) => [s.id, s]))
@@ -16,12 +16,15 @@ function priceLine(line: Line) {
   if (product.styles) {
     const st = product.styles.find((s: any) => s.id === line.style)
     if (!st) return null
-    const label = size.label
+    const types: any[] = (catalog as any).frameTypes || []
+    const ft = types.find((t) => t.id === line.tipo)
+    if (types.length && !ft) return null
+    const label = size.label + (ft ? `, tipo ${ft.label.toLowerCase()}` : "")
     return {
-      id: `${product.id}-${size.id}-${st.id}`,
+      id: `${product.id}-${size.id}-${ft ? ft.id + "-" : ""}${st.id}`,
       title: `${product.name} (${label}, ${st.label})`,
       quantity: qtyS,
-      unit_price: st.finish === "marco" ? size.marco : size.lamina,
+      unit_price: (st.finish === "marco" ? size.marco : size.lamina) + (ft?.extra || 0),
       currency_id: "ARS",
     }
   }

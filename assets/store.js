@@ -32,12 +32,18 @@ window.DS = (() => {
   function unitPrice(line) {
     const s = size(line.size);
     if (!s) return 0;
-    return finishOf(line) === "marco" ? s.marco : s.lamina;
+    const base = finishOf(line) === "marco" ? s.marco : s.lamina;
+    return base + (frameType(line.tipo)?.extra || 0);
+  }
+  function frameType(id) {
+    const list = catalog.frameTypes || [];
+    return list.find((t) => t.id === id) || null;
   }
   function variantText(line) {
     const p = product(line.productId), s = size(line.size);
     const st = style(p, line.style);
-    if (st) return `${sizeLabel(p, s)} · ${st.label}`;
+    const ft = frameType(line.tipo);
+    if (st) return `${sizeLabel(p, s)}${ft ? ` · Tipo ${ft.label.toLowerCase()}` : ""} · ${st.label}`;
     if (line.finish !== "marco") return `${sizeLabel(p, s)} · Solo lámina`;
     return `${sizeLabel(p, s)} · Marco ${frame(line.frame).label.toLowerCase()}`;
   }
@@ -46,7 +52,7 @@ window.DS = (() => {
     if (st.interestFree && price >= (st.interestFreeMin || 0)) return `${st.interestFree} cuotas sin interés de ${money(price / st.interestFree)}`;
     return `Hasta ${st.maxInstallments} cuotas con Mercado Pago`;
   }
-  const lineKey = (l) => [l.productId, l.size, l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : ""].join("|");
+  const lineKey = (l) => [l.productId, l.size, l.tipo || "", l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : ""].join("|");
 
   /* ---------- Carrito ---------- */
   function getCart() {
@@ -255,6 +261,6 @@ window.DS = (() => {
 
   async function init() { await load(); chrome(); return catalog; }
 
-  return { init, load, money, esc, product, size, frame, category, fromPrice, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
+  return { init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
     getCart, setCart, addToCart, cartTotal, framed, openCart, closeCart, toast, submitForm, get catalog() { return catalog; } };
 })();

@@ -191,5 +191,17 @@
         }
       ]
     }
+  ],
+  "frameTypes": [
+    {
+      "id": "chato",
+      "label": "Chato",
+      "extra": 0
+    },
+    {
+      "id": "box",
+      "label": "Box",
+      "extra": 0
+    }
   ]
 }

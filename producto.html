@@ -27,6 +27,7 @@
     <p class="transfer-line" id="pTransfer"></p>
 
     <fieldset class="opt"><legend>Medida: <b id="lSize"></b></legend><div class="pills" id="oSize" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="typeSet" hidden><legend>Tipo de marco: <b id="lType"></b></legend><div class="pills" id="oType" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="styleSet" hidden><legend>Enmarcado: <b id="lStyle"></b></legend><div class="styles" id="oStyle" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="finishSet"><legend>Terminación: <b id="lFinish"></b></legend><div class="pills" id="oFinish" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="frameSet"><legend>Color del marco: <b id="lFrame"></b></legend><div class="pills" id="oFrame" role="radiogroup"></div></fieldset>
@@ -86,6 +87,7 @@
     size: DS.size(q.get("medida")) ? q.get("medida") : c.sizes[1].id,
     finish: q.get("terminacion") === "lamina" ? "lamina" : "marco",
     frame: DS.frame(q.get("marco")) ? q.get("marco") : "negro",
+    tipo: (c.frameTypes || []).some((t) => t.id === q.get("tipo")) ? q.get("tipo") : (c.frameTypes || [])[0]?.id,
     style: p.styles ? (DS.style(p, q.get("estilo")) || p.styles[0]).id : null,
     qty: 1, view: 0,
   };
@@ -105,6 +107,10 @@
 
   const pill = (group, id, label, extra = "") => `<button class="pill" role="radio" data-g="${group}" data-v="${id}" ${extra}>${DS.esc(label)}</button>`;
   $("oSize").innerHTML = c.sizes.map((s) => pill("size", s.id, DS.sizeLabel(p, s))).join("");
+  if ((c.frameTypes || []).length) {
+    $("typeSet").hidden = false;
+    $("oType").innerHTML = c.frameTypes.map((t) => pill("tipo", t.id, t.label)).join("");
+  }
   if (hasStyles) {
     $("styleSet").hidden = false; $("finishSet").hidden = true; $("frameSet").hidden = true;
     $("oStyle").innerHTML = p.styles.map((x) => `<button class="style-opt" role="radio" data-g="style" data-v="${x.id}"><img src="${DS.esc(x.images[0])}" alt="" loading="lazy">${DS.esc(x.label)}</button>`).join("");
@@ -137,6 +143,7 @@
     if (!hasStyles) $("frameSet").hidden = state.finish !== "marco";
     else { $("lStyle").textContent = DS.style(p, state.style).label; if (!gal[state.view] || gal[state.view].style !== state.style) state.view = gal.findIndex((g) => g.style === state.style); }
     $("lSize").textContent = DS.sizeLabel(p, s);
+    if (state.tipo) $("lType").textContent = DS.frameType(state.tipo).label;
     $("lFinish").textContent = c.finishes.find((f) => f.id === state.finish).label;
     $("lFrame").textContent = DS.frame(state.frame).label;
     $("pPrice").textContent = DS.money(total);
@@ -146,7 +153,7 @@
     $("thumbs").innerHTML = (hasStyles ? gal.map((g) => g.label) : views).map((name, i) => `<button role="tab" aria-label="${name}" aria-current="${i === state.view}" data-view="${i}">${stageHTML(i, true)}</button>`).join("");
     $("stage").innerHTML = stageHTML(state.view, false);
     const url = new URL(location.href);
-    url.search = new URLSearchParams(hasStyles ? { id: p.id, medida: state.size, estilo: state.style } : { id: p.id, medida: state.size, terminacion: state.finish, marco: state.frame }).toString();
+    url.search = new URLSearchParams(hasStyles ? { id: p.id, medida: state.size, tipo: state.tipo, estilo: state.style } : { id: p.id, medida: state.size, terminacion: state.finish, marco: state.frame }).toString();
     history.replaceState(null, "", url);
     const link = encodeURIComponent(url.href), text = encodeURIComponent(`${p.name} — Design Studio`);
     $("shWa").href = `https://wa.me/?text=${text}%20${link}`;
@@ -157,8 +164,8 @@
   $("shCopy").onclick = async () => { try { await navigator.clipboard.writeText(location.href); DS.toast("Link copiado"); } catch { DS.toast(location.href); } };
 
   const line = () => hasStyles
-    ? { productId: p.id, size: state.size, style: state.style, finish: DS.style(p, state.style).finish, qty: state.qty }
-    : { productId: p.id, size: state.size, finish: state.finish, frame: state.frame, qty: state.qty };
+    ? { productId: p.id, size: state.size, tipo: state.tipo, style: state.style, finish: DS.style(p, state.style).finish, qty: state.qty }
+    : { productId: p.id, size: state.size, tipo: state.tipo, finish: state.finish, frame: state.frame, qty: state.qty };
   $("addBtn").onclick = () => {
     DS.addToCart(line());
     const b = $("addBtn"); b.textContent = "¡Listo!"; b.classList.add("btn-ok");
