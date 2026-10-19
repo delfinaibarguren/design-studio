@@ -89,7 +89,6 @@
       "name": "Criollo",
       "category": "campo",
       "orientation": "horizontal",
-      "description": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
       "styles": [
         {
           "id": "negro-paspartu-negro",
@@ -155,7 +154,6 @@
       "name": "Curioso",
       "category": "campo",
       "orientation": "vertical",
-      "description": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
       "styles": [
         {
           "id": "madera-sin-paspartu",

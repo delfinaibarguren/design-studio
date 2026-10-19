@@ -103,7 +103,7 @@
   document.title = `${p.name} — Design Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
   $("pName").textContent = p.name;
-  $("pDesc").textContent = p.description;
+  $("pDesc").textContent = p.description || c.store.productDescription;
   $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
   $("shipText").textContent = st.shippingText;
