@@ -130,6 +130,22 @@
           "images": [
             "/assets/obras/criollo-negro-arpillera-v2.jpg"
           ]
+        },
+        {
+          "id": "madera-sin-paspartu",
+          "label": "Marco madera · Sin paspartú",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-madera-sin-paspartu.jpg"
+          ]
+        },
+        {
+          "id": "negro-sin-paspartu",
+          "label": "Marco negro · Sin paspartú",
+          "finish": "marco",
+          "images": [
+            "/assets/obras/criollo-negro-sin-paspartu.jpg"
+          ]
         }
       ]
     },
