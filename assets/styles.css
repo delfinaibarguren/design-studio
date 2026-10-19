@@ -388,3 +388,7 @@ img.photo { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .gallery .pdesc { grid-column: 1 / -1; margin-top: 1rem; }
 @media (max-width: 560px) { .gallery .pdesc { order: 3; } }
+
+.help a { color: var(--ink); text-decoration: underline; }
+.help h2 { font-size: 1.5rem; margin-top: 2.2rem; }
+.help ul { padding-left: 1.2rem; }

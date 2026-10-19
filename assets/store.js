@@ -138,7 +138,7 @@ window.DS = (() => {
           <a href="/">Inicio</a>
           <div class="dropdown"><a href="/#colecciones">Colecciones ▾</a><div class="dropdown-menu">${catalog.categories.map((c) => `<a href="/coleccion.html?c=${c.id}">${esc(c.label)}</a>`).join("")}</div></div>
           <a href="/ayuda.html#envios">Envíos</a>
-          <a href="/ayuda.html#contacto">Contacto</a>
+          <a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Contacto</a>
           <a href="/enmarcado-a-medida.html" class="nav-strong">Enmarcado a medida</a>
         </nav>
         <button class="icon-btn cart-btn" id="openCart" aria-label="Abrir carrito">
@@ -164,11 +164,11 @@ window.DS = (() => {
       <footer class="footer2">
         <a href="/" class="footer2-logo"><img src="/assets/logo.png" alt="Dsgn. Studio" width="354" height="160"></a>
         <div class="footer2-cols">
-          <div><h4>Categorías</h4><a href="/">Inicio</a><a href="/ayuda.html#envios">Envíos</a><a href="/ayuda.html#contacto">Contacto</a><a href="/enmarcado-a-medida.html">Enmarcado a medida</a></div>
+          <div><h4>Categorías</h4><a href="/">Inicio</a><a href="/ayuda.html#envios">Envíos</a><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Contacto</a><a href="/enmarcado-a-medida.html">Enmarcado a medida</a></div>
           <div><h4>Ayuda</h4><a href="/ayuda.html">Preguntas frecuentes</a><a href="/ayuda.html#devoluciones">Política de devolución</a><a href="/ayuda.html#compra">Cómo comprar</a></div>
           <div><h4>Contacto</h4><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Whatsapp</a><a href="https://www.instagram.com/_designstu?psln=MThpOHZrcGxvcGh1Mg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a><span>Buenos Aires, Argentina</span></div>
         </div>
-        <div class="footer2-bottom"><span>© ${new Date().getFullYear()} Dsgn. Studio</span><a href="/ayuda.html#arrepentimiento">Botón de arrepentimiento</a></div>
+        <div class="footer2-bottom"><span>© ${new Date().getFullYear()} Dsgn. Studio</span><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Botón de arrepentimiento</a></div>
       </footer>
       ${st.whatsapp ? `<a class="wa-float" href="https://wa.me/${esc(st.whatsapp)}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="28" height="28"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.5 3.5 0 0 0-1.1 2.6 6 6 0 0 0 1.3 3.2 13.8 13.8 0 0 0 5.3 4.7c2 .8 2.7.9 3.7.8a3.1 3.1 0 0 0 2.1-1.5 2.6 2.6 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.3Z"/></svg></a>` : ""}`;
 
