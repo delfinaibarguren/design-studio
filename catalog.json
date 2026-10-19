@@ -152,17 +152,17 @@
       ]
     },
     {
-      "id": "mate",
-      "name": "Mate",
+      "id": "primavera",
+      "name": "Primavera",
       "category": "pampa",
-      "photo": "/assets/obras/mate-original.jpg",
+      "photo": "/assets/obras/primavera-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
-        "terminacion": "paspartu-negro"
+        "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/mate-ambiente-1.jpg"
+        "/assets/obras/primavera-ambiente-1.jpg"
       ]
     },
     {
@@ -194,17 +194,17 @@
       ]
     },
     {
-      "id": "primavera",
-      "name": "Primavera",
+      "id": "mate",
+      "name": "Mate",
       "category": "pampa",
-      "photo": "/assets/obras/primavera-original.jpg",
+      "photo": "/assets/obras/mate-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
-        "terminacion": "sin"
+        "terminacion": "paspartu-negro"
       },
       "ambientes": [
-        "/assets/obras/primavera-ambiente-1.jpg"
+        "/assets/obras/mate-ambiente-1.jpg"
       ]
     },
     {
