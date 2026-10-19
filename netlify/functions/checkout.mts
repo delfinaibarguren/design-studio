@@ -1,7 +1,7 @@
 import type { Config, Context } from "@netlify/functions"
 import catalog from "../../catalog.json" with { type: "json" }
 
-type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; qty: number }
+type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; color?: string; terminacion?: string; fondo?: string; qty: number }
 
 const products = new Map(catalog.products.map((p) => [p.id, p]))
 const sizes = new Map(catalog.sizes.map((s) => [s.id, s]))
@@ -13,6 +13,21 @@ function priceLine(line: Line) {
   const size = sizes.get(String(line.size))
   if (!product || !size) return null
   const qtyS = Math.max(1, Math.min(10, Math.floor(Number(line.qty) || 1)))
+  if (product.photo) {
+    const C: any = catalog
+    const find = (list: any[], id: any) => (list || []).find((x) => x.id === String(id))
+    const ft = find(C.frameTypes, line.tipo), col = find(C.frameColors, line.color), ter = find(C.terminaciones, line.terminacion)
+    const fon = ter?.id === "arpillera" ? find(C.fondos, line.fondo) : null
+    if (!ft || !col || !ter || (ter.id === "arpillera" && !fon)) return null
+    const variant = `${size.label}, marco ${ft.label.toLowerCase()} ${col.label.toLowerCase()}, ${ter.label.toLowerCase()}${fon ? " fondo " + fon.label.toLowerCase() : ""}`
+    return {
+      id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id].filter(Boolean).join("-"),
+      title: `${product.name} (${variant})`,
+      quantity: qtyS,
+      unit_price: size.marco + (ft.extra || 0),
+      currency_id: "ARS",
+    }
+  }
   if (product.styles) {
     const st = product.styles.find((s: any) => s.id === line.style)
     if (!st) return null

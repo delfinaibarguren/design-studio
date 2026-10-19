@@ -16,8 +16,7 @@
 
 <main class="pdp" id="pdp">
   <div class="gallery">
-    <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas"></div>
-    <div class="stage" id="stage"></div>
+    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas></div>
     <div class="pdesc">
       <h3>Descripción del producto:</h3>
       <p id="pDesc"></p>
@@ -30,11 +29,11 @@
     <p class="inst-line muted" id="pInst"></p>
     <p class="transfer-line" id="pTransfer"></p>
 
-    <fieldset class="opt"><legend>Medida: <b id="lSize"></b></legend><div class="pills" id="oSize" role="radiogroup"></div></fieldset>
-    <fieldset class="opt" id="typeSet" hidden><legend>Tipo de marco: <b id="lType"></b></legend><div class="pills" id="oType" role="radiogroup"></div></fieldset>
-    <fieldset class="opt" id="styleSet" hidden><legend>Enmarcado: <b id="lStyle"></b></legend><div class="styles" id="oStyle" role="radiogroup"></div></fieldset>
-    <fieldset class="opt" id="finishSet"><legend>Terminación: <b id="lFinish"></b></legend><div class="pills" id="oFinish" role="radiogroup"></div></fieldset>
-    <fieldset class="opt" id="frameSet"><legend>Color del marco: <b id="lFrame"></b></legend><div class="pills" id="oFrame" role="radiogroup"></div></fieldset>
+    <fieldset class="opt"><legend>Medida: <b id="l-size"></b></legend><div class="pills" id="o-size" role="radiogroup"></div></fieldset>
+    <fieldset class="opt"><legend>Tipo de marco: <b id="l-tipo"></b></legend><div class="pills" id="o-tipo" role="radiogroup"></div></fieldset>
+    <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row" id="o-color" role="radiogroup"></div></fieldset>
+    <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills" id="o-terminacion" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="fondoSet" hidden><legend>Fondo de la arpillera: <b id="l-fondo"></b></legend><div class="pills" id="o-fondo" role="radiogroup"></div></fieldset>
 
     <div class="buy-row">
       <div class="qty" aria-label="Cantidad"><button id="qMinus" aria-label="Restar">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Sumar">+</button></div>
@@ -80,95 +79,69 @@
 <div id="ds-footer"></div>
 
 <script src="/assets/store.js"></script>
+<script src="/assets/configurador.js"></script>
 <script>
 (async () => {
   const c = await DS.init();
   const q = new URLSearchParams(location.search);
   const p = DS.product(q.get("id")) || c.products[0];
   const st = c.store;
-  const state = {
-    size: DS.size(q.get("medida")) ? q.get("medida") : c.sizes[1].id,
-    finish: q.get("terminacion") === "lamina" ? "lamina" : "marco",
-    frame: DS.frame(q.get("marco")) ? q.get("marco") : "negro",
-    tipo: (c.frameTypes || []).some((t) => t.id === q.get("tipo")) ? q.get("tipo") : (c.frameTypes || [])[0]?.id,
-    style: p.styles ? (DS.style(p, q.get("estilo")) || p.styles[0]).id : null,
-    qty: 1, view: 0,
-  };
-  const hasStyles = !!p.styles;
-  // galería: todas las fotos de todos los enmarcados, en orden
-  const gal = hasStyles ? p.styles.flatMap((x) => x.images.map((_, i) => ({ style: x.id, img: i, label: x.label }))) : [];
   const $ = (id) => document.getElementById(id);
+  const lists = { size: c.sizes, tipo: c.frameTypes, color: c.frameColors, terminacion: c.terminaciones, fondo: c.fondos };
+  const pick = (k, v, def) => (lists[k].some((x) => x.id === v) ? v : def);
+  const d = p.defaults || {};
+  const state = {
+    size: pick("size", q.get("medida"), (c.sizes[1] || c.sizes[0]).id),
+    tipo: pick("tipo", q.get("tipo"), d.tipo || c.frameTypes[0].id),
+    color: pick("color", q.get("color"), d.color || "negro"),
+    terminacion: pick("terminacion", q.get("terminacion"), d.terminacion || "paspartu-blanco"),
+    fondo: pick("fondo", q.get("fondo"), d.fondo || "negro"),
+    qty: 1,
+  };
   const cat = DS.category(p.category);
-
-  document.title = `${p.name} — Design Studio`;
+  document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
   $("pName").textContent = p.name;
-  $("pDesc").textContent = p.description || c.store.productDescription;
+  $("pDesc").textContent = p.description || st.productDescription;
   $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
   $("shipText").textContent = st.shippingText;
 
-  const pill = (group, id, label, extra = "") => `<button class="pill" role="radio" data-g="${group}" data-v="${id}" ${extra}>${DS.esc(label)}</button>`;
-  $("oSize").innerHTML = c.sizes.map((s) => pill("size", s.id, DS.sizeLabel(p, s))).join("");
-  if ((c.frameTypes || []).length) {
-    $("typeSet").hidden = false;
-    $("oType").innerHTML = c.frameTypes.map((t) => pill("tipo", t.id, t.label)).join("");
-  }
-  if (hasStyles) {
-    $("styleSet").hidden = false; $("finishSet").hidden = true; $("frameSet").hidden = true;
-    $("oStyle").innerHTML = p.styles.map((x) => `<button class="style-opt" role="radio" data-g="style" data-v="${x.id}"><img src="${DS.esc(x.images[0])}" alt="" loading="lazy">${DS.esc(x.label)}</button>`).join("");
-  }
-  $("oFinish").innerHTML = c.finishes.map((f) => pill("finish", f.id, f.label)).join("");
-  $("oFrame").innerHTML = c.frames.map((f) => `<button class="swatch" role="radio" data-g="frame" data-v="${f.id}" style="background:${f.color}" title="${DS.esc(f.label)}" aria-label="${DS.esc(f.label)}"></button>`).join("");
+  const pill = (g, x) => `<button class="pill" role="radio" data-g="${g}" data-v="${x.id}">${DS.esc(x.label)}</button>`;
+  for (const g of ["size", "tipo", "terminacion", "fondo"]) $("o-" + g).innerHTML = lists[g].map((x) => pill(g, x)).join("");
+  $("o-color").innerHTML = c.frameColors.map((x) => `<button class="swatch" role="radio" data-g="color" data-v="${x.id}" style="background:${x.color}" title="${DS.esc(x.label)}" aria-label="${DS.esc(x.label)}"></button>`).join("");
 
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
-    state[b.dataset.g] = b.dataset.v; $("added").hidden = true; update();
+    const visual = b.dataset.g !== "size";
+    state[b.dataset.g] = b.dataset.v; $("added").hidden = true; update(visual);
   });
-  $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(); };
-  $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(); };
+  $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(false); };
+  $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(false); };
 
-  const views = ["Frente", "En ambiente", "Detalle"];
-  function stageHTML(v, forThumb) {
-    if (hasStyles) { const g = gal[v]; return DS.framed(p, { style: g.style, img: g.img }); }
-    const opts = { size: state.size, finish: state.finish, frame: state.frame };
-    if (v === 0) return `<div class="${forThumb ? "mini" : "front"}">${DS.framed(p, opts)}</div>`;
-    if (v === 1) {
-      const s = DS.size(state.size);
-      const w = (p.orientation === "horizontal" ? s.h : s.w) / 220 * 100;
-      return `<div class="room"><div class="wall-art" style="width:${w}%">${DS.framed(p, opts)}</div><div class="sofa"></div><div class="plant"></div></div>${forThumb ? "" : `<span class="stage-note">Escala aproximada · ${DS.esc(s.label)}</span>`}`;
-    }
-    return `<div class="detail">${DS.framed(p, opts)}</div>`;
-  }
-  function update() {
-    const s = DS.size(state.size), unit = DS.unitPrice({ ...state, productId: p.id }), total = unit * state.qty;
-    document.querySelectorAll("[data-g]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.g] === b.dataset.v));
-    if (!hasStyles) $("frameSet").hidden = state.finish !== "marco";
-    else { $("lStyle").textContent = DS.style(p, state.style).label; if (!gal[state.view] || gal[state.view].style !== state.style) state.view = gal.findIndex((g) => g.style === state.style); }
-    $("lSize").textContent = DS.sizeLabel(p, s);
-    if (state.tipo) $("lType").textContent = DS.frameType(state.tipo).label;
-    $("lFinish").textContent = c.finishes.find((f) => f.id === state.finish).label;
-    $("lFrame").textContent = DS.frame(state.frame).label;
+  const line = () => ({ productId: p.id, size: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion, fondo: state.fondo, finish: "marco", qty: state.qty });
+  function update(redraw = true) {
+    const unit = DS.unitPrice(line()), total = unit * state.qty;
+    document.querySelectorAll(".pinfo [data-g]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.g] === b.dataset.v));
+    for (const g of ["size", "tipo", "color", "terminacion", "fondo"]) $("l-" + g).textContent = lists[g].find((x) => x.id === state[g]).label;
+    $("fondoSet").hidden = state.terminacion !== "arpillera";
     $("pPrice").textContent = DS.money(total);
     $("pInst").textContent = DS.instText(total);
     $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
     $("qVal").textContent = state.qty;
-    $("thumbs").innerHTML = (hasStyles ? gal.map((g) => g.label) : views).map((name, i) => `<button role="tab" aria-label="${name}" aria-current="${i === state.view}" data-view="${i}">${stageHTML(i, true)}</button>`).join("");
-    $("stage").innerHTML = stageHTML(state.view, false);
+    if (redraw) DSFrame.draw($("cv"), p.photo, state).then(() => (document.body.dataset.ready = "1"));
     const url = new URL(location.href);
-    url.search = new URLSearchParams(hasStyles ? { id: p.id, medida: state.size, tipo: state.tipo, estilo: state.style } : { id: p.id, medida: state.size, terminacion: state.finish, marco: state.frame }).toString();
+    const qs = { id: p.id, medida: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion };
+    if (state.terminacion === "arpillera") qs.fondo = state.fondo;
+    url.search = new URLSearchParams(qs).toString();
     history.replaceState(null, "", url);
-    const link = encodeURIComponent(url.href), text = encodeURIComponent(`${p.name} — Design Studio`);
+    const link = encodeURIComponent(url.href), text = encodeURIComponent(`${p.name} — Dsgn. Studio`);
     $("shWa").href = `https://wa.me/?text=${text}%20${link}`;
     $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
     $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
   }
-  $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("[data-view]"); if (b) { state.view = Number(b.dataset.view); if (hasStyles) state.style = gal[state.view].style; update(); } });
+  let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => update(true), 150); });
   $("shCopy").onclick = async () => { try { await navigator.clipboard.writeText(location.href); DS.toast("Link copiado"); } catch { DS.toast(location.href); } };
-
-  const line = () => hasStyles
-    ? { productId: p.id, size: state.size, tipo: state.tipo, style: state.style, finish: DS.style(p, state.style).finish, qty: state.qty }
-    : { productId: p.id, size: state.size, tipo: state.tipo, finish: state.finish, frame: state.frame, qty: state.qty };
   $("addBtn").onclick = () => {
     DS.addToCart(line());
     const b = $("addBtn"); b.textContent = "¡Listo!"; b.classList.add("btn-ok");
@@ -178,15 +151,10 @@
   $("seeCart").onclick = (e) => { e.preventDefault(); DS.openCart(); };
   $("buyBtn").onclick = () => { DS.addToCart(line()); location.href = "/checkout.html"; };
 
-  const frames = ["negro", "natural", "blanco", "oscura"];
   const sim = c.products.filter((x) => x.id !== p.id).sort((a, b) => (b.category === p.category) - (a.category === p.category)).slice(0, 4);
-  $("similar").innerHTML = sim.map((x, i) => `
-    <a class="card" href="/producto.html?id=${x.id}">
-      <div class="card-wall${x.styles ? " photo" : ""}">${DS.framed(x, { frame: frames[i % 4], size: "40x50" })}</div>
-      <h3>${DS.esc(x.name)}</h3><div class="from"><small>Desde</small> ${DS.money(DS.fromPrice(x))}</div>
-    </a>`).join("");
+  $("similar").innerHTML = sim.map(DS.productCard).join("");
   if (!sim.length) $("similar").closest("section").hidden = true;
-  update();
+  await DSFrame.preload(); update(true);
 })();
 </script>
 </body>

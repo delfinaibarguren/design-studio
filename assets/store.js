@@ -17,12 +17,14 @@ window.DS = (() => {
   const frame = (id) => catalog.frames.find((f) => f.id === id);
   const category = (id) => catalog.categories.find((c) => c.id === id);
   const fromPrice = (p) => {
+    if (p && p.photo) return Math.min(...catalog.sizes.map((s) => s.marco)) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
     const fin = p && p.styles ? [...new Set(p.styles.map((x) => x.finish))] : ["lamina", "marco"];
     return Math.min(...catalog.sizes.flatMap((s) => fin.map((f) => s[f])));
   };
 
   const style = (p, id) => (p && p.styles ? p.styles.find((s) => s.id === id) || p.styles[0] : null);
   function finishOf(line) {
+    if (product(line.productId)?.photo) return "marco";
     const st = style(product(line.productId), line.style);
     return st ? st.finish : line.finish;
   }
@@ -41,6 +43,12 @@ window.DS = (() => {
   }
   function variantText(line) {
     const p = product(line.productId), s = size(line.size);
+    if (p && p.photo) {
+      const lab = (list, id) => (catalog[list] || []).find((x) => x.id === id)?.label || "";
+      const ft = frameType(line.tipo);
+      const arp = line.terminacion === "arpillera" ? ` (fondo ${lab("fondos", line.fondo).toLowerCase()})` : "";
+      return `${s.label} · Marco ${ft ? ft.label.toLowerCase() + " " : ""}${lab("frameColors", line.color).toLowerCase()} · ${lab("terminaciones", line.terminacion)}${arp}`;
+    }
     const st = style(p, line.style);
     const ft = frameType(line.tipo);
     if (st) return `${sizeLabel(p, s)}${ft ? ` · Tipo ${ft.label.toLowerCase()}` : ""} · ${st.label}`;
@@ -52,13 +60,13 @@ window.DS = (() => {
     if (st.interestFree && price >= (st.interestFreeMin || 0)) return `${st.interestFree} cuotas sin interés de ${money(price / st.interestFree)}`;
     return `Hasta ${st.maxInstallments} cuotas con Mercado Pago`;
   }
-  const lineKey = (l) => [l.productId, l.size, l.tipo || "", l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : ""].join("|");
+  const lineKey = (l) => [l.productId, l.size, l.tipo || "", l.color || "", l.terminacion || "", l.terminacion === "arpillera" ? l.fondo : "", l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : ""].join("|");
 
   /* ---------- Carrito ---------- */
   function getCart() {
     try {
       const c = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-      return c.filter((l) => product(l.productId) && size(l.size));
+      return c.filter((l) => product(l.productId) && size(l.size) && (!product(l.productId).photo || (l.color && l.terminacion)));
     } catch { return []; }
   }
   function setCart(c) {
@@ -110,6 +118,10 @@ window.DS = (() => {
   }
   /* Obra enmarcada. opts: { finish, frame, size, img } */
   function framed(p, opts = {}) {
+    if (p.photo) {
+      const o = Object.assign({ tipo: (catalog.frameTypes || [])[0]?.id || "chato", color: "negro", terminacion: "paspartu-blanco", fondo: "negro" }, p.defaults || {}, opts);
+      return `<canvas class="cfg" role="img" aria-label="${esc(p.name)}" data-photo="${esc(p.photo)}" data-tipo="${esc(o.tipo)}" data-color="${esc(o.color)}" data-terminacion="${esc(o.terminacion)}" data-fondo="${esc(o.fondo)}"></canvas>`;
+    }
     if (p.styles) {
       const st = style(p, opts.style);
       return `<img class="photo" src="${esc(st.images[opts.img || 0])}" alt="${esc(p.name)} — ${esc(st.label)}" loading="lazy">`;
@@ -243,7 +255,7 @@ window.DS = (() => {
 
   function productCard(p) {
     return `<a class="card" href="/producto.html?id=${p.id}">
-        <div class="card-wall${p.styles ? " photo" : ""}">${framed(p, { frame: "negro" })}</div>
+        <div class="card-wall${p.styles || p.photo ? " photo" : ""}">${framed(p, { frame: "negro" })}</div>
         <h3>${esc(p.name)}</h3>
         <div class="from"><small>Desde</small> ${money(fromPrice(p))}</div>
         <div class="inst">${catalog.store.interestFree} cuotas sin interés · ${Math.round(catalog.store.transferDiscount * 100)}% OFF por transferencia</div>
@@ -259,8 +271,25 @@ window.DS = (() => {
       </a>`;
   }
 
-  async function init() { await load(); chrome(); return catalog; }
+  /* Dibuja todos los cuadros configurables (<canvas class="cfg">) que aparezcan en la página */
+  let cfgReady = null;
+  function loadCfg() {
+    if (window.DSFrame) return Promise.resolve();
+    return cfgReady || (cfgReady = new Promise((ok) => { const sc = document.createElement("script"); sc.src = "/assets/configurador.js"; sc.onload = ok; document.head.appendChild(sc); }));
+  }
+  async function hydrate(root = document) {
+    const list = [...root.querySelectorAll("canvas.cfg:not([data-done])")];
+    if (!list.length) return;
+    await loadCfg();
+    for (const cv of list) { cv.dataset.done = "1"; DSFrame.draw(cv, cv.dataset.photo, { ...cv.dataset }).catch(() => {}); }
+  }
+  async function init() {
+    await load(); chrome();
+    new MutationObserver(() => hydrate()).observe(document.body, { childList: true, subtree: true });
+    hydrate();
+    return catalog;
+  }
 
   return { init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
-    getCart, setCart, addToCart, cartTotal, framed, openCart, closeCart, toast, submitForm, get catalog() { return catalog; } };
+    getCart, setCart, addToCart, hydrate, loadCfg, cartTotal, framed, openCart, closeCart, toast, submitForm, get catalog() { return catalog; } };
 })();

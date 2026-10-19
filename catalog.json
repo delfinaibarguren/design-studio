@@ -101,99 +101,21 @@
       "id": "criollo",
       "name": "Criollo",
       "category": "pampa",
-      "orientation": "horizontal",
-      "styles": [
-        {
-          "id": "negro-paspartu-negro",
-          "label": "Marco negro · Paspartú negro",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-negro-paspartu-negro-principal-v2.jpg",
-            "/assets/obras/criollo-negro-paspartu-negro.jpg"
-          ]
-        },
-        {
-          "id": "negro-paspartu-blanco",
-          "label": "Marco negro · Paspartú blanco",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-negro-paspartu-blanco.jpg"
-          ]
-        },
-        {
-          "id": "madera-paspartu-negro",
-          "label": "Marco madera · Paspartú negro",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-madera-paspartu-negro.jpg"
-          ]
-        },
-        {
-          "id": "madera-paspartu-blanco",
-          "label": "Marco madera · Paspartú blanco",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-madera-paspartu-blanco.jpg"
-          ]
-        },
-        {
-          "id": "madera-sin-paspartu",
-          "label": "Marco madera · Sin paspartú",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-madera-sin-paspartu.jpg"
-          ]
-        },
-        {
-          "id": "negro-sin-paspartu",
-          "label": "Marco negro · Sin paspartú",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-negro-sin-paspartu.jpg"
-          ]
-        }
-      ]
+      "photo": "/assets/obras/criollo-original.jpg",
+      "defaults": {
+        "color": "negro",
+        "terminacion": "paspartu-negro"
+      }
     },
     {
       "id": "curioso",
       "name": "Curioso",
       "category": "pampa",
-      "orientation": "vertical",
-      "styles": [
-        {
-          "id": "madera-sin-paspartu",
-          "label": "Marco madera · Sin paspartú",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/blanco-madera-sin-paspartu-principal.jpg",
-            "/assets/obras/blanco-madera-sin-paspartu.jpg"
-          ]
-        },
-        {
-          "id": "madera-paspartu-blanco",
-          "label": "Marco madera · Paspartú blanco",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/blanco-madera-paspartu-blanco.jpg"
-          ]
-        },
-        {
-          "id": "negro-sin-paspartu",
-          "label": "Marco negro · Sin paspartú",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/blanco-negro-sin-paspartu.jpg"
-          ]
-        },
-        {
-          "id": "negro-paspartu-blanco",
-          "label": "Marco negro · Paspartú blanco",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/blanco-negro-paspartu-blanco.jpg"
-          ]
-        }
-      ]
+      "photo": "/assets/obras/curioso-original.jpg",
+      "defaults": {
+        "color": "natural",
+        "terminacion": "sin"
+      }
     }
   ],
   "frameTypes": [
@@ -206,6 +128,51 @@
       "id": "box",
       "label": "Box",
       "extra": 0
+    }
+  ],
+  "frameColors": [
+    {
+      "id": "negro",
+      "label": "Negro",
+      "color": "#1e1d1c"
+    },
+    {
+      "id": "natural",
+      "label": "Natural",
+      "color": "#d9b88f"
+    },
+    {
+      "id": "blanco",
+      "label": "Blanco",
+      "color": "#f3f1ec"
+    }
+  ],
+  "terminaciones": [
+    {
+      "id": "paspartu-blanco",
+      "label": "Paspartú blanco"
+    },
+    {
+      "id": "paspartu-negro",
+      "label": "Paspartú negro"
+    },
+    {
+      "id": "sin",
+      "label": "Sin paspartú"
+    },
+    {
+      "id": "arpillera",
+      "label": "Arpillera"
+    }
+  ],
+  "fondos": [
+    {
+      "id": "negro",
+      "label": "Negro"
+    },
+    {
+      "id": "blanco",
+      "label": "Blanco"
     }
   ]
 }
