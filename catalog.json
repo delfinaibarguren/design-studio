@@ -447,10 +447,10 @@
       ]
     },
     {
-      "id": "petisos",
-      "name": "Petisos",
+      "id": "ponis",
+      "name": "Ponis",
       "category": "pampa",
-      "photo": "/assets/obras/petisos-original.jpg",
+      "photo": "/assets/obras/ponis-original.jpg",
       "sizes": [
         "30x40"
       ],
@@ -460,7 +460,7 @@
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/petisos-ambiente-1.jpg"
+        "/assets/obras/ponis-ambiente-1.jpg"
       ]
     }
   ],
