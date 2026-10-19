@@ -411,7 +411,10 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .stage canvas.cfg { position: absolute; inset: 0; }
 .line-thumb canvas.cfg, .card-wall canvas.cfg, .col-img canvas.cfg { background: #f3f1ec; }
 
-.pdp .gallery { grid-template-columns: 1fr; }
+.pdp .gallery.single { grid-template-columns: 1fr; }
+.cfg-stage #amb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.cfg-stage [hidden] { display: none !important; }
+.thumbs canvas, .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .cfg-stage { background: #f3f1ec; aspect-ratio: 1; position: relative; }
 .cfg-stage #cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .swatch-row { display: flex; gap: .8rem; }

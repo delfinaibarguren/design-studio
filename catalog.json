@@ -105,7 +105,10 @@
       "defaults": {
         "color": "negro",
         "terminacion": "paspartu-negro"
-      }
+      },
+      "ambientes": [
+        "/assets/obras/criollo-ambiente-1.jpg"
+      ]
     },
     {
       "id": "curioso",
@@ -115,7 +118,10 @@
       "defaults": {
         "color": "natural",
         "terminacion": "sin"
-      }
+      },
+      "ambientes": [
+        "/assets/obras/curioso-ambiente-1.jpg"
+      ]
     }
   ],
   "frameTypes": [

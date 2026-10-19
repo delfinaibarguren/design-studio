@@ -15,8 +15,9 @@
 <nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
 
 <main class="pdp" id="pdp">
-  <div class="gallery">
-    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas></div>
+  <div class="gallery single" id="gallery">
+    <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas" hidden></div>
+    <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><img id="amb" alt="" hidden></div>
     <div class="pdesc">
       <h3>Descripción del producto:</h3>
       <p id="pDesc"></p>
@@ -114,7 +115,9 @@
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
     const visual = b.dataset.g !== "size";
-    state[b.dataset.g] = b.dataset.v; $("added").hidden = true; update(visual);
+    state[b.dataset.g] = b.dataset.v; $("added").hidden = true;
+    if (visual) showView(0);
+    update(visual);
   });
   $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(false); };
   $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(false); };
@@ -129,7 +132,7 @@
     $("pInst").textContent = DS.instText(total);
     $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
     $("qVal").textContent = state.qty;
-    if (redraw) DSFrame.draw($("cv"), p.photo, state).then(() => (document.body.dataset.ready = "1"));
+    if (redraw) DSFrame.draw($("cv"), p.photo, state).then(() => { document.body.dataset.ready = "1"; mirror(); });
     const url = new URL(location.href);
     const qs = { id: p.id, medida: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion };
     if (state.terminacion === "arpillera") qs.fondo = state.fondo;
@@ -139,6 +142,24 @@
     $("shWa").href = `https://wa.me/?text=${text}%20${link}`;
     $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
     $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
+  }
+  const amb = p.ambientes || [];
+  function mirror() {
+    const t = document.querySelector("#thumbs canvas"); if (!t) return;
+    const src = $("cv"); t.width = 160; t.height = 160;
+    t.getContext("2d").drawImage(src, 0, 0, 160, 160);
+  }
+  function showView(i) {
+    document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
+    $("cv").hidden = i !== 0; $("amb").hidden = i === 0;
+    if (i > 0) { $("amb").src = amb[i - 1]; $("amb").alt = `${p.name} en un ambiente`; }
+  }
+  if (amb.length) {
+    $("gallery").classList.remove("single"); $("thumbs").hidden = false;
+    $("thumbs").innerHTML = `<button role="tab" aria-label="Tu cuadro"><canvas></canvas></button>` +
+      amb.map((u, i) => `<button role="tab" aria-label="Ambiente ${i + 1}"><img src="${u}" alt="" loading="lazy"></button>`).join("");
+    $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showView([...b.parentNode.children].indexOf(b)); });
+    showView(0);
   }
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => update(true), 150); });
   $("shCopy").onclick = async () => { try { await navigator.clipboard.writeText(location.href); DS.toast("Link copiado"); } catch { DS.toast(location.href); } };
