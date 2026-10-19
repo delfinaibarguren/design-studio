@@ -463,6 +463,90 @@
       "ambientes": [
         "/assets/obras/ponis-ambiente-1.jpg"
       ]
+    },
+    {
+      "id": "regreso",
+      "name": "Regreso",
+      "category": "pampa",
+      "photo": "/assets/obras/regreso-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/regreso-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "girasoles",
+      "name": "Girasoles",
+      "category": "pampa",
+      "photo": "/assets/obras/girasoles-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/girasoles-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "postes",
+      "name": "Postes",
+      "category": "pampa",
+      "photo": "/assets/obras/postes-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/postes-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "nube",
+      "name": "Nube",
+      "category": "pampa",
+      "photo": "/assets/obras/nube-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/nube-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "trigo",
+      "name": "Trigo",
+      "category": "pampa",
+      "photo": "/assets/obras/trigo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/trigo-ambiente-1.jpg"
+      ]
+    },
+    {
+      "id": "overo",
+      "name": "Overo",
+      "category": "pampa",
+      "photo": "/assets/obras/overo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/overo-ambiente-1.jpg"
+      ]
     }
   ],
   "frameTypes": [
