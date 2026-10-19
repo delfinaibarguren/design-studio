@@ -451,3 +451,4 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .perks4 svg { margin-bottom: .9rem; }
 .perks4 strong { font-weight: 600; }
 .perks4 span { margin-top: .35rem; }
+.perks4 span { text-transform: uppercase; letter-spacing: .06em; font-size: clamp(.78rem, .95vw, .88rem); }
