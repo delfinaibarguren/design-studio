@@ -131,14 +131,6 @@
           ]
         },
         {
-          "id": "negro-arpillera",
-          "label": "Marco negro · Paspartú arpillera",
-          "finish": "marco",
-          "images": [
-            "/assets/obras/criollo-negro-arpillera-v2.jpg"
-          ]
-        },
-        {
           "id": "madera-sin-paspartu",
           "label": "Marco madera · Sin paspartú",
           "finish": "marco",
