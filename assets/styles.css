@@ -395,3 +395,13 @@ img.photo { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .grid > p.muted { grid-column: 1 / -1; }
 .col-head .hero-sub:empty { display: none; }
+
+/* Datos para transferir */
+.bank { white-space: normal; max-width: 460px; padding: .4rem 1.2rem; background: var(--white); border: 1px solid var(--line); }
+.bank-row { display: grid; grid-template-columns: 70px 1fr auto; gap: .8rem; align-items: center; padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.bank-row:last-child { border-bottom: 0; }
+.bank-row span { color: var(--ink-soft); font-size: .85rem; }
+.bank-row b { font-weight: 500; word-break: break-all; }
+.bank-row .copy { font: 500 .78rem var(--sans); border: 1px solid var(--ink); background: none; border-radius: 999px; padding: .35rem .8rem; cursor: pointer; color: var(--ink); }
+.done .wa-btn { margin-bottom: 1rem; }
+.done .wa-btn + .btn { background: none; color: var(--ink); }

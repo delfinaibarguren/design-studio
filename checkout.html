@@ -51,7 +51,7 @@
     <div class="box">
       <h2><span class="step">3</span> Pago</h2>
       <label class="choice"><input type="radio" name="pago" value="Mercado Pago" checked><span><b>Mercado Pago</b><span>Tarjetas de crédito, débito o dinero en cuenta. <span id="maxInst"></span>.</span></span></label>
-      <label class="choice"><input type="radio" name="pago" value="Transferencia"><span><b>Transferencia bancaria <span class="tag-ok" id="trTag"></span></b><span>Te enviamos los datos para transferir al confirmar el pedido.</span></span></label>
+      <label class="choice"><input type="radio" name="pago" value="Transferencia"><span><b>Transferencia bancaria <span class="tag-ok" id="trTag"></span></b><span>Al confirmar te mostramos el alias y CBU para transferir en el momento.</span></span></label>
       <label class="f">Comentarios (opcional)<textarea name="comentarios" rows="2"></textarea></label>
     </div>
 
@@ -76,6 +76,7 @@
   <h1 id="dTitle">¡Gracias por tu compra!</h1>
   <p id="dText"></p>
   <div class="bank" id="dBank" hidden></div>
+  <a class="btn btn-dark wa-btn" id="dWa" target="_blank" rel="noopener" hidden>Enviar comprobante por WhatsApp</a>
   <a class="btn btn-dark" href="/">Volver a la tienda</a>
 </section>
 
@@ -123,6 +124,11 @@
   // el carrito lateral también puede cambiar el pedido
   new MutationObserver(render).observe($("cartBody"), { childList: true });
 
+  document.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-copy]"); if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.copy); } catch {}
+    b.textContent = "¡Copiado!"; setTimeout(() => (b.textContent = "Copiar"), 1500);
+  });
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const err = $("err"); err.hidden = true;
@@ -158,8 +164,15 @@
       $("checkout").hidden = true; $("done").hidden = false; window.scrollTo(0, 0);
       $("dTitle").textContent = "¡Recibimos tu pedido!";
       if (transfer) {
-        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Para confirmarlo, transferí <b>${DS.money(total)}</b> y envianos el comprobante.` + (st.transferInfo ? "" : " En breve te mandamos los datos bancarios por email.");
-        if (st.transferInfo) { $("dBank").hidden = false; $("dBank").textContent = st.transferInfo; }
+        const bk = st.bank || {};
+        $("dTitle").textContent = "Último paso: transferí";
+        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>.<br>Transferí <b>${DS.money(total)}</b> a esta cuenta y envianos el comprobante para confirmar tu compra.`;
+        const row = (k, v, copy) => `<div class="bank-row"><span>${k}</span><b>${DS.esc(v)}</b>${copy ? `<button type="button" class="copy" data-copy="${DS.esc(v)}">Copiar</button>` : ""}</div>`;
+        $("dBank").hidden = false;
+        $("dBank").innerHTML = row("Monto", DS.money(total), true).replace(`data-copy="${DS.money(total)}"`, `data-copy="${Math.round(total)}"`)
+          + row("Alias", bk.alias, true) + row("CBU", bk.cbu, true) + row("Titular", bk.titular) + row("Banco", bk.banco);
+        const msg = encodeURIComponent(`Hola! Te envío el comprobante de transferencia del pedido ${orden} por ${DS.money(total)}.`);
+        $("dWa").hidden = false; $("dWa").href = `https://wa.me/5491153132340?text=${msg}`;
       } else {
         $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Te vamos a escribir a la brevedad con el link de pago.`;
       }

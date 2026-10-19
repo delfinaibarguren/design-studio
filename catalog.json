@@ -8,10 +8,16 @@
     "whatsapp": "",
     "instagram": "",
     "email": "",
-    "transferInfo": "",
     "interestFree": 3,
     "interestFreeMin": 50000,
-    "productDescription": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo."
+    "productDescription": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
+    "bank": {
+      "alias": "design.enmarcados",
+      "cbu": "0070361930004085337249",
+      "titular": "Delfina Ibarguren",
+      "banco": "Banco Galicia"
+    },
+    "whatsappLink": "http://wa.link/vp5yn9"
   },
   "sizes": [
     {
