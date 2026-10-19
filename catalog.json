@@ -73,13 +73,13 @@
   ],
   "categories": [
     {
-      "id": "campo",
-      "label": "Campo",
+      "id": "pampa",
+      "label": "Pampa",
       "description": "Flora y fauna del campo argentino"
     },
     {
-      "id": "playa",
-      "label": "Playa",
+      "id": "mar",
+      "label": "Mar",
       "description": "Mar, arena y luz de verano."
     }
   ],
@@ -87,7 +87,7 @@
     {
       "id": "criollo",
       "name": "Criollo",
-      "category": "campo",
+      "category": "pampa",
       "orientation": "horizontal",
       "styles": [
         {
@@ -152,7 +152,7 @@
     {
       "id": "curioso",
       "name": "Curioso",
-      "category": "campo",
+      "category": "pampa",
       "orientation": "vertical",
       "styles": [
         {
