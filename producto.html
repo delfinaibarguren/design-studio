@@ -159,11 +159,14 @@
   }
   const amb = p.ambientes || [];
   const esc = amb.map((src, i) => (p.escenas && p.escenas[i] ? { src, ...p.escenas[i] } : null));
+  const extras = st.guiaMarcos ? [st.guiaMarcos] : [];
+  const views = [...amb, ...extras];   // índice 1.. en la galería
+  const isScene = (i) => i > 0 && i - 1 < amb.length && esc[i - 1];
   let tok = 0;
   async function render() {
     const my = ++tok;
     const jobs = [DSFrame.draw($("cv"), p.photo, state)];
-    if (cur > 0 && esc[cur - 1]) jobs.push(DSFrame.scene($("sc"), p.photo, state, esc[cur - 1]));
+    if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, state, esc[cur - 1]));
     await Promise.all(jobs);
     if (my !== tok) return;
     document.body.dataset.ready = "1"; mirror();
@@ -183,16 +186,17 @@
     cur = i;
     document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
     $("cv").hidden = i !== 0; $("sc").hidden = i === 0;
-    if (i > 0) { if (esc[i - 1]) DSFrame.scene($("sc"), p.photo, state, esc[i - 1]); else drawImg($("sc"), amb[i - 1]); }
+    if (i > 0) { if (isScene(i)) DSFrame.scene($("sc"), p.photo, state, esc[i - 1]); else drawImg($("sc"), views[i - 1]); }
   }
-  if (amb.length) {
+  if (views.length) {
     $("gallery").classList.remove("single"); $("thumbs").hidden = false;
     $("thumbs").innerHTML = `<button role="tab" aria-label="Tu cuadro"><canvas></canvas></button>` +
-      amb.map((u, i) => `<button role="tab" aria-label="Ambiente ${i + 1}"><img src="${u}" alt="" loading="lazy"></button>`).join("");
+      amb.map((u, i) => `<button role="tab" aria-label="Ambiente ${i + 1}"><img src="${u}" alt="" loading="lazy"></button>`).join("") +
+      extras.map((u) => `<button role="tab" aria-label="Tipos y colores de marco"><img src="${u}" alt="" loading="lazy"></button>`).join("");
     $("thumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showView([...b.parentNode.children].indexOf(b)); });
     showView(0);
   }
-  const nViews = 1 + amb.length;
+  const nViews = 1 + views.length;
   function lbShow(i) {
     lbI = (i + nViews) % nViews;
     const cvs = $("lbCv"), img = $("lbImg");
@@ -205,7 +209,7 @@
       cvs.hidden = false; img.hidden = true;
       const side = Math.min(innerWidth, innerHeight) * 0.92;
       cvs.style.width = cvs.style.height = side + "px";
-      if (esc[lbI - 1]) DSFrame.scene(cvs, p.photo, state, esc[lbI - 1]); else drawImg(cvs, amb[lbI - 1]);
+      if (isScene(lbI)) DSFrame.scene(cvs, p.photo, state, esc[lbI - 1]); else drawImg(cvs, views[lbI - 1]);
     }
     $("lbPrev").hidden = $("lbNext").hidden = nViews < 2;
   }
