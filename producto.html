@@ -43,6 +43,7 @@
     <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row" id="o-color" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills" id="o-terminacion" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="fondoSet" hidden><legend>Fondo de la arpillera: <b id="l-fondo"></b></legend><div class="pills" id="o-fondo" role="radiogroup"></div></fieldset>
+    <a class="btn btn-outline btn-block back-col" id="backCol" href="/#colecciones">← Volver a la colección</a>
 
     <div class="buy-row">
       <div class="qty" aria-label="Cantidad"><button id="qMinus" aria-label="Restar">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Sumar">+</button></div>
@@ -115,6 +116,7 @@
     qty: 1,
   };
   const cat = DS.category(p.category);
+  if (cat) $("backCol").href = `/coleccion.html?c=${cat.id}`;
   document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
   $("pName").textContent = p.name;

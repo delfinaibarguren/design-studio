@@ -456,3 +456,5 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .perks4 svg { color: #b8893e; }
 .hero-sub strong { color: #b8893e; }
 .col-head .hero-sub { color: #b8893e; font-weight: 300; }
+
+.back-col { text-transform: uppercase; letter-spacing: .08em; font-size: .82rem; padding: .75rem; margin: 1.3rem 0 1.6rem; border-width: 1px; border-color: #b9b4aa; color: #3a3833; }
