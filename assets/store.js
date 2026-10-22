@@ -32,12 +32,12 @@ window.DS = (() => {
     return s.label;
   }
   // precio de una obra enmarcada (todo sale de catalog.json → sizes):
-  // precios["<tipo>-<grupo de color>"] + adicional de arpillera de esa medida
+  // precios["<tipo>-<grupo de color>"] + adicional de arpillera − descuento sin paspartú (de esa medida)
   function framedPrice(s, tipoId, colorId, terminacion) {
     if (!s.precios) return s.marco;
     const col = (catalog.frameColors || []).find((x) => x.id === colorId);
     const base = s.precios[`${tipoId}-${col?.grupo || "natural"}`];
-    return base + (terminacion === "arpillera" ? s.arpillera || 0 : 0);
+    return base + (terminacion === "arpillera" ? s.arpillera || 0 : 0) - (terminacion === "sin" ? s.descuentoSinPaspartu || 0 : 0);
   }
   function unitPrice(line) {
     const s = size(line.size);

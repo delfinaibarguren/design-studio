@@ -24,7 +24,7 @@ function priceLine(line: Line) {
       id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id].filter(Boolean).join("-"),
       title: `${product.name} (${variant})`,
       quantity: qtyS,
-      unit_price: size.precios[`${ft.id}-${col.grupo || "natural"}`] + (ter.id === "arpillera" ? size.arpillera || 0 : 0),
+      unit_price: size.precios[`${ft.id}-${col.grupo || "natural"}`] + (ter.id === "arpillera" ? size.arpillera || 0 : 0) - (ter.id === "sin" ? size.descuentoSinPaspartu || 0 : 0),
       currency_id: "ARS",
     }
   }

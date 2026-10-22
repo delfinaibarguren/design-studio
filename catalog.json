@@ -35,7 +35,8 @@
         "chato-natural": 85000,
         "chato-pintado": 93000
       },
-      "arpillera": 20000
+      "arpillera": 20000,
+      "descuentoSinPaspartu": 5000
     },
     {
       "id": "50x70",
@@ -50,7 +51,8 @@
         "chato-natural": 144000,
         "chato-pintado": 154000
       },
-      "arpillera": 25000
+      "arpillera": 25000,
+      "descuentoSinPaspartu": 8000
     },
     {
       "id": "70x100",
@@ -65,7 +67,8 @@
         "chato-natural": 208000,
         "chato-pintado": 220000
       },
-      "arpillera": 30000
+      "arpillera": 30000,
+      "descuentoSinPaspartu": 15000
     }
   ],
   "finishes": [
