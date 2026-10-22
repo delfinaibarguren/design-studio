@@ -41,7 +41,8 @@ En `catalog.json` cada medida tiene:
 "arpillera": 20000,
 "descuentoSinPaspartu": 5000
 ```
-"Pintado" = negro o blanco (`frameColors[].grupo`). Paspartú blanco o negro: precio de tabla. Sin paspartú: se descuenta `descuentoSinPaspartu`.
+"Pintado" = negro o blanco (`frameColors[].grupo`).
+La arpillera está desactivada (se sacó de `terminaciones`). Su adicional sigue guardado en `sizes[].arpillera` y el dibujo en el configurador: para volver a ofrecerla, agregar `{ "id": "arpillera", "label": "Arpillera" }` en `terminaciones`. Paspartú blanco o negro: precio de tabla. Sin paspartú: se descuenta `descuentoSinPaspartu`.
 Todas las obras (actuales y futuras) usan esta tabla; no hay precios por obra.
 El servidor (`checkout.mts`) recalcula el precio desde la misma tabla antes de cobrar con Mercado Pago. 3 cuotas sin interés, 10% OFF por transferencia.
 

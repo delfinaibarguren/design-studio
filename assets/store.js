@@ -75,7 +75,7 @@ window.DS = (() => {
   function getCart() {
     try {
       const c = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-      return c.filter((l) => product(l.productId) && size(l.size) && (!product(l.productId).photo || (l.color && l.terminacion)));
+      return c.filter((l) => product(l.productId) && size(l.size) && (!product(l.productId).photo || (l.color && (catalog.terminaciones || []).some((t) => t.id === l.terminacion))));
     } catch { return []; }
   }
   function setCart(c) {
