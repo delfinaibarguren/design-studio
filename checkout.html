@@ -20,6 +20,7 @@
     <input type="hidden" name="orden" id="fOrden">
     <input type="hidden" name="detalle" id="fDetalle">
     <input type="hidden" name="total" id="fTotal">
+    <input type="hidden" name="comision_fotografas" id="fComision">
 
     <div class="box">
       <h2><span class="step">1</span> Datos de contacto</h2>
@@ -147,6 +148,8 @@
     $("fOrden").value = orden;
     $("fDetalle").value = cart.map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
     $("fTotal").value = DS.money(total) + (transfer ? ` (con ${pct}% OFF transferencia)` : "");
+    const com = DS.comisiones(cart, transfer ? 1 - st.transferDiscount : 1);
+    $("fComision").value = Object.entries(com).map(([who, x]) => `${who}: ${DS.money(x.total)} — ${x.obras.join(", ")}`).join("\n");
 
     const btn = $("payBtn"); btn.disabled = true; btn.textContent = "Procesando…";
     try {

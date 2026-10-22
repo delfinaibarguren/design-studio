@@ -12,7 +12,6 @@ function priceLine(line: Line) {
   const product: any = products.get(String(line.productId))
   const size = sizes.get(String(line.size))
   if (!product || !size) return null
-  if (Array.isArray(product.sizes) && !product.sizes.includes(size.id)) return null
   const qtyS = Math.max(1, Math.min(10, Math.floor(Number(line.qty) || 1)))
   if (product.photo) {
     const C: any = catalog
@@ -25,7 +24,7 @@ function priceLine(line: Line) {
       id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id].filter(Boolean).join("-"),
       title: `${product.name} (${variant})`,
       quantity: qtyS,
-      unit_price: size.marco + (ft.extra || 0),
+      unit_price: (size.precios ? size.precios[(col.grupo || "natural") + (ter.id === "arpillera" ? "-arpillera" : "")] : size.marco) + (ft.extra || 0),
       currency_id: "ARS",
     }
   }

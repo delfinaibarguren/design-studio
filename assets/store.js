@@ -17,7 +17,7 @@ window.DS = (() => {
   const frame = (id) => catalog.frames.find((f) => f.id === id);
   const category = (id) => catalog.categories.find((c) => c.id === id);
   const fromPrice = (p) => {
-    if (p && p.photo) return Math.min(...catalog.sizes.filter((s) => !p.sizes || p.sizes.includes(s.id)).map((s) => s.marco)) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
+    if (p && p.photo) return Math.min(...catalog.sizes.map((s) => framedPrice(s, "natural", "sin"))) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
     const fin = p && p.styles ? [...new Set(p.styles.map((x) => x.finish))] : ["lamina", "marco"];
     return Math.min(...catalog.sizes.flatMap((s) => fin.map((f) => s[f])));
   };
@@ -31,9 +31,17 @@ window.DS = (() => {
   function sizeLabel(p, s) {
     return s.label;
   }
+  // precio de una obra enmarcada: medida × grupo de color (natural / pintado) × arpillera
+  function framedPrice(s, colorId, terminacion) {
+    if (!s.precios) return s.marco;
+    const col = (catalog.frameColors || []).find((x) => x.id === colorId);
+    const key = (col?.grupo || "natural") + (terminacion === "arpillera" ? "-arpillera" : "");
+    return s.precios[key];
+  }
   function unitPrice(line) {
     const s = size(line.size);
     if (!s) return 0;
+    if (product(line.productId)?.photo) return framedPrice(s, line.color, line.terminacion) + (frameType(line.tipo)?.extra || 0);
     const base = finishOf(line) === "marco" ? s.marco : s.lamina;
     return base + (frameType(line.tipo)?.extra || 0);
   }
@@ -290,6 +298,19 @@ window.DS = (() => {
     return catalog;
   }
 
-  return { init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
+  // 8% para la fotógrafa sobre lo que paga el cliente (cálculo interno, no se suma al precio)
+  function comisiones(lines, factor = 1) {
+    const rate = catalog.store.comisionFotografa || 0, out = {};
+    for (const l of lines) {
+      const p = product(l.productId); if (!p) continue;
+      const who = p.fotografa || "Sin asignar";
+      const paid = unitPrice(l) * l.qty * factor;
+      (out[who] ||= { obras: [], total: 0 });
+      out[who].obras.push(`${l.qty} × ${p.name} (${money(paid)})`);
+      out[who].total += paid * rate;
+    }
+    return out;
+  }
+  return { framedPrice, comisiones, init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
     getCart, setCart, addToCart, hydrate, loadCfg, cartTotal, framed, openCart, closeCart, toast, submitForm, get catalog() { return catalog; } };
 })();

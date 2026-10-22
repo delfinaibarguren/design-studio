@@ -18,7 +18,8 @@
       "banco": "Banco Galicia"
     },
     "whatsappLink": "http://wa.link/vp5yn9",
-    "guiaMarcos": "/assets/marcos-guia.jpg"
+    "guiaMarcos": "/assets/marcos-guia.jpg",
+    "comisionFotografa": 0.08
   },
   "sizes": [
     {
@@ -27,7 +28,13 @@
       "w": 30,
       "h": 40,
       "lamina": 50000,
-      "marco": 87000
+      "marco": 89000,
+      "precios": {
+        "natural": 89000,
+        "pintado": 97000,
+        "natural-arpillera": 114000,
+        "pintado-arpillera": 122000
+      }
     },
     {
       "id": "50x70",
@@ -35,7 +42,13 @@
       "w": 50,
       "h": 70,
       "lamina": 83000,
-      "marco": 147000
+      "marco": 149000,
+      "precios": {
+        "natural": 149000,
+        "pintado": 159000,
+        "natural-arpillera": 174000,
+        "pintado-arpillera": 184000
+      }
     },
     {
       "id": "70x100",
@@ -43,7 +56,13 @@
       "w": 70,
       "h": 100,
       "lamina": 125000,
-      "marco": 225000
+      "marco": 219000,
+      "precios": {
+        "natural": 219000,
+        "pintado": 231000,
+        "natural-arpillera": 244000,
+        "pintado-arpillera": 256000
+      }
     }
   ],
   "finishes": [
@@ -134,7 +153,8 @@
           "luz": "/assets/obras/criollo-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "curioso",
@@ -171,7 +191,8 @@
           "luz": "/assets/obras/curioso-ambiente-2-luz.png",
           "apoyado": true
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "mirada",
@@ -209,7 +230,8 @@
           "luz": "/assets/obras/mirada-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "potrero",
@@ -247,7 +269,8 @@
           "luz": "/assets/obras/potrero-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "primavera",
@@ -285,7 +308,8 @@
           "luz": "/assets/obras/primavera-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "huella",
@@ -323,7 +347,8 @@
           "luz": "/assets/obras/huella-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "tapera",
@@ -361,7 +386,8 @@
           "luz": "/assets/obras/tapera-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "mate",
@@ -399,7 +425,8 @@
           "luz": "/assets/obras/mate-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "gaucho",
@@ -437,7 +464,8 @@
           "luz": "/assets/obras/gaucho-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "molino",
@@ -475,7 +503,8 @@
           "luz": "/assets/obras/molino-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "tordillo-i",
@@ -513,7 +542,8 @@
           "luz": "/assets/obras/tordillo-i-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "tordillo-ii",
@@ -551,7 +581,8 @@
           "luz": "/assets/obras/tordillo-ii-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "margarita",
@@ -589,7 +620,8 @@
           "luz": "/assets/obras/margarita-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "zaino",
@@ -627,7 +659,8 @@
           "luz": "/assets/obras/zaino-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "girasol-i",
@@ -665,7 +698,8 @@
           "luz": "/assets/obras/girasol-i-ambiente-1-luz.png",
           "apoyado": true
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "girasol-ii",
@@ -703,7 +737,8 @@
           "luz": "/assets/obras/girasol-ii-ambiente-1-luz.png",
           "apoyado": true
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "girasol-iii",
@@ -741,7 +776,8 @@
           "luz": "/assets/obras/girasol-iii-ambiente-1-luz.png",
           "apoyado": true
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "whisky",
@@ -779,7 +815,8 @@
           "luz": "/assets/obras/whisky-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "invierno",
@@ -817,16 +854,14 @@
           "luz": "/assets/obras/invierno-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "chimango-i",
       "name": "Chimango I",
       "category": "pampa",
       "photo": "/assets/obras/chimango-i-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "negro",
@@ -858,16 +893,14 @@
           "luz": "/assets/obras/chimango-i-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "chimango-ii",
       "name": "Chimango II",
       "category": "pampa",
       "photo": "/assets/obras/chimango-ii-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "negro",
@@ -899,16 +932,14 @@
           "luz": "/assets/obras/chimango-ii-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "lantana",
       "name": "Lantana",
       "category": "pampa",
       "photo": "/assets/obras/lantana-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "negro",
@@ -940,16 +971,14 @@
           "luz": "/assets/obras/lantana-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "calandria",
       "name": "Calandria",
       "category": "pampa",
       "photo": "/assets/obras/calandria-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "negro",
@@ -981,16 +1010,14 @@
           "luz": "/assets/obras/calandria-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "hibiscus",
       "name": "Hibiscus",
       "category": "pampa",
       "photo": "/assets/obras/hibiscus-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "blanco",
@@ -1022,16 +1049,14 @@
           "luz": "/assets/obras/hibiscus-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "ponis",
       "name": "Ponis",
       "category": "pampa",
       "photo": "/assets/obras/ponis-original.jpg",
-      "sizes": [
-        "30x40"
-      ],
       "defaults": {
         "tipo": "chato",
         "color": "negro",
@@ -1063,7 +1088,8 @@
           "luz": "/assets/obras/ponis-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "regreso",
@@ -1101,7 +1127,8 @@
           "luz": "/assets/obras/regreso-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "girasoles",
@@ -1139,7 +1166,8 @@
           "luz": "/assets/obras/girasoles-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "poste",
@@ -1177,7 +1205,8 @@
           "luz": "/assets/obras/poste-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "nube",
@@ -1215,7 +1244,8 @@
           "luz": "/assets/obras/nube-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "trigal",
@@ -1253,7 +1283,8 @@
           "luz": "/assets/obras/trigal-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     },
     {
       "id": "tobiano",
@@ -1291,7 +1322,8 @@
           "luz": "/assets/obras/tobiano-ambiente-1-luz.png",
           "apoyado": false
         }
-      ]
+      ],
+      "fotografa": ""
     }
   ],
   "frameTypes": [
@@ -1310,17 +1342,20 @@
     {
       "id": "negro",
       "label": "Negro",
-      "color": "#1e1d1c"
+      "color": "#1e1d1c",
+      "grupo": "pintado"
     },
     {
       "id": "natural",
-      "label": "Natural",
-      "color": "#d9b88f"
+      "label": "Kiri natural",
+      "color": "#d9b88f",
+      "grupo": "natural"
     },
     {
       "id": "blanco",
       "label": "Blanco",
-      "color": "#f3f1ec"
+      "color": "#f3f1ec",
+      "grupo": "pintado"
     }
   ],
   "terminaciones": [

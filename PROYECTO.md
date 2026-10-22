@@ -27,10 +27,22 @@ Para subir algo **sin** publicar, poner `[skip netlify]` en el mensaje del commi
 - `netlify/functions/checkout.mts` — crea el pago en Mercado Pago; **recalcula el precio en el servidor** desde `catalog.json` (máx. 3 cuotas).
 - `tools/escena_luz.py` — genera el mapa de luz de la foto de ambiente.
 
-## Precios (catalog.json → sizes, precio con marco)
+## Precios (catalog.json → sizes[].precios)
 
-30x40 $87.000 · 50x70 $147.000 · 100x70 $225.000. 3 cuotas sin interés, 10% OFF por transferencia.
-Una obra puede limitar medidas con `"sizes": ["30x40"]`.
+| Medida | Kiri natural | Negro o blanco | Natural + arpillera | Pintado + arpillera |
+|---|---|---|---|---|
+| 30 × 40 | $89.000 | $97.000 | $114.000 | $122.000 |
+| 50 × 70 | $149.000 | $159.000 | $174.000 | $184.000 |
+| 100 × 70 | $219.000 | $231.000 | $244.000 | $256.000 |
+
+El precio depende de la medida, del grupo del color (`frameColors[].grupo`: natural / pintado) y de si la terminación es arpillera. Paspartú blanco, negro o sin paspartú no cambian el precio; chato y box tampoco. Todas las obras tienen las 3 medidas.
+El servidor (`checkout.mts`) recalcula el mismo precio antes de cobrar con Mercado Pago. 3 cuotas sin interés, 10% OFF por transferencia.
+
+## Comisión de fotógrafas (interna)
+
+8% del precio final que paga el cliente (`store.comisionFotografa`), con el descuento por transferencia ya aplicado. No se suma al precio.
+Cada obra tiene `"fotografa": "Nombre"` en `catalog.json` (vacío = "Sin asignar").
+Cada pedido llega a Netlify Forms (formulario **pedido**) con el campo **comision_fotografas**: cuánto le corresponde a cada fotógrafa y por qué obras. Para sumar por mes: Netlify → Forms → pedido → exportar CSV.
 
 ## Cómo sumar una obra nueva
 
@@ -43,6 +55,7 @@ Material: foto original (sin marco) + foto en ambiente (cuadrada, 1080×1080) + 
   "id": "tobiano", "name": "Tobiano", "category": "pampa",
   "photo": "/assets/obras/tobiano-original.jpg",
   "defaults": { "tipo": "chato", "color": "natural", "terminacion": "paspartu-blanco" },
+  "fotografa": "Nombre de la fotógrafa",
   "ambientes": ["/assets/obras/tobiano-ambiente-1.jpg"],
   "escenas": [{ "quad": [[256,134],[908,134],[908,568],[256,568]], "apoyado": false }]
 }
