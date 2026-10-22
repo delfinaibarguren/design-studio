@@ -17,7 +17,7 @@ window.DS = (() => {
   const frame = (id) => catalog.frames.find((f) => f.id === id);
   const category = (id) => catalog.categories.find((c) => c.id === id);
   const fromPrice = (p) => {
-    if (p && p.photo) return Math.min(...catalog.sizes.map((s) => framedPrice(s, "natural", "sin"))) + Math.min(0, ...(catalog.frameTypes || []).map((t) => t.extra || 0));
+    if (p && p.photo) return Math.min(...catalog.sizes.flatMap((s) => (catalog.frameTypes || []).flatMap((t) => (catalog.frameColors || []).map((c) => framedPrice(s, t.id, c.id, "sin")))));
     const fin = p && p.styles ? [...new Set(p.styles.map((x) => x.finish))] : ["lamina", "marco"];
     return Math.min(...catalog.sizes.flatMap((s) => fin.map((f) => s[f])));
   };
@@ -31,17 +31,18 @@ window.DS = (() => {
   function sizeLabel(p, s) {
     return s.label;
   }
-  // precio de una obra enmarcada: medida × grupo de color (natural / pintado) × arpillera
-  function framedPrice(s, colorId, terminacion) {
+  // precio de una obra enmarcada (todo sale de catalog.json → sizes):
+  // precios["<tipo>-<grupo de color>"] + adicional de arpillera de esa medida
+  function framedPrice(s, tipoId, colorId, terminacion) {
     if (!s.precios) return s.marco;
     const col = (catalog.frameColors || []).find((x) => x.id === colorId);
-    const key = (col?.grupo || "natural") + (terminacion === "arpillera" ? "-arpillera" : "");
-    return s.precios[key];
+    const base = s.precios[`${tipoId}-${col?.grupo || "natural"}`];
+    return base + (terminacion === "arpillera" ? s.arpillera || 0 : 0);
   }
   function unitPrice(line) {
     const s = size(line.size);
     if (!s) return 0;
-    if (product(line.productId)?.photo) return framedPrice(s, line.color, line.terminacion) + (frameType(line.tipo)?.extra || 0);
+    if (product(line.productId)?.photo) return framedPrice(s, line.tipo, line.color, line.terminacion);
     const base = finishOf(line) === "marco" ? s.marco : s.lamina;
     return base + (frameType(line.tipo)?.extra || 0);
   }

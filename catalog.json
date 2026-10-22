@@ -28,13 +28,14 @@
       "w": 30,
       "h": 40,
       "lamina": 50000,
-      "marco": 89000,
+      "marco": 85000,
       "precios": {
-        "natural": 89000,
-        "pintado": 97000,
-        "natural-arpillera": 114000,
-        "pintado-arpillera": 122000
-      }
+        "box-natural": 89000,
+        "box-pintado": 97000,
+        "chato-natural": 85000,
+        "chato-pintado": 93000
+      },
+      "arpillera": 20000
     },
     {
       "id": "50x70",
@@ -42,13 +43,14 @@
       "w": 50,
       "h": 70,
       "lamina": 83000,
-      "marco": 149000,
+      "marco": 144000,
       "precios": {
-        "natural": 149000,
-        "pintado": 159000,
-        "natural-arpillera": 174000,
-        "pintado-arpillera": 184000
-      }
+        "box-natural": 149000,
+        "box-pintado": 159000,
+        "chato-natural": 144000,
+        "chato-pintado": 154000
+      },
+      "arpillera": 25000
     },
     {
       "id": "70x100",
@@ -56,13 +58,14 @@
       "w": 70,
       "h": 100,
       "lamina": 125000,
-      "marco": 219000,
+      "marco": 208000,
       "precios": {
-        "natural": 219000,
-        "pintado": 231000,
-        "natural-arpillera": 244000,
-        "pintado-arpillera": 256000
-      }
+        "box-natural": 219000,
+        "box-pintado": 231000,
+        "chato-natural": 208000,
+        "chato-pintado": 220000
+      },
+      "arpillera": 30000
     }
   ],
   "finishes": [

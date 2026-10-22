@@ -27,16 +27,22 @@ Para subir algo **sin** publicar, poner `[skip netlify]` en el mensaje del commi
 - `netlify/functions/checkout.mts` — crea el pago en Mercado Pago; **recalcula el precio en el servidor** desde `catalog.json` (máx. 3 cuotas).
 - `tools/escena_luz.py` — genera el mapa de luz de la foto de ambiente.
 
-## Precios (catalog.json → sizes[].precios)
+## Precios — se cambian SOLO en catalog.json → "sizes"
 
-| Medida | Kiri natural | Negro o blanco | Natural + arpillera | Pintado + arpillera |
-|---|---|---|---|---|
-| 30 × 40 | $89.000 | $97.000 | $114.000 | $122.000 |
-| 50 × 70 | $149.000 | $159.000 | $174.000 | $184.000 |
-| 100 × 70 | $219.000 | $231.000 | $244.000 | $256.000 |
+| Medida | Box natural | Box pintado | Chato natural | Chato pintado | + Arpillera |
+|---|---|---|---|---|---|
+| 30 × 40 | $89.000 | $97.000 | $85.000 | $93.000 | +$20.000 |
+| 50 × 70 | $149.000 | $159.000 | $144.000 | $154.000 | +$25.000 |
+| 100 × 70 | $219.000 | $231.000 | $208.000 | $220.000 | +$30.000 |
 
-El precio depende de la medida, del grupo del color (`frameColors[].grupo`: natural / pintado) y de si la terminación es arpillera. Paspartú blanco, negro o sin paspartú no cambian el precio; chato y box tampoco. Todas las obras tienen las 3 medidas.
-El servidor (`checkout.mts`) recalcula el mismo precio antes de cobrar con Mercado Pago. 3 cuotas sin interés, 10% OFF por transferencia.
+En `catalog.json` cada medida tiene:
+```json
+"precios": { "box-natural": 89000, "box-pintado": 97000, "chato-natural": 85000, "chato-pintado": 93000 },
+"arpillera": 20000
+```
+"Pintado" = negro o blanco (`frameColors[].grupo`). Paspartú blanco, negro o sin paspartú no cambian el precio.
+Todas las obras (actuales y futuras) usan esta tabla; no hay precios por obra.
+El servidor (`checkout.mts`) recalcula el precio desde la misma tabla antes de cobrar con Mercado Pago. 3 cuotas sin interés, 10% OFF por transferencia.
 
 ## Comisión de fotógrafas (interna)
 
