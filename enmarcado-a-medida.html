@@ -85,7 +85,7 @@
 
   <div class="q-ok" id="qOk" hidden>
     <h2>¡Recibimos tu pedido de presupuesto!</h2>
-    <p>Te respondemos a la brevedad con el presupuesto. Se abre WhatsApp con tu pedido ya escrito: tocá enviar para seguir la charla por ahí.</p>
+    <p>Te respondemos a la brevedad con el presupuesto. Si querés seguir la conversación, escribinos por WhatsApp.</p>
     <a class="hero-btn" id="qWa" target="_blank" rel="noopener">Enviar por WhatsApp</a>
   </div>
   <p class="q-ig">¿Querés ver trabajos que ya hicimos? <a href="https://www.instagram.com/_designstu" target="_blank" rel="noopener">Mirá nuestro Instagram →</a></p>
@@ -207,8 +207,6 @@
     const msg = `Hola! Soy ${form.nombre.value}. Les pedí un presupuesto por la web para enmarcar ${que}:\n${medidasTxt()}`;
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
     form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
-    // abre WhatsApp con el pedido ya escrito (si el navegador lo bloquea, queda el botón)
-    setTimeout(() => { try { window.open($("qWa").href, "_blank", "noopener"); } catch {} }, 600);
   });
 })();
 </script>
