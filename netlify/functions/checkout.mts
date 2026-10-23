@@ -1,5 +1,6 @@
 import type { Config, Context } from "@netlify/functions"
 import catalog from "../../catalog.json" with { type: "json" }
+import { verificar } from "../lib/presupuesto.mts"
 
 type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; color?: string; terminacion?: string; fondo?: string; qty: number }
 
@@ -61,14 +62,24 @@ export default async (req: Request, context: Context) => {
   const token = Netlify.env.get("MP_ACCESS_TOKEN")
   if (!token) return Response.json({ mode: "manual" })
 
-  let body: { items?: Line[]; buyer?: { name?: string; email?: string; phone?: string }; orderId?: string }
+  let body: { items?: Line[]; presupuesto?: string; buyer?: { name?: string; email?: string; phone?: string }; orderId?: string }
   try {
     body = await req.json()
   } catch {
     return Response.json({ error: "Pedido inválido" }, { status: 400 })
   }
 
-  const items = (Array.isArray(body.items) ? body.items : []).map(priceLine).filter(Boolean)
+  let items: any[]
+  if (body.presupuesto) {
+    // pedido a medida: el monto sale del link firmado, nunca del navegador
+    const p = verificar(body.presupuesto)
+    if ("error" in p) return Response.json({ error: p.error }, { status: 400 })
+    items = p.items.map((i, k) => ({ id: `${p.id}-${k + 1}`, title: `${i.cant} × ${i.desc}`.slice(0, 250), quantity: 1, unit_price: i.precio, currency_id: "ARS" }))
+    if (p.envio) items.push({ id: `${p.id}-envio`, title: "Envío", quantity: 1, unit_price: p.envio, currency_id: "ARS" })
+    body.orderId = p.id
+  } else {
+    items = (Array.isArray(body.items) ? body.items : []).map(priceLine).filter(Boolean)
+  }
   if (items.length === 0) return Response.json({ error: "El carrito está vacío" }, { status: 400 })
 
   const origin = new URL(req.url).origin

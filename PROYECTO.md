@@ -82,3 +82,10 @@ Bajadas de colección en ocre `#b8893e`, light.
 
 Fondo crema, tipografías Playfair Display (títulos), Poppins (navegación), Work Sans / Inter (textos). Acento ocre `#b8893e`.
 Hero: "Enmarcados personalizados." con foto de Ponis. Vista previa de links: `assets/og.jpg`.
+
+## Pedidos a medida: link de pago
+
+1. El cliente pide presupuesto en **Enmarcado a medida** (formulario `consulta`, queda en Netlify → Forms).
+2. Cuando acepta, entrá a **/presupuestos.html** (página privada, no aparece en el menú), poné la clave de administración, los ítems con su precio, envío opcional y generá el link.
+3. El link abre el checkout con el pedido y el monto fijo (firmado; no se puede modificar). El cliente completa dirección y paga con Mercado Pago o transferencia. Llega como pedido normal (formulario `pedido`, N° `PR-…`).
+Variables en Netlify: `ADMIN_KEY` (clave de la página de presupuestos) y `PRESUPUESTO_SECRET` (firma de los links; si se cambia, los links viejos dejan de funcionar).

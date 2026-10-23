@@ -101,23 +101,48 @@
 
   const val = (n) => (form.querySelector(`[name="${n}"]:checked`) || form.elements[n]).value;
 
+  // ---- modo "pedido a medida": viene con ?p=<link firmado>
+  const PTOK = new URLSearchParams(location.search).get("p");
+  let PRE = null;
+  if (PTOK) {
+    const r = await fetch("/api/presupuesto?p=" + encodeURIComponent(PTOK)).catch(() => null);
+    const d = r ? await r.json().catch(() => ({})) : {};
+    if (!r || !r.ok || d.error) {
+      $("checkout").innerHTML = `<div class="done" style="grid-column:1/-1"><h1>No pudimos abrir tu presupuesto</h1><p>${DS.esc(d.error || "Revisá el link o escribinos.")}</p><a class="btn btn-dark" href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Escribinos por WhatsApp</a></div>`;
+      return;
+    }
+    PRE = d;
+    document.querySelector("#summary h2").textContent = "Tu pedido a medida";
+    document.querySelector("#checkout h1").textContent = PRE.cliente ? `Hola ${PRE.cliente.split(" ")[0]}, completá tu pedido` : "Completá tu pedido";
+  }
+  const preSub = () => PRE.items.reduce((a, i) => a + i.precio, 0) + (PRE.envio || 0);
+  const discOn = () => (PRE ? PRE.descTransfer : true);
+  const subTotal = () => (PRE ? preSub() : DS.cartTotal(DS.getCart()));
+  const detalle = () => PRE
+    ? PRE.items.map((i) => `${i.cant} × ${i.desc} — ${DS.money(i.precio)}`).concat(PRE.envio ? [`Envío — ${DS.money(PRE.envio)}`] : []).join("\n") + (PRE.nota ? `\nNota: ${PRE.nota}` : "")
+    : DS.getCart().map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
+
   function render() {
     const cart = DS.getCart();
-    if (!cart.length && $("done").hidden) {
+    if (!PRE && !cart.length && $("done").hidden) {
       $("checkout").innerHTML = `<div class="done" style="grid-column:1/-1"><h1>Tu carrito está vacío</h1><p>Elegí una obra para empezar.</p><a class="btn btn-dark" href="/#obras">Ver la colección</a></div>`;
       return;
     }
-    $("sumLines").innerHTML = cart.map((l) => {
+    $("sumLines").innerHTML = PRE
+      ? PRE.items.map((i) => `<div class="line pre"><div class="line-info"><h4>${DS.esc(i.desc)}</h4><small>Cantidad: ${i.cant}</small></div><div class="line-right">${DS.money(i.precio)}</div></div>`).join("")
+        + (PRE.nota ? `<p class="pre-nota">${DS.esc(PRE.nota)}</p>` : "")
+      : cart.map((l) => {
       const p = DS.product(l.productId);
       return `<div class="line"><div class="line-thumb">${DS.framed(p, l)}</div><div class="line-info"><h4>${DS.esc(p.name)}</h4><small>${DS.esc(DS.variantText(l))}</small><small>Cantidad: ${l.qty}</small></div><div class="line-right">${DS.money(DS.unitPrice(l) * l.qty)}</div></div>`;
     }).join("");
-    const sub = DS.cartTotal(cart);
+    const sub = subTotal();
     const transfer = val("pago") === "Transferencia";
-    const disc = transfer ? sub * st.transferDiscount : 0;
+    const disc = transfer && discOn() ? sub * st.transferDiscount : 0;
     $("sSub").textContent = DS.money(sub);
     $("sDiscRow").hidden = !transfer;
     $("sDisc").textContent = "−" + DS.money(disc);
-    $("sShip").textContent = val("entrega") === "Retiro por el estudio" ? "Gratis" : "A coordinar";
+    $("sDiscRow").hidden = !disc;
+    $("sShip").textContent = PRE && PRE.envio ? "Incluido" : val("entrega") === "Retiro por el estudio" ? "Gratis" : "A coordinar";
     $("sTotal").textContent = DS.money(sub - disc);
     $("addr").hidden = val("entrega") !== "Envío a domicilio";
     $("payBtn").textContent = transfer ? "Confirmar pedido" : "Continuar al pago";
@@ -143,22 +168,26 @@
     if (missing.length || !form.elements.email.checkValidity()) {
       err.textContent = "Completá los campos marcados para continuar."; err.hidden = false; return;
     }
-    const cart = DS.getCart(); if (!cart.length) return;
+    const cart = DS.getCart(); if (!PRE && !cart.length) return;
     const transfer = val("pago") === "Transferencia";
-    const sub = DS.cartTotal(cart);
-    const total = transfer ? sub * (1 - st.transferDiscount) : sub;
-    const orden = "DS-" + Date.now().toString(36).toUpperCase();
+    const conDesc = transfer && discOn();
+    const sub = subTotal();
+    const total = conDesc ? sub * (1 - st.transferDiscount) : sub;
+    const orden = PRE ? PRE.id : "DS-" + Date.now().toString(36).toUpperCase();
     $("fOrden").value = orden;
-    $("fDetalle").value = cart.map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
-    $("fTotal").value = DS.money(total) + (transfer ? ` (con ${pct}% OFF transferencia)` : "");
-    const com = DS.comisiones(cart, transfer ? 1 - st.transferDiscount : 1);
-    $("fComision").value = Object.entries(com).map(([who, x]) => `${who}: ${DS.money(x.total)} — ${x.obras.join(", ")}`).join("\n");
+    $("fDetalle").value = (PRE ? "PEDIDO A MEDIDA\n" : "") + detalle();
+    $("fTotal").value = DS.money(total) + (conDesc ? ` (con ${pct}% OFF transferencia)` : "");
+    if (PRE) $("fComision").value = "";
+    else {
+      const com = DS.comisiones(cart, transfer ? 1 - st.transferDiscount : 1);
+      $("fComision").value = Object.entries(com).map(([who, x]) => `${who}: ${DS.money(x.total)} — ${x.obras.join(", ")}`).join("\n");
+    }
 
     const btn = $("payBtn"); btn.disabled = true; btn.textContent = "Procesando…";
     try {
       await DS.submitForm("pedido", new FormData(form));
       const g = (n) => (form.elements[n] ? form.elements[n].value : "");
-      DS.notifyMail(`Nueva compra en la web (${g("orden")}) — ${g("nombre")} — ${g("total")}`, {
+      DS.notifyMail(`${PRE ? "Pago de pedido a medida" : "Nueva compra en la web"} (${g("orden")}) — ${g("nombre")} — ${g("total")}`, {
         "N° de pedido": g("orden"), "Detalle": g("detalle"), "Total": g("total"), "Forma de pago": val("pago"),
         "Nombre": g("nombre"), "Email": g("email"), "Teléfono": g("telefono"), "Entrega": val("entrega"),
         "Dirección": [g("direccion"), g("depto"), g("cp"), g("ciudad"), g("provincia")].filter(Boolean).join(", "),
@@ -167,13 +196,13 @@
       if (!transfer) {
         const r = await fetch("/api/checkout", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: cart, orderId: orden, buyer: { name: form.elements.nombre.value, email: form.elements.email.value } }),
+          body: JSON.stringify({ ...(PRE ? { presupuesto: PTOK } : { items: cart }), orderId: orden, buyer: { name: form.elements.nombre.value, email: form.elements.email.value } }),
         });
         const data = await r.json().catch(() => ({}));
         if (data.mode === "mercadopago" && data.url) { location.href = data.url; return; }
         if (data.mode !== "manual") throw new Error(data.error || "pago");
       }
-      DS.setCart([]);
+      if (!PRE) DS.setCart([]);
       $("checkout").hidden = true; $("done").hidden = false; window.scrollTo(0, 0);
       $("dTitle").textContent = "¡Recibimos tu pedido!";
       if (transfer) {
