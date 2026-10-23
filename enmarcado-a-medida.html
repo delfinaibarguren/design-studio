@@ -41,7 +41,7 @@
     <input type="hidden" name="form-name" value="consulta">
     <p hidden><label>No completar: <input name="bot-field"></label></p>
     <h2 class="q-title">Armá tu consulta</h2>
-    <p class="q-sub">Contanos qué querés enmarcar y te pasamos la cotización.</p>
+    <p class="q-sub">Contanos qué querés enmarcar y te pasamos el presupuesto.</p>
 
     <div class="box">
       <h2><span class="step">1</span> ¿Qué querés enmarcar?</h2>
@@ -80,12 +80,12 @@
       </div>
     </div>
 
-    <button class="btn btn-dark btn-block" id="qSend" type="submit">Pedir cotización</button>
+    <button class="btn btn-dark btn-block" id="qSend" type="submit">Pedir presupuesto</button>
     <p class="q-err" id="qErr" hidden></p>
   </form>
 
   <div class="q-ok" id="qOk" hidden>
-    <h2>¡Recibimos tu pedido de cotización!</h2>
+    <h2>¡Recibimos tu pedido de presupuesto!</h2>
     <p>Te respondemos a la brevedad con el presupuesto. Si querés, seguí la charla por WhatsApp.</p>
     <a class="hero-btn" id="qWa" target="_blank" rel="noopener">Seguir por WhatsApp</a>
   </div>
@@ -199,12 +199,12 @@
       const r = await fetch("/", { method: "POST", body: fd });
       if (!r.ok) throw new Error(r.status);
     } catch {
-      b.disabled = false; b.textContent = "Pedir cotización";
+      b.disabled = false; b.textContent = "Pedir presupuesto";
       $("qErr").textContent = "No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp."; $("qErr").hidden = false; return;
     }
     const obra = form.que.value === "Obra de Dsgn. Studio";
     const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();
-    const msg = `Hola! Soy ${form.nombre.value}. Les pedí una cotización por la web para enmarcar ${que}:\n${medidasTxt()}`;
+    const msg = `Hola! Soy ${form.nombre.value}. Les pedí un presupuesto por la web para enmarcar ${que}:\n${medidasTxt()}`;
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
     form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
   });
