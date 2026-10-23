@@ -193,6 +193,7 @@
     $("qMedidas").value = medidasTxt();
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
     const fd = new FormData(form);
+    if (form.que.value === "Algo mío") fd.set("obra", ""); else fd.set("objeto", "");
     for (let i = 1; i <= MAXF; i++) fd.delete("archivo" + i);
     if (form.que.value === "Algo mío") files.forEach((f, i) => fd.append("archivo" + (i + 1), f, f.name));
     try {
