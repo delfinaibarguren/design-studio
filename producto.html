@@ -41,7 +41,7 @@
     <p class="inst-line muted" id="pInst"></p>
     <p class="transfer-line" id="pTransfer"></p>
 
-    <fieldset class="opt"><legend>Medida: <b id="l-size"></b></legend><div class="pills" id="o-size" role="radiogroup"></div></fieldset>
+    <fieldset class="opt"><legend>Medida: <b id="l-size"></b></legend><div class="pills" id="o-size" role="radiogroup"></div><a class="other-size" id="otherSize" href="/enmarcado-a-medida.html#consulta">¿Buscás otra medida? Pedila a medida →</a></fieldset>
     <fieldset class="opt"><legend>Tipo de marco: <b id="l-tipo"></b></legend><div class="pills" id="o-tipo" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row" id="o-color" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills" id="o-terminacion" role="radiogroup"></div></fieldset>
@@ -157,6 +157,7 @@
     if (state.terminacion === "arpillera") qs.fondo = state.fondo;
     url.search = new URLSearchParams(qs).toString();
     history.replaceState(null, "", url);
+    $("otherSize").href = `/enmarcado-a-medida.html?${new URLSearchParams({ obra: p.id, tipo: state.tipo, color: state.color, terminacion: state.terminacion })}#consulta`;
     const link = encodeURIComponent(url.href), text = encodeURIComponent(`${p.name} — Dsgn. Studio`);
     $("shWa").href = `https://wa.me/?text=${text}%20${link}`;
     $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${link}`;

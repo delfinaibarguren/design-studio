@@ -12,7 +12,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="description" content="Enmarcamos tus fotos, láminas y obras a medida. Pedí tu presupuesto por WhatsApp.">
+  <meta name="description" content="Nuestras obras en la medida que necesites, o lo que quieras enmarcar: fotos, láminas, camisetas, diplomas y más. Armá tu consulta.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css">
@@ -27,17 +27,123 @@
 <main class="custom2">
   <div class="custom2-text">
     <h1><span class="h-light">Enmarcados</span><span class="h-bold">a medida.</span></h1>
-    <p class="hero-sub">Fotografías, láminas, obras originales,<br>diplomas, camisetas <strong>y mucho más.</strong></p>
+    <p class="hero-sub">Cualquiera de nuestras obras en la medida que necesites, o lo que vos quieras enmarcar: fotos, láminas, camisetas, diplomas <strong>y mucho más.</strong></p>
     <div class="cta-col">
-      <a class="hero-btn" href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Pedir presupuesto</a>
+      <a class="hero-btn" href="#consulta">Armá tu consulta</a>
       <a class="hero-btn white" href="https://www.instagram.com/_designstu" target="_blank" rel="noopener">Nuestros trabajos</a>
     </div>
   </div>
   <div class="custom2-img"><img src="/assets/enmarcado-a-medida.jpg" alt="Marcos de madera natural apoyados contra una pared con luz de ventana"></div>
 </main>
 
+<section class="consulta" id="consulta">
+  <form id="qForm" name="consulta" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" novalidate>
+    <input type="hidden" name="form-name" value="consulta">
+    <p hidden><label>No completar: <input name="bot-field"></label></p>
+    <h2 class="q-title">Armá tu consulta</h2>
+    <p class="q-sub">Completá lo que sepas; si tenés dudas, elegí “No sé, aconsejame” y lo vemos juntos.</p>
+
+    <div class="box">
+      <h2><span class="step">1</span> ¿Qué querés enmarcar?</h2>
+      <label class="choice"><input type="radio" name="que" value="Obra de Dsgn. Studio" checked><span><b>Una obra de Dsgn. Studio en otra medida</b><span>Elegí cuál de nuestras obras.</span></span></label>
+      <label class="choice"><input type="radio" name="que" value="Algo mío"><span><b>Algo mío</b><span>Una foto, lámina, camiseta, diploma, obra original…</span></span></label>
+      <div class="fields" id="qObra">
+        <label class="f full">Obra<select name="obra" id="qObraSel"><option value="">Elegí la obra…</option></select></label>
+      </div>
+      <div class="fields" id="qPropio" hidden>
+        <label class="f">Qué es
+          <select name="objeto"><option value="">Elegí…</option><option>Foto</option><option>Lámina / ilustración</option><option>Camiseta</option><option>Diploma / título</option><option>Obra original (pintura, dibujo)</option><option>Poema / carta</option><option>Otro</option></select>
+        </label>
+        <label class="f">Foto de referencia (opcional)<input type="file" name="foto" accept="image/*"></label>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><span class="step">2</span> Medida y terminación</h2>
+      <div class="fields">
+        <label class="f">Ancho (cm)<input name="ancho" inputmode="decimal" placeholder="Ej: 60"></label>
+        <label class="f">Alto (cm)<input name="alto" inputmode="decimal" placeholder="Ej: 90"></label>
+        <label class="f">Tipo de marco<select name="tipo"><option>Box</option><option>Chato</option><option>No sé, aconsejame</option></select></label>
+        <label class="f">Color del marco<select name="color"><option>Kiri natural</option><option>Negro</option><option>Blanco</option><option>No sé, aconsejame</option></select></label>
+        <label class="f">Paspartú<select name="paspartu"><option>Paspartú blanco</option><option>Paspartú negro</option><option>Sin paspartú</option><option>No sé, aconsejame</option></select></label>
+        <label class="f">Cantidad<input name="cantidad" type="number" min="1" value="1"></label>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><span class="step">3</span> Tus datos</h2>
+      <div class="fields">
+        <label class="f">Nombre<input name="nombre" required autocomplete="name"></label>
+        <label class="f">WhatsApp<input name="whatsapp" type="tel" required autocomplete="tel" placeholder="Ej: 11 5555 5555"></label>
+        <label class="f full">Email (opcional)<input name="email" type="email" autocomplete="email"></label>
+        <label class="f full">Comentarios (opcional)<textarea name="comentarios" rows="3" placeholder="Contanos lo que quieras: para qué espacio es, fecha, ideas…"></textarea></label>
+      </div>
+    </div>
+
+    <button class="btn btn-dark btn-block" id="qSend" type="submit">Enviar consulta</button>
+    <p class="q-err" id="qErr" hidden></p>
+  </form>
+
+  <div class="q-ok" id="qOk" hidden>
+    <h2>¡Recibimos tu consulta!</h2>
+    <p>Te respondemos a la brevedad con el presupuesto. Si querés, seguí la charla por WhatsApp.</p>
+    <a class="hero-btn" id="qWa" target="_blank" rel="noopener">Seguir por WhatsApp</a>
+  </div>
+</section>
+
 <div id="ds-footer"></div>
 <script src="/assets/store.js"></script>
-<script>DS.init();</script>
+<script>
+(async () => {
+  const c = await DS.init();
+  const $ = (id) => document.getElementById(id);
+  const form = $("qForm"), q = new URLSearchParams(location.search);
+  const sel = $("qObraSel");
+  for (const cat of c.categories) {
+    const items = c.products.filter((p) => p.category === cat.id); if (!items.length) continue;
+    const g = document.createElement("optgroup"); g.label = "Colección " + cat.label;
+    for (const p of items) g.append(new Option(p.name, p.name));
+    sel.append(g);
+  }
+  sel.append(new Option("Otra / no sé el nombre", "Otra / no sé el nombre"));
+  const toggle = () => {
+    const obra = form.que.value === "Obra de Dsgn. Studio";
+    $("qObra").hidden = !obra; $("qPropio").hidden = obra;
+  };
+  form.addEventListener("change", toggle);
+  // si viene desde una obra: la deja elegida con sus opciones
+  const p = DS.product(q.get("obra"));
+  if (p) {
+    sel.value = p.name;
+    const lab = (list, id) => (list || []).find((x) => x.id === id)?.label;
+    const set = (name, v) => { if (v && [...form[name].options].some((o) => o.value === v)) form[name].value = v; };
+    set("tipo", lab(c.frameTypes, q.get("tipo"))); set("color", lab(c.frameColors, q.get("color"))); set("paspartu", lab(c.terminaciones, q.get("terminacion")));
+  }
+  if (q.has("obra") || q.has("consulta")) setTimeout(() => $("consulta").scrollIntoView({ behavior: "smooth" }), 300);
+  toggle();
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const req = ["nombre", "whatsapp"], miss = req.filter((n) => !form[n].value.trim());
+    req.forEach((n) => (form[n].style.borderColor = miss.includes(n) ? "#a12d1c" : ""));
+    if (miss.length) { $("qErr").textContent = "Completá tu nombre y WhatsApp para poder responderte."; $("qErr").hidden = false; return; }
+    $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
+    const fd = new FormData(form);
+    try {
+      const r = await fetch("/", { method: "POST", body: fd });
+      if (!r.ok) throw new Error(r.status);
+    } catch {
+      b.disabled = false; b.textContent = "Enviar consulta";
+      $("qErr").textContent = "No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp."; $("qErr").hidden = false; return;
+    }
+    const obra = form.que.value === "Obra de Dsgn. Studio";
+    const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();
+    const med = form.ancho.value && form.alto.value ? ` en ${form.ancho.value} × ${form.alto.value} cm` : "";
+    const msg = `Hola! Soy ${form.nombre.value}. Les mandé una consulta por la web para enmarcar ${que}${med} (${form.tipo.value}, ${form.color.value}, ${form.paspartu.value}).`;
+    $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
+    form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+})();
+</script>
 </body>
 </html>
