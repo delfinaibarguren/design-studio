@@ -469,3 +469,25 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-ok h2 { font-family: "Playfair Display", Georgia, serif; font-size: 2rem; }
 .other-size { display: inline-block; margin-top: .6rem; font-size: .88rem; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; }
 .other-size:hover { color: var(--ink); }
+
+.q-hint { color: var(--ink-soft); font-size: .9rem; margin: -.2rem 0 .8rem; }
+.q-items { display: grid; gap: .8rem; }
+.q-item { border: 1px solid var(--line); border-radius: var(--radius); padding: .8rem .9rem .9rem; background: #fff; }
+.q-item-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem; font-size: .9rem; }
+.q-item-h button { border: 0; background: none; color: var(--ink-soft); text-decoration: underline; cursor: pointer; font: inherit; font-size: .85rem; }
+.q-item-g { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem .8rem; }
+.q-item-g select { padding-left: .7rem; padding-right: .4rem; }
+.q-item-g .f { margin: 0; }
+.q-step { display: flex; align-items: center; justify-content: space-between; gap: .3rem; height: 44px; margin-top: .35rem; }
+.q-step button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 1rem; line-height: 1; padding: 0; }
+.q-step button:hover { border-color: var(--ink); }
+.q-step b { font-weight: 600; }
+.q-add { margin: .8rem 0 .4rem; border: 1.5px dashed #b9b4aa; background: none; border-radius: var(--radius); padding: .7rem 1rem; cursor: pointer; font: inherit; width: 100%; }
+.q-add:hover { border-color: var(--ink); }
+.q-drop { display: block; margin-top: .4rem; border: 1.5px dashed #b9b4aa; border-radius: var(--radius); padding: .9rem; text-align: center; cursor: pointer; background: #fff; }
+.q-drop input { display: none; }
+.q-drop:has(input:disabled) { opacity: .6; cursor: default; }
+.q-files { list-style: none; padding: 0; margin: .5rem 0 0; font-size: .88rem; }
+.q-files li { display: flex; justify-content: space-between; align-items: center; padding: .3rem 0; border-bottom: 1px solid var(--line); }
+.q-files button { border: 0; background: none; font-size: 1.1rem; cursor: pointer; color: var(--ink-soft); }
+@media (max-width: 700px) { .q-item-g { grid-template-columns: 1fr 1fr; } .q-item-g .k-color, .q-item-g .k-paspartu { grid-column: 1 / -1; } }

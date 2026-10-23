@@ -54,20 +54,20 @@
         <label class="f">Qué es
           <select name="objeto"><option value="">Elegí…</option><option>Foto</option><option>Lámina / ilustración</option><option>Camiseta</option><option>Diploma / título</option><option>Obra original (pintura, dibujo)</option><option>Poema / carta</option><option>Otro</option></select>
         </label>
-        <label class="f">Foto de referencia (opcional)<input type="file" name="foto" accept="image/*"></label>
+        <div class="f full">Fotos o archivos de referencia (opcional, hasta 10)
+          <label class="q-drop"><input type="file" id="qFiles" accept="image/*,application/pdf" multiple><span>+ Adjuntar archivos</span></label>
+          <ul class="q-files" id="qFileList"></ul>
+        </div>
       </div>
+      <div hidden><input type="file" name="archivo1"><input type="file" name="archivo2"><input type="file" name="archivo3"><input type="file" name="archivo4"><input type="file" name="archivo5"><input type="file" name="archivo6"><input type="file" name="archivo7"><input type="file" name="archivo8"><input type="file" name="archivo9"><input type="file" name="archivo10"></div>
     </div>
 
     <div class="box">
-      <h2><span class="step">2</span> Medida y terminación</h2>
-      <div class="fields">
-        <label class="f">Ancho (cm)<input name="ancho" inputmode="decimal" placeholder="Ej: 60"></label>
-        <label class="f">Alto (cm)<input name="alto" inputmode="decimal" placeholder="Ej: 90"></label>
-        <label class="f">Tipo de marco<select name="tipo"><option>Box</option><option>Chato</option><option>No sé, aconsejame</option></select></label>
-        <label class="f">Color del marco<select name="color"><option>Kiri natural</option><option>Negro</option><option>Blanco</option><option>No sé, aconsejame</option></select></label>
-        <label class="f">Paspartú<select name="paspartu"><option>Paspartú blanco</option><option>Paspartú negro</option><option>Sin paspartú</option><option>No sé, aconsejame</option></select></label>
-        <label class="f">Cantidad<input name="cantidad" type="number" min="1" value="1"></label>
-      </div>
+      <h2><span class="step">2</span> Medidas y terminación</h2>
+      <p class="q-hint">Armá cada cuadro: medida, tipo de marco, color, paspartú y cantidad. Si querés distintas combinaciones, agregá otra línea.</p>
+      <div class="q-items" id="qItems"></div>
+      <button type="button" class="q-add" id="qAdd">+ Agregar otra medida</button>
+      <input type="hidden" name="medidas" id="qMedidas">
     </div>
 
     <div class="box">
@@ -115,20 +115,84 @@
   const p = DS.product(q.get("obra"));
   if (p) {
     sel.value = p.name;
-    const lab = (list, id) => (list || []).find((x) => x.id === id)?.label;
-    const set = (name, v) => { if (v && [...form[name].options].some((o) => o.value === v)) form[name].value = v; };
-    set("tipo", lab(c.frameTypes, q.get("tipo"))); set("color", lab(c.frameColors, q.get("color"))); set("paspartu", lab(c.terminaciones, q.get("terminacion")));
   }
   if (q.has("obra") || q.has("consulta")) setTimeout(() => $("consulta").scrollIntoView({ behavior: "smooth" }), 300);
   toggle();
+
+  // ---- cuadros: cada línea = medida + tipo + color + paspartú + cantidad
+  const OPTS = {
+    medida: ["20x20", "20x25", "30x20", "30x30", "30x40", "40x40", "40x50", "50x50", "50x70", "60x60", "100x70"],
+    tipo: ["Box", "Chato", "No sé, aconsejame"],
+    color: ["Kiri natural", "Negro", "Blanco", "No sé, aconsejame"],
+    paspartu: ["Paspartú blanco", "Paspartú negro", "Sin paspartú", "No sé, aconsejame"],
+  };
+  const LBL = { medida: "Medida", tipo: "Tipo de marco", color: "Color", paspartu: "Paspartú" };
+  const items = [];
+  const lab = (list, id) => (list || []).find((x) => x.id === id)?.label;
+  const first = { medida: "", tipo: "Box", color: "Kiri natural", paspartu: "Paspartú blanco", cant: 1 };
+  if (p) {
+    const t = lab(c.frameTypes, q.get("tipo")), co = lab(c.frameColors, q.get("color")), pa = lab(c.terminaciones, q.get("terminacion"));
+    if (OPTS.tipo.includes(t)) first.tipo = t; if (OPTS.color.includes(co)) first.color = co; if (OPTS.paspartu.includes(pa)) first.paspartu = pa;
+  }
+  items.push({ ...first });
+  const selHtml = (i, k) => `<label class="f k-${k}">${LBL[k]}<select data-i="${i}" data-k="${k}">${k === "medida" ? '<option value="">Elegí…</option>' : ""}${OPTS[k]
+    .map((o) => `<option value="${o}"${items[i][k] === o ? " selected" : ""}>${k === "medida" ? o.replace("x", " × ") + " cm" : o}</option>`).join("")}</select></label>`;
+  const drawItems = () => {
+    $("qItems").innerHTML = items.map((it, i) => `<div class="q-item">
+      <div class="q-item-h"><b>Cuadro ${i + 1}</b>${items.length > 1 ? `<button type="button" data-rm-item="${i}">Quitar</button>` : ""}</div>
+      <div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}
+        <label class="f">Cantidad<span class="q-step"><button type="button" data-i="${i}" data-d="-1" aria-label="Restar">−</button><b>${it.cant}</b><button type="button" data-i="${i}" data-d="1" aria-label="Sumar">+</button></span></label>
+      </div></div>`).join("");
+  };
+  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
+  $("qItems").addEventListener("click", (e) => {
+    const d = e.target.closest("button[data-d]");
+    if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; }
+    const rm = e.target.closest("[data-rm-item]"); if (rm) { items.splice(+rm.dataset.rmItem, 1); drawItems(); }
+  });
+  $("qAdd").onclick = () => { const last = items[items.length - 1]; items.push({ ...last, medida: "", cant: 1 }); drawItems(); };
+  drawItems();
+  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida} cm · ${it.tipo} · ${it.color} · ${it.paspartu}`).join("\n");
+
+  // ---- archivos (máx. 10, las fotos se achican antes de enviar)
+  const MAXF = 10; let files = [];
+  const shrink = (f) => new Promise((ok) => {
+    if (!f.type.startsWith("image/")) return ok(f);
+    const img = new Image(), url = URL.createObjectURL(f);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const cv = document.createElement("canvas"); cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
+      cv.toBlob((b) => ok(b ? new File([b], f.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }) : f), "image/jpeg", 0.82);
+    };
+    img.onerror = () => ok(f); img.src = url;
+  });
+  const drawFiles = () => {
+    $("qFileList").innerHTML = files.map((f, i) => `<li>${DS.esc(f.name)} <button type="button" data-rm="${i}" aria-label="Quitar">×</button></li>`).join("");
+    document.querySelector(".q-drop span").textContent = files.length >= MAXF ? "Llegaste al máximo de 10 archivos" : "+ Adjuntar archivos";
+    $("qFiles").disabled = files.length >= MAXF;
+  };
+  $("qFiles").addEventListener("change", async (e) => {
+    const pick = [...e.target.files]; e.target.value = "";
+    const room = MAXF - files.length;
+    if (pick.length > room) DS.toast(`Podés adjuntar hasta ${MAXF} archivos`);
+    files = files.concat(await Promise.all(pick.slice(0, room).map(shrink))); drawFiles();
+  });
+  $("qFileList").addEventListener("click", (e) => { const bt = e.target.closest("[data-rm]"); if (bt) { files.splice(+bt.dataset.rm, 1); drawFiles(); } });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const req = ["nombre", "whatsapp"], miss = req.filter((n) => !form[n].value.trim());
     req.forEach((n) => (form[n].style.borderColor = miss.includes(n) ? "#a12d1c" : ""));
+    const sinMed = [...$("qItems").querySelectorAll('select[data-k="medida"]')].filter((x) => !x.value);
+    sinMed.forEach((x) => (x.style.borderColor = "#a12d1c"));
+    if (sinMed.length) { $("qErr").textContent = "Elegí la medida de cada cuadro (o quitá la línea que no uses)."; $("qErr").hidden = false; sinMed[0].scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     if (miss.length) { $("qErr").textContent = "Completá tu nombre y WhatsApp para poder responderte."; $("qErr").hidden = false; return; }
+    $("qMedidas").value = medidasTxt();
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
     const fd = new FormData(form);
+    for (let i = 1; i <= MAXF; i++) fd.delete("archivo" + i);
+    if (form.que.value === "Algo mío") files.forEach((f, i) => fd.append("archivo" + (i + 1), f, f.name));
     try {
       const r = await fetch("/", { method: "POST", body: fd });
       if (!r.ok) throw new Error(r.status);
@@ -138,8 +202,7 @@
     }
     const obra = form.que.value === "Obra de Dsgn. Studio";
     const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();
-    const med = form.ancho.value && form.alto.value ? ` en ${form.ancho.value} × ${form.alto.value} cm` : "";
-    const msg = `Hola! Soy ${form.nombre.value}. Les mandé una consulta por la web para enmarcar ${que}${med} (${form.tipo.value}, ${form.color.value}, ${form.paspartu.value}).`;
+    const msg = `Hola! Soy ${form.nombre.value}. Les mandé una consulta por la web para enmarcar ${que}:\n${medidasTxt()}`;
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
     form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
   });
