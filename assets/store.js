@@ -255,6 +255,19 @@ window.DS = (() => {
     if (!r.ok) throw new Error("form " + r.status);
   }
 
+  // aviso por mail a Dsgn. Studio (FormSubmit, desde el navegador del cliente)
+  const MAIL_TO = "designstudioenmarcados@gmail.com";
+  async function notifyMail(subject, fields) {
+    try {
+      const body = { _subject: subject, _template: "table", _captcha: "false" };
+      for (const [k, v] of Object.entries(fields)) if (v !== "" && v != null) body[k] = String(v);
+      const r = await fetch(`https://formsubmit.co/ajax/${MAIL_TO}`, {
+        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body), keepalive: true,
+      });
+      return await r.json().catch(() => ({}));
+    } catch { return {}; }
+  }
+
   let tt;
   function toast(msg) {
     const el = document.getElementById("toast"); if (!el) return;
@@ -312,6 +325,6 @@ window.DS = (() => {
     }
     return out;
   }
-  return { framedPrice, comisiones, init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
+  return { notifyMail, framedPrice, comisiones, init, load, money, esc, product, size, frame, category, fromPrice, frameType, productCard, collectionCard, unitPrice, instText, style, sizeLabel, variantText,
     getCart, setCart, addToCart, hydrate, loadCfg, cartTotal, framed, openCart, closeCart, toast, submitForm, get catalog() { return catalog; } };
 })();

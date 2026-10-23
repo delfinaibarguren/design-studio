@@ -157,6 +157,13 @@
     const btn = $("payBtn"); btn.disabled = true; btn.textContent = "Procesando…";
     try {
       await DS.submitForm("pedido", new FormData(form));
+      const g = (n) => (form.elements[n] ? form.elements[n].value : "");
+      DS.notifyMail(`Nueva compra en la web (${g("orden")}) — ${g("nombre")} — ${g("total")}`, {
+        "N° de pedido": g("orden"), "Detalle": g("detalle"), "Total": g("total"), "Forma de pago": val("pago"),
+        "Nombre": g("nombre"), "Email": g("email"), "Teléfono": g("telefono"), "Entrega": val("entrega"),
+        "Dirección": [g("direccion"), g("depto"), g("cp"), g("ciudad"), g("provincia")].filter(Boolean).join(", "),
+        "Comentarios": g("comentarios"), "Comisión fotógrafas (interno)": g("comision_fotografas"),
+      });
       if (!transfer) {
         const r = await fetch("/api/checkout", {
           method: "POST", headers: { "Content-Type": "application/json" },

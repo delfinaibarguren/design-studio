@@ -203,7 +203,13 @@
       b.disabled = false; b.textContent = "Pedir presupuesto";
       $("qErr").textContent = "No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp."; $("qErr").hidden = false; return;
     }
-    const obra = form.que.value === "Obra de Dsgn. Studio";
+    const esObra = form.que.value === "Obra de Dsgn. Studio";
+    DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
+      "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
+      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? `${files.length} (verlas en Netlify → Forms → consulta)` : "",
+      "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
+    });
+    const obra = esObra;
     const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();
     const msg = `Hola! Soy ${form.nombre.value}. Les pedí un presupuesto por la web para enmarcar ${que}:\n${medidasTxt()}`;
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
