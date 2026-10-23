@@ -477,6 +477,7 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-item-h button { border: 0; background: none; color: var(--ink-soft); text-decoration: underline; cursor: pointer; font: inherit; font-size: .85rem; }
 .q-item-g { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem .8rem; }
 .q-item-g select { padding-left: .7rem; padding-right: .4rem; }
+.q-item-g .k-nota { grid-column: span 2; }
 .q-item-g .f { margin: 0; }
 .q-step { display: flex; align-items: center; justify-content: space-between; gap: .3rem; height: 44px; margin-top: .35rem; }
 .q-step button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 1rem; line-height: 1; padding: 0; }
@@ -490,4 +491,4 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-files { list-style: none; padding: 0; margin: .5rem 0 0; font-size: .88rem; }
 .q-files li { display: flex; justify-content: space-between; align-items: center; padding: .3rem 0; border-bottom: 1px solid var(--line); }
 .q-files button { border: 0; background: none; font-size: 1.1rem; cursor: pointer; color: var(--ink-soft); }
-@media (max-width: 700px) { .q-item-g { grid-template-columns: 1fr 1fr; } .q-item-g .k-color, .q-item-g .k-paspartu { grid-column: 1 / -1; } }
+@media (max-width: 700px) { .q-item-g { grid-template-columns: 1fr 1fr; } .q-item-g .k-color, .q-item-g .k-paspartu, .q-item-g .k-nota { grid-column: 1 / -1; } }
