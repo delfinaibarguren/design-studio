@@ -1721,6 +1721,240 @@
           "luz": "/assets/obras/surf-ii-ambiente-1-luz.png"
         }
       ]
+    },
+    {
+      "id": "escalera",
+      "name": "Escalera",
+      "category": "terra",
+      "photo": "/assets/obras/escalera-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/escalera-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              318,
+              97
+            ],
+            [
+              828,
+              49
+            ],
+            [
+              828,
+              812
+            ],
+            [
+              318,
+              797
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/escalera-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cerco",
+      "name": "Cerco",
+      "category": "terra",
+      "photo": "/assets/obras/cerco-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/cerco-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              340,
+              63
+            ],
+            [
+              716,
+              63
+            ],
+            [
+              716,
+              560
+            ],
+            [
+              340,
+              560
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/cerco-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "tablas",
+      "name": "Tablas",
+      "category": "terra",
+      "photo": "/assets/obras/tablas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tablas-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              466,
+              100
+            ],
+            [
+              930,
+              74
+            ],
+            [
+              929,
+              739
+            ],
+            [
+              467,
+              739
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tablas-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cerco-ii",
+      "name": "Cerco II",
+      "category": "terra",
+      "photo": "/assets/obras/cerco-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/cerco-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              319,
+              239
+            ],
+            [
+              1002,
+              226
+            ],
+            [
+              988,
+              736
+            ],
+            [
+              316,
+              718
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/cerco-ii-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "ramas",
+      "name": "Ramas",
+      "category": "terra",
+      "photo": "/assets/obras/ramas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/ramas-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              383,
+              100
+            ],
+            [
+              735,
+              109
+            ],
+            [
+              738,
+              617
+            ],
+            [
+              384,
+              617
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/ramas-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "costa",
+      "name": "Costa",
+      "category": "terra",
+      "photo": "/assets/obras/costa-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/costa-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              294,
+              79
+            ],
+            [
+              760,
+              79
+            ],
+            [
+              760,
+              715
+            ],
+            [
+              296,
+              715
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/costa-ambiente-1-luz.png"
+        }
+      ]
     }
   ],
   "frameTypes": [
