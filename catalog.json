@@ -1330,6 +1330,396 @@
         }
       ],
       "fotografa": ""
+    },
+    {
+      "id": "mariposa",
+      "name": "Mariposa",
+      "category": "terra",
+      "photo": "/assets/obras/mariposa-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/mariposa-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              344,
+              158
+            ],
+            [
+              727,
+              127
+            ],
+            [
+              728,
+              767
+            ],
+            [
+              345,
+              743
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mariposa-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "salpicadura",
+      "name": "Salpicadura",
+      "category": "terra",
+      "photo": "/assets/obras/salpicadura-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/salpicadura-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              343,
+              110
+            ],
+            [
+              690,
+              111
+            ],
+            [
+              690,
+              640
+            ],
+            [
+              349,
+              641
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/salpicadura-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "gota",
+      "name": "Gota",
+      "category": "terra",
+      "photo": "/assets/obras/gota-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/gota-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              343,
+              110
+            ],
+            [
+              691,
+              110
+            ],
+            [
+              691,
+              642
+            ],
+            [
+              344,
+              642
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/gota-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "otono",
+      "name": "Otoño",
+      "category": "terra",
+      "photo": "/assets/obras/otono-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/otono-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              307,
+              56
+            ],
+            [
+              777,
+              55
+            ],
+            [
+              778,
+              700
+            ],
+            [
+              309,
+              700
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/otono-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "loros",
+      "name": "Loros",
+      "category": "terra",
+      "photo": "/assets/obras/loros-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/loros-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              291,
+              93
+            ],
+            [
+              811,
+              96
+            ],
+            [
+              825,
+              815
+            ],
+            [
+              292,
+              816
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/loros-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "mirilla",
+      "name": "Mirilla",
+      "category": "terra",
+      "photo": "/assets/obras/mirilla-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/mirilla-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              273,
+              60
+            ],
+            [
+              809,
+              60
+            ],
+            [
+              807,
+              773
+            ],
+            [
+              272,
+              774
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mirilla-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "faro",
+      "name": "Faro",
+      "category": "terra",
+      "photo": "/assets/obras/faro-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/faro-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              109,
+              135
+            ],
+            [
+              544,
+              144
+            ],
+            [
+              578,
+              810
+            ],
+            [
+              128,
+              869
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/faro-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "mariposa-ii",
+      "name": "Mariposa II",
+      "category": "terra",
+      "photo": "/assets/obras/mariposa-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/mariposa-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              486,
+              91
+            ],
+            [
+              879,
+              71
+            ],
+            [
+              880,
+              671
+            ],
+            [
+              486,
+              664
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mariposa-ii-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "surf",
+      "name": "Surf",
+      "category": "terra",
+      "photo": "/assets/obras/surf-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/surf-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              318,
+              122
+            ],
+            [
+              789,
+              66
+            ],
+            [
+              788,
+              805
+            ],
+            [
+              319,
+              780
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/surf-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "surf-ii",
+      "name": "Surf II",
+      "category": "terra",
+      "photo": "/assets/obras/surf-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/surf-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              379,
+              65
+            ],
+            [
+              809,
+              65
+            ],
+            [
+              809,
+              676
+            ],
+            [
+              379,
+              676
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/surf-ii-ambiente-1-luz.png"
+        }
+      ]
     }
   ],
   "frameTypes": [
