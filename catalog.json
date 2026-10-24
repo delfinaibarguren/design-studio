@@ -108,11 +108,12 @@
       "id": "pampa",
       "label": "Pampa",
       "description": "Flora y fauna del campo argentino",
-      "cover": "/assets/obras/huella-ambiente-1.jpg"
+      "cover": "/assets/obras/curioso-ambiente-2.jpg"
     },
     {
       "id": "terra",
-      "label": "Terra"
+      "label": "Terra",
+      "cover": "/assets/obras/faro-ambiente-1.jpg"
     },
     {
       "id": "origen",
