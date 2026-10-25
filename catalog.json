@@ -1977,6 +1977,84 @@
           "luz": "/assets/obras/costa-ambiente-1-luz.png"
         }
       ]
+    },
+    {
+      "id": "koala",
+      "name": "Koala",
+      "category": "terra",
+      "photo": "/assets/obras/koala-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/koala-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              291,
+              93
+            ],
+            [
+              810,
+              97
+            ],
+            [
+              822,
+              814
+            ],
+            [
+              292,
+              815
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/koala-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "lunita",
+      "name": "Lunita",
+      "category": "terra",
+      "photo": "/assets/obras/lunita-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/lunita-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              318,
+              120
+            ],
+            [
+              790,
+              60
+            ],
+            [
+              790,
+              787
+            ],
+            [
+              319,
+              760
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/lunita-ambiente-1-luz.png"
+        }
+      ]
     }
   ],
   "frameTypes": [
