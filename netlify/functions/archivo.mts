@@ -2,16 +2,19 @@ import type { Config } from "@netlify/functions"
 import { getStore } from "@netlify/blobs"
 
 // Fotos que adjuntan los clientes en "Enmarcado a medida", en su calidad original.
-// Los archivos grandes llegan en partes (cada request de una función tiene un límite de ~6 MB).
+// Los archivos grandes viajan en partes de ~3,5 MB (cada pedido a una función tiene un límite de tamaño),
+// y se vuelven a unir en el navegador al descargarlos (/descargar.html).
 // POST /api/archivo                 -> primera (o única) parte: crea el archivo y devuelve { id, url }
 // POST /api/archivo/<id>?parte=N    -> partes siguientes
-// GET  /api/archivo/<id>            -> muestra el archivo  ·  ?descargar -> lo descarga
+// GET  /api/archivo/<id>?info       -> nombre, tipo, partes y tamaño
+// GET  /api/archivo/<id>?parte=N    -> una parte
+// GET  /api/archivo/<id>            -> el archivo (si tiene una sola parte) o la página de descarga
 const TIPOS: Record<string, string> = {
   "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif",
   "image/tiff": "tif", "image/gif": "gif", "application/pdf": "pdf",
 }
-const PARTE_MAX = 5 * 1024 * 1024
-const PARTES_MAX = 12          // hasta ~60 MB por archivo
+const PARTE_MAX = 4 * 1024 * 1024
+const PARTES_MAX = 150         // hasta ~500 MB por archivo
 const ID = /^[a-z0-9-]{20,60}\.(jpg|png|webp|heic|heif|tif|gif|pdf)$/
 
 export default async (req: Request) => {
@@ -31,19 +34,17 @@ export default async (req: Request) => {
       "Cache-Control": "private, max-age=86400", "X-Robots-Tag": "noindex",
     }
     const partes = Math.max(1, Number(m.partes) || 1)
+    if (url.searchParams.has("info")) return Response.json({ nombre: m.nombre || id, tipo: m.tipo || "", partes, tamano: Number((m as any).tamano) || 0 })
+    if (url.searchParams.has("parte")) {
+      const n = Number(url.searchParams.get("parte"))
+      if (!Number.isInteger(n) || n < 0 || n >= partes) return new Response("Parte inválida", { status: 400 })
+      const data = n === 0 ? r.data : await store.get(`${id}~${n}`, { type: "arrayBuffer" })
+      if (!data) return new Response("Falta una parte", { status: 404 })
+      return new Response(data, { headers: { "Content-Type": "application/octet-stream", "Cache-Control": "private, max-age=86400" } })
+    }
     if (partes === 1) return new Response(r.data, { headers })
-    // varias partes: se mandan una detrás de otra
-    let i = 0
-    const stream = new ReadableStream({
-      async pull(ctrl) {
-        if (i === 0) { ctrl.enqueue(new Uint8Array(r.data)); i++; return }
-        if (i >= partes) { ctrl.close(); return }
-        const p = await store.get(`${id}~${i}`, { type: "arrayBuffer" })
-        if (!p) { ctrl.error(new Error("falta una parte")); return }
-        ctrl.enqueue(new Uint8Array(p)); i++
-      },
-    })
-    return new Response(stream, { headers })
+    // archivo grande: la página de descarga lo arma en el navegador
+    return Response.redirect(`${url.origin}/descargar.html?f=${encodeURIComponent(id)}`, 302)
   }
 
   if (req.method !== "POST") return new Response("Método no permitido", { status: 405 })
@@ -67,7 +68,8 @@ export default async (req: Request) => {
   const partes = Math.max(1, Math.min(PARTES_MAX, Number(req.headers.get("x-partes")) || 1))
   const nombre = decodeURIComponent(req.headers.get("x-nombre") || "").slice(0, 120) || `foto.${ext}`
   const key = `${crypto.randomUUID()}.${ext}`
-  await store.set(key, buf, { metadata: { tipo, nombre, partes, fecha: Date.now() } })
+  const tamano = Number(req.headers.get("x-tamano")) || buf.byteLength
+  await store.set(key, buf, { metadata: { tipo, nombre, partes, tamano, fecha: Date.now() } })
   return Response.json({ id: key, url: `${url.origin}/api/archivo/${key}` })
 }
 

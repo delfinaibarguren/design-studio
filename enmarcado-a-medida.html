@@ -175,18 +175,31 @@
     };
     img.onerror = () => ok(null); img.src = url;
   });
-  const PARTE = 4.5 * 1024 * 1024;
+  const PARTE = 3.5 * 1024 * 1024;
+  let subidoBytes = 0, totalBytes = 0;
+  const progreso = () => { const b = $("qSend"); if (totalBytes > 8 * 1048576) b.textContent = `Subiendo fotos… ${Math.min(99, Math.floor((subidoBytes / totalBytes) * 100))}%`; };
   async function subir(f) {
     const tipo = tipoDe(f), partes = Math.ceil(f.size / PARTE) || 1;
-    if (!tipo || partes > 12) return "";
-    const r = await fetch("/api/archivo", { method: "POST", headers: { "Content-Type": tipo, "X-Nombre": encodeURIComponent(f.name), "X-Partes": String(partes) }, body: f.slice(0, PARTE) });
-    if (!r.ok) return "";
+    if (!tipo || partes > 150) return "";
+    const enviar = async (u, body, headers, intentos = 3) => {
+      for (let k = 0; k < intentos; k++) { try { const r = await fetch(u, { method: "POST", headers, body }); if (r.ok) return r; } catch {} await new Promise((x) => setTimeout(x, 800 * (k + 1))); }
+      return null;
+    };
+    const r = await enviar("/api/archivo", f.slice(0, PARTE), { "Content-Type": tipo, "X-Nombre": encodeURIComponent(f.name), "X-Partes": String(partes), "X-Tamano": String(f.size) });
+    if (!r) return "";
     const { id, url } = await r.json();
-    for (let i = 1; i < partes; i++) {
-      const x = await fetch(`/api/archivo/${id}?parte=${i}`, { method: "POST", headers: { "Content-Type": "application/octet-stream" }, body: f.slice(i * PARTE, (i + 1) * PARTE) });
-      if (!x.ok) return "";
-    }
-    return url;
+    subidoBytes += Math.min(PARTE, f.size); progreso();
+    let sig = 1, ok = true;
+    const trabajador = async () => {
+      while (ok && sig < partes) {
+        const i = sig++;
+        const x = await enviar(`/api/archivo/${id}?parte=${i}`, f.slice(i * PARTE, (i + 1) * PARTE), { "Content-Type": "application/octet-stream" });
+        if (!x) { ok = false; return; }
+        subidoBytes += Math.min(PARTE, f.size - i * PARTE); progreso();
+      }
+    };
+    await Promise.all([trabajador(), trabajador(), trabajador()]);
+    return ok ? url : "";
   }
   const peso = (n) => n >= 1048576 ? (n / 1048576).toFixed(1).replace(".", ",") + " MB" : Math.round(n / 1024) + " KB";
   const drawFiles = () => {
@@ -219,7 +232,9 @@
     let links = [];
     if (form.que.value === "Algo mío" && files.length) {
       b.textContent = "Subiendo fotos…";
-      links = await Promise.all(files.map((f) => subir(f).catch(() => "")));
+      subidoBytes = 0; totalBytes = files.reduce((a, f) => a + f.size, 0);
+      links = [];
+      for (const f of files) links.push(await subir(f).catch(() => ""));
       b.textContent = "Enviando…";
     }
     const linksTxt = links.map((u, i) => (u ? `Foto ${i + 1} (${files[i].name}, ${peso(files[i].size)}) — descargar: ${u}?descargar` : "")).filter(Boolean).join("\n");

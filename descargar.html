@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Descargar archivo | Dsgn. Studio</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    .dl { max-width: 560px; margin: 0 auto; padding: 80px var(--gutter); text-align: center; }
+    .dl h1 { font-family: "Playfair Display", Georgia, serif; font-size: 2rem; margin: 0 0 .4rem; }
+    .dl p { color: var(--ink-soft); }
+    .bar { height: 8px; background: #eee9df; border-radius: 99px; overflow: hidden; margin: 1.4rem 0 .6rem; }
+    .bar i { display: block; height: 100%; width: 0; background: #b8893e; transition: width .2s; }
+  </style>
+</head>
+<body>
+<main class="dl">
+  <h1 id="t">Preparando la descarga…</h1>
+  <p id="n"></p>
+  <div class="bar"><i id="b"></i></div>
+  <p id="m">No cierres esta pestaña hasta que termine.</p>
+  <a class="btn btn-dark" id="a" hidden>Guardar de nuevo</a>
+</main>
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const id = new URLSearchParams(location.search).get("f") || "";
+  const peso = (n) => (n / 1048576).toFixed(1).replace(".", ",") + " MB";
+  try {
+    const info = await (await fetch(`/api/archivo/${encodeURIComponent(id)}?info`)).json();
+    if (!info.partes) throw new Error("No encontramos el archivo.");
+    $("n").textContent = `${info.nombre}${info.tamano ? " · " + peso(info.tamano) : ""}`;
+    $("t").textContent = "Descargando…";
+    const partes = new Array(info.partes); let hechas = 0, sig = 0;
+    const bajar = async (i) => {
+      for (let k = 0; k < 4; k++) {
+        try { const r = await fetch(`/api/archivo/${encodeURIComponent(id)}?parte=${i}`); if (r.ok) return await r.blob(); } catch {}
+        await new Promise((x) => setTimeout(x, 1000 * (k + 1)));
+      }
+      throw new Error("Se cortó la descarga. Recargá la página para intentar de nuevo.");
+    };
+    const trabajador = async () => { while (sig < info.partes) { const i = sig++; partes[i] = await bajar(i); hechas++; $("b").style.width = Math.round((hechas / info.partes) * 100) + "%"; } };
+    await Promise.all([trabajador(), trabajador(), trabajador(), trabajador()]);
+    const blob = new Blob(partes, { type: info.tipo || "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const a = $("a"); a.href = url; a.download = info.nombre; a.hidden = false; a.click();
+    $("t").textContent = "¡Listo!";
+    $("m").textContent = `Se descargó ${info.nombre} (${peso(blob.size)}). Si no lo ves en tus descargas, tocá el botón.`;
+  } catch (e) {
+    $("t").textContent = "No pudimos descargar el archivo";
+    $("m").textContent = e.message || "Probá de nuevo en un momento.";
+  }
+})();
+</script>
+</body>
+</html>
