@@ -69,6 +69,7 @@
       <div class="q-items" id="qItems"></div>
       <button type="button" class="q-add" id="qAdd">+ Agregar otra medida</button>
       <input type="hidden" name="medidas" id="qMedidas">
+      <input type="hidden" name="fotos_links">
     </div>
 
     <div class="box">
@@ -198,6 +199,16 @@
     const fd = new FormData(form);
     if (form.que.value === "Algo mío") fd.set("obra", ""); else fd.set("objeto", "");
     for (let i = 1; i <= MAXF; i++) fd.delete("archivo" + i);
+    // subir cada foto aparte para que en el mail lleguen links directos
+    let links = [];
+    if (form.que.value === "Algo mío" && files.length) {
+      b.textContent = "Subiendo fotos…";
+      links = await Promise.all(files.map((f) => fetch("/api/archivo", { method: "POST", headers: { "Content-Type": f.type || "application/octet-stream", "X-Nombre": encodeURIComponent(f.name) }, body: f })
+        .then((r) => (r.ok ? r.json() : {})).then((j) => j.url || "").catch(() => "")));
+      b.textContent = "Enviando…";
+    }
+    const linksTxt = links.map((u, i) => (u ? `Foto ${i + 1}: ${u}` : "")).filter(Boolean).join("\n");
+    fd.set("fotos_links", linksTxt);
     if (form.que.value === "Algo mío") files.forEach((f, i) => fd.append("archivo" + (i + 1), f, f.name));
     try {
       const r = await fetch("/", { method: "POST", body: fd });
@@ -209,7 +220,7 @@
     const esObra = form.que.value === "Obra de Dsgn. Studio";
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
-      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? `${files.length} — descargalas acá: https://app.netlify.com/projects/design-studio-cuadros/forms/6adba1342e56b8aad86f93a5 (el pedido más nuevo está arriba de todo)` : "",
+      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt || `${files.length} — verlas en Netlify → Forms → consulta`) : "",
       "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
     });
     const obra = esObra;

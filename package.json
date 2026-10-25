@@ -4,5 +4,8 @@
   "type": "module",
   "devDependencies": {
     "@netlify/functions": "^4.0.0"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
   }
 }
