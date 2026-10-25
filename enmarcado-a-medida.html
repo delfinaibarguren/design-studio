@@ -57,7 +57,7 @@
         <div class="f full">Fotos o archivos de referencia (opcional, hasta 10)
           <label class="q-drop"><input type="file" id="qFiles" accept="image/*,application/pdf" multiple><span>+ Adjuntar archivos</span></label>
           <ul class="q-files" id="qFileList"></ul>
-          <small class="q-hint">Si es para imprimir, cuando confirmes el pedido te vamos a pedir los archivos originales en alta resolución.</small>
+          <small class="q-hint">Subí las fotos en su mejor calidad: las recibimos tal cual las mandás.</small>
         </div>
       </div>
       <div hidden><input type="file" name="archivo1"><input type="file" name="archivo2"><input type="file" name="archivo3"><input type="file" name="archivo4"><input type="file" name="archivo5"><input type="file" name="archivo6"><input type="file" name="archivo7"><input type="file" name="archivo8"><input type="file" name="archivo9"><input type="file" name="archivo10"></div>
@@ -160,19 +160,35 @@
   drawItems();
   const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida} cm · ${it.tipo} · ${it.color} · ${it.paspartu}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
 
-  // ---- archivos (máx. 10, las fotos se achican antes de enviar)
+  // ---- archivos (máx. 10). Se suben en su calidad original; la copia achicada es solo un respaldo para el formulario.
   const MAXF = 10; let files = [];
+  const EXT = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", heic: "image/heic", heif: "image/heif", tif: "image/tiff", tiff: "image/tiff", gif: "image/gif", pdf: "application/pdf" };
+  const tipoDe = (f) => f.type || EXT[(f.name.split(".").pop() || "").toLowerCase()] || "";
   const shrink = (f) => new Promise((ok) => {
-    if (!f.type.startsWith("image/")) return ok(f);
+    if (!tipoDe(f).startsWith("image/")) return ok(null);
     const img = new Image(), url = URL.createObjectURL(f);
     img.onload = () => {
       const k = Math.min(1, 1600 / Math.max(img.width, img.height));
       const cv = document.createElement("canvas"); cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
       cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
-      cv.toBlob((b) => ok(b ? new File([b], f.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }) : f), "image/jpeg", 0.82);
+      cv.toBlob((b) => ok(b ? new File([b], f.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }) : null), "image/jpeg", 0.82);
     };
-    img.onerror = () => ok(f); img.src = url;
+    img.onerror = () => ok(null); img.src = url;
   });
+  const PARTE = 4.5 * 1024 * 1024;
+  async function subir(f) {
+    const tipo = tipoDe(f), partes = Math.ceil(f.size / PARTE) || 1;
+    if (!tipo || partes > 12) return "";
+    const r = await fetch("/api/archivo", { method: "POST", headers: { "Content-Type": tipo, "X-Nombre": encodeURIComponent(f.name), "X-Partes": String(partes) }, body: f.slice(0, PARTE) });
+    if (!r.ok) return "";
+    const { id, url } = await r.json();
+    for (let i = 1; i < partes; i++) {
+      const x = await fetch(`/api/archivo/${id}?parte=${i}`, { method: "POST", headers: { "Content-Type": "application/octet-stream" }, body: f.slice(i * PARTE, (i + 1) * PARTE) });
+      if (!x.ok) return "";
+    }
+    return url;
+  }
+  const peso = (n) => n >= 1048576 ? (n / 1048576).toFixed(1).replace(".", ",") + " MB" : Math.round(n / 1024) + " KB";
   const drawFiles = () => {
     $("qFileList").innerHTML = files.map((f, i) => `<li><span><b>Foto ${i + 1}</b> · ${DS.esc(f.name)}</span> <button type="button" data-rm="${i}" aria-label="Quitar">×</button></li>`).join("");
     document.querySelector(".q-drop span").textContent = files.length >= MAXF ? "Llegaste al máximo de 10 archivos" : "+ Adjuntar archivos";
@@ -182,7 +198,7 @@
     const pick = [...e.target.files]; e.target.value = "";
     const room = MAXF - files.length;
     if (pick.length > room) DS.toast(`Podés adjuntar hasta ${MAXF} archivos`);
-    files = files.concat(await Promise.all(pick.slice(0, room).map(shrink))); drawFiles();
+    files = files.concat(pick.slice(0, room)); drawFiles();
   });
   $("qFileList").addEventListener("click", (e) => { const bt = e.target.closest("[data-rm]"); if (bt) { files.splice(+bt.dataset.rm, 1); drawFiles(); } });
 
@@ -199,17 +215,20 @@
     const fd = new FormData(form);
     if (form.que.value === "Algo mío") fd.set("obra", ""); else fd.set("objeto", "");
     for (let i = 1; i <= MAXF; i++) fd.delete("archivo" + i);
-    // subir cada foto aparte para que en el mail lleguen links directos
+    // subir cada foto original aparte para que en el mail lleguen links de descarga
     let links = [];
     if (form.que.value === "Algo mío" && files.length) {
       b.textContent = "Subiendo fotos…";
-      links = await Promise.all(files.map((f) => fetch("/api/archivo", { method: "POST", headers: { "Content-Type": f.type || "application/octet-stream", "X-Nombre": encodeURIComponent(f.name) }, body: f })
-        .then((r) => (r.ok ? r.json() : {})).then((j) => j.url || "").catch(() => "")));
+      links = await Promise.all(files.map((f) => subir(f).catch(() => "")));
       b.textContent = "Enviando…";
     }
-    const linksTxt = links.map((u, i) => (u ? `Foto ${i + 1}: ${u}` : "")).filter(Boolean).join("\n");
+    const linksTxt = links.map((u, i) => (u ? `Foto ${i + 1} (${files[i].name}, ${peso(files[i].size)}) — descargar: ${u}?descargar` : "")).filter(Boolean).join("\n");
     fd.set("fotos_links", linksTxt);
-    if (form.que.value === "Algo mío") files.forEach((f, i) => fd.append("archivo" + (i + 1), f, f.name));
+    // al formulario solo va una copia chica de las que no se pudieron subir (respaldo)
+    if (form.que.value === "Algo mío") {
+      let k = 1;
+      for (let i = 0; i < files.length; i++) if (!links[i]) { const c = await shrink(files[i]); if (c) fd.append("archivo" + k++, c, c.name); }
+    }
     try {
       const r = await fetch("/", { method: "POST", body: fd });
       if (!r.ok) throw new Error(r.status);
@@ -220,7 +239,7 @@
     const esObra = form.que.value === "Obra de Dsgn. Studio";
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
-      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt || `${files.length} — verlas en Netlify → Forms → consulta`) : "",
+      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt + (links.filter(Boolean).length < files.length ? `${linksTxt ? "\n" : ""}${files.length - links.filter(Boolean).length} foto(s) no se pudieron subir en original: hay una copia chica en Netlify → Forms → consulta` : "")) : "",
       "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
     });
     const obra = esObra;
