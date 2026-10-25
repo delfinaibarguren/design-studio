@@ -113,6 +113,7 @@
         ${p.entrega === "domicilio" && d.calle ? `<div><b>Dirección:</b> ${esc(`${d.calle} ${d.numero}${d.depto ? ", " + d.depto : ""}, ${d.cp} ${d.ciudad}, ${d.provincia}`)}</div>` : ""}
         ${d.email || d.telefono ? `<div><b>Contacto:</b> ${esc([d.email, d.telefono, d.dni ? "DNI " + d.dni : ""].filter(Boolean).join(" · "))}</div>` : ""}
         <div><b>Productos:</b> ${money(p.productos)} · <b>Envío cobrado:</b> ${p.envioPrecio ? money(p.envioPrecio) : p.envio ? "gratis" : "—"}${p.envio && p.envio.bonif ? ` · <b>pagás vos:</b> ${money(p.envio.bonif)} (costo ${money(p.envio.opcion.precio)})` : ""}</div>
+        ${e || p.envio ? `<div><b>Llevar a:</b> ${/oca/i.test((e && e.carrier) || p.envio.opcion.carrier) ? "OCA Pilar · Colectora Oeste Ramal Pilar 850 (lun a vie 8:30–18)" : /correo/i.test((e && e.carrier) || p.envio.opcion.carrier) ? "Correo Argentino Del Viso · Av. Ing. Eduardo Madero 1395 (lun a vie 11–18)" : "sucursal de " + esc((e && e.carrier) || p.envio.opcion.carrier)}</div>` : ""}
         ${e ? `<div><b>Seguimiento:</b> ${esc(e.seguimiento || "(en proceso)")} · ${esc(e.estado || "")}</div>` : ""}
         ${p.envioError ? `<div style="color:#a12d1c"><b>Error:</b> ${esc(p.envioError)}</div>` : ""}
       </div>
