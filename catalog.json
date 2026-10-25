@@ -38,7 +38,7 @@
       "arpillera": 20000,
       "descuentoSinPaspartu": 5000,
       "paquete": {
-        "peso": 2500,
+        "peso": 3000,
         "alto": 8,
         "ancho": 45,
         "largo": 55
@@ -60,7 +60,7 @@
       "arpillera": 25000,
       "descuentoSinPaspartu": 8000,
       "paquete": {
-        "peso": 5000,
+        "peso": 7500,
         "alto": 8,
         "ancho": 65,
         "largo": 85
@@ -82,7 +82,7 @@
       "arpillera": 30000,
       "descuentoSinPaspartu": 15000,
       "paquete": {
-        "peso": 9000,
+        "peso": 15000,
         "alto": 10,
         "ancho": 85,
         "largo": 115
