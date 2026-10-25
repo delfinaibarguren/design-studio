@@ -17,6 +17,7 @@ const clave = (orden: string) => orden.replace(/[^A-Za-z0-9-]/g, "").slice(0, 40
 
 export const leer = async (orden: string) => (await store().get(clave(orden), { type: "json" })) as Pedido | null
 export const guardar = (p: Pedido) => store().setJSON(clave(p.orden), p)
+export const borrar = (orden: string) => store().delete(clave(orden))
 
 export async function listar(max = 80): Promise<Pedido[]> {
   const { blobs } = await store().list()

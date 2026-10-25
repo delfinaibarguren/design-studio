@@ -1,5 +1,5 @@
 import type { Config } from "@netlify/functions"
-import { listar, leer, guardar, pagadoYEnviar, enviar } from "../lib/pedidos.mts"
+import { listar, leer, guardar, borrar, pagadoYEnviar, enviar } from "../lib/pedidos.mts"
 import { firmaCorta } from "../lib/firma.mts"
 import { configurado, cotizar, verEnvio, opciones } from "../lib/zipnova.mts"
 
@@ -27,6 +27,12 @@ export default async (req: Request) => {
         const p = await leer(String(b.orden)); if (!p) throw new Error("No existe el pedido")
         p.estado = "cancelado"; await guardar(p)
         return Response.json({ pedido: conLinks(p) })
+      }
+      case "eliminar": {   // solo pedidos cancelados (pruebas, pedidos que no siguieron)
+        const p = await leer(String(b.orden)); if (!p) throw new Error("No existe el pedido")
+        if (p.estado !== "cancelado") throw new Error("Primero cancelá el pedido")
+        await borrar(p.orden)
+        return Response.json({ eliminado: p.orden })
       }
       case "actualizar": {   // estado actual del envío en Zipnova
         const p = await leer(String(b.orden)); if (!p?.envioCreado) throw new Error("Sin envío")

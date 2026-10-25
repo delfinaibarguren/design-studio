@@ -103,6 +103,7 @@
     if (e && e.tracking) acts.push(`<a class="btn btn-outline" href="${esc(e.tracking)}" target="_blank" rel="noopener">Seguimiento</a>`);
     if (e) acts.push(`<button class="btn btn-outline" data-a="actualizar" data-o="${esc(p.orden)}">Actualizar estado</button>`);
     if (p.estado !== "cancelado") acts.push(`<button class="btn btn-outline" data-a="cancelar" data-o="${esc(p.orden)}">Cancelar pedido</button>`);
+    if (p.estado === "cancelado") acts.push(`<button class="btn btn-outline" data-a="eliminar" data-o="${esc(p.orden)}">Eliminar</button>`);
     if (d.telefono) acts.push(`<a class="btn btn-outline" href="https://wa.me/${esc(((n) => (n.startsWith("54") ? n : "549" + n.replace(/^0/, "")))(String(d.telefono).replace(/\D/g, "")))}" target="_blank" rel="noopener">WhatsApp</a>`);
     return `<div class="ped">
       <div class="ped-top"><h3>${esc(p.orden)} · ${esc(d.nombre || "")}</h3><small>${f} · <b>${money(p.total)}</b></small></div>
@@ -137,11 +138,14 @@
   $("list").onclick = async (e) => {
     const b = e.target.closest("[data-a]"); if (!b) return;
     if (b.dataset.a === "cancelar" && !confirm("¿Cancelar este pedido? Si ya tenía envío creado, acordate de anularlo también en Zipnova (Acciones → Anular envío).")) return;
+    if (b.dataset.a === "eliminar" && !confirm("¿Eliminar definitivamente el pedido " + b.dataset.o + "?")) return;
     if (b.dataset.a === "pagado" && !confirm("¿Confirmás que recibiste el pago de " + b.dataset.o + "?")) return;
     b.disabled = true; const t = b.textContent; b.textContent = "…";
     try {
       const d = await api(b.dataset.a, { orden: b.dataset.o });
-      const i = PED.findIndex((p) => p.orden === b.dataset.o); if (i >= 0 && d.pedido) PED[i] = d.pedido; draw();
+      const i = PED.findIndex((p) => p.orden === b.dataset.o);
+      if (i >= 0 && d.eliminado) PED.splice(i, 1); else if (i >= 0 && d.pedido) PED[i] = d.pedido;
+      draw();
     } catch (x) { alert(x.message); b.disabled = false; b.textContent = t; }
   };
   $("tGo").onclick = async () => {
