@@ -28,6 +28,7 @@
   <div class="custom2-text">
     <h1><span class="h-light">Enmarcados</span><span class="h-bold">a medida.</span></h1>
     <p class="hero-sub">Cualquiera de nuestras obras en la medida que necesites, o lo que vos quieras enmarcar: fotos, láminas, camisetas, diplomas <strong>y mucho más.</strong></p>
+    <p class="q-plazo">Demora aproximada: 15 días.</p>
     <div class="cta-col">
       <a class="hero-btn" href="#consulta">Armá tu pedido</a>
     </div>
@@ -56,6 +57,7 @@
         <div class="f full">Fotos o archivos de referencia (opcional, hasta 10)
           <label class="q-drop"><input type="file" id="qFiles" accept="image/*,application/pdf" multiple><span>+ Adjuntar archivos</span></label>
           <ul class="q-files" id="qFileList"></ul>
+          <small class="q-hint">Si es para imprimir, cuando confirmes el pedido te vamos a pedir los archivos originales en alta resolución.</small>
         </div>
       </div>
       <div hidden><input type="file" name="archivo1"><input type="file" name="archivo2"><input type="file" name="archivo3"><input type="file" name="archivo4"><input type="file" name="archivo5"><input type="file" name="archivo6"><input type="file" name="archivo7"><input type="file" name="archivo8"><input type="file" name="archivo9"><input type="file" name="archivo10"></div>
@@ -80,12 +82,13 @@
     </div>
 
     <button class="btn btn-dark btn-block" id="qSend" type="submit">Pedir presupuesto</button>
+    <p class="q-plazo-btn">Los enmarcados a medida tienen una demora aproximada de 15 días.</p>
     <p class="q-err" id="qErr" hidden></p>
   </form>
 
   <div class="q-ok" id="qOk" hidden>
     <h2>¡Recibimos tu pedido!</h2>
-    <p>Te respondemos a la brevedad con el presupuesto. Si querés seguir la conversación, escribinos por WhatsApp.</p>
+    <p>Te respondemos a la brevedad con el presupuesto. Recordá que la demora aproximada es de 15 días desde que confirmás el pedido. Si querés seguir la conversación, escribinos por WhatsApp.</p>
     <a class="hero-btn" id="qWa" target="_blank" rel="noopener">Seguir por WhatsApp</a>
   </div>
   <p class="q-ig">¿Querés ver trabajos que ya hicimos? <a href="https://www.instagram.com/_designstu" target="_blank" rel="noopener">Mirá nuestro Instagram →</a></p>
@@ -206,7 +209,7 @@
     const esObra = form.que.value === "Obra de Dsgn. Studio";
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
-      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? `${files.length} (verlas en Netlify → Forms → consulta)` : "",
+      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? `${files.length} — descargalas acá: https://app.netlify.com/projects/design-studio-cuadros/forms/6adba1342e56b8aad86f93a5 (el pedido más nuevo está arriba de todo)` : "",
       "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
     });
     const obra = esObra;

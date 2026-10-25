@@ -496,3 +496,7 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-ig a { color: var(--ink); text-underline-offset: 3px; }
 .pre-nota { font-size: .88rem; color: var(--ink-soft); margin: .6rem 0 0; }
 .line.pre { grid-template-columns: minmax(0, 1fr) auto; }
+
+.q-plazo { margin-top: .6rem; font-size: .92rem; color: #b8893e; font-weight: 500; }
+.q-hint { display: block; margin-top: .45rem; color: #6b6862; font-size: .82rem; line-height: 1.4; }
+.q-plazo-btn { margin-top: .6rem; text-align: center; font-size: .85rem; color: #6b6862; }
