@@ -2055,6 +2055,162 @@
           "luz": "/assets/obras/lunita-ambiente-1-luz.png"
         }
       ]
+    },
+    {
+      "id": "dupla",
+      "name": "Dupla",
+      "category": "terra",
+      "photo": "/assets/obras/dupla-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/dupla-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              330,
+              247
+            ],
+            [
+              800,
+              247
+            ],
+            [
+              800,
+              565
+            ],
+            [
+              330,
+              565
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/dupla-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "canguro",
+      "name": "Canguro",
+      "category": "terra",
+      "photo": "/assets/obras/canguro-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/canguro-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              93,
+              130
+            ],
+            [
+              546,
+              141
+            ],
+            [
+              576,
+              799
+            ],
+            [
+              120,
+              864
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/canguro-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "tordillo-pastando-i",
+      "name": "Tordillo Pastando I",
+      "category": "terra",
+      "photo": "/assets/obras/tordillo-pastando-i-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tordillo-pastando-i-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              272,
+              56
+            ],
+            [
+              802,
+              56
+            ],
+            [
+              803,
+              766
+            ],
+            [
+              271,
+              766
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tordillo-pastando-i-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "tordillo-pastando-ii",
+      "name": "Tordillo Pastando II",
+      "category": "terra",
+      "photo": "/assets/obras/tordillo-pastando-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/tordillo-pastando-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              350,
+              217
+            ],
+            [
+              873,
+              217
+            ],
+            [
+              875,
+              581
+            ],
+            [
+              351,
+              581
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tordillo-pastando-ii-ambiente-1-luz.png"
+        }
+      ]
     }
   ],
   "frameTypes": [
