@@ -154,19 +154,22 @@
   }
   const envioMonto = () => (ENV && ENV.modo === "zipnova" && domicilio() && !PRE ? ENV.precio : 0);
 
+  let lastLines = null;
   function render() {
     const cart = DS.getCart();
     if (!PRE && !cart.length && $("done").hidden) {
       $("checkout").innerHTML = `<div class="done" style="grid-column:1/-1"><h1>Tu carrito está vacío</h1><p>Elegí una obra para empezar.</p><a class="btn btn-dark" href="/#obras">Ver la colección</a></div>`;
       return;
     }
-    $("sumLines").innerHTML = PRE
+    const linesHtml = PRE
       ? PRE.items.map((i) => `<div class="line pre"><div class="line-info"><h4>${DS.esc(i.desc)}</h4><small>Cantidad: ${i.cant}</small></div><div class="line-right">${DS.money(i.precio)}</div></div>`).join("")
         + (PRE.nota ? `<p class="pre-nota">${DS.esc(PRE.nota)}</p>` : "")
-      : cart.map((l) => {
+      : cart.map((l, i) => {
       const p = DS.product(l.productId);
-      return `<div class="line"><div class="line-thumb">${DS.framed(p, l)}</div><div class="line-info"><h4>${DS.esc(p.name)}</h4><small>${DS.esc(DS.variantText(l))}</small><small>Cantidad: ${l.qty}</small></div><div class="line-right">${DS.money(DS.unitPrice(l) * l.qty)}</div></div>`;
+      return `<div class="line"><div class="line-thumb">${DS.framed(p, l)}</div><div class="line-info"><h4>${DS.esc(p.name)}</h4><small>${DS.esc(DS.variantText(l))}</small><small>Cantidad: ${l.qty}</small></div><button type="button" class="line-rm" data-quitar="${i}" aria-label="Quitar ${DS.esc(p.name)} del carrito" title="Quitar del carrito">×</button><div class="line-right">${DS.money(DS.unitPrice(l) * l.qty)}</div></div>`;
     }).join("");
+    // solo se redibuja si cambió (si no, un clic en la × se pierde cuando otro campo dispara render)
+    if (lastLines !== linesHtml) { $("sumLines").innerHTML = linesHtml; lastLines = linesHtml; }
     const sub = subTotal();
     const transfer = val("pago") === "Transferencia";
     const disc = transfer && discOn() ? sub * st.transferDiscount : 0;
@@ -190,6 +193,11 @@
   // el carrito lateral también puede cambiar el pedido
   new MutationObserver(() => { render(); cotizarEnvio(); }).observe($("cartBody"), { childList: true });
 
+  $("sumLines").addEventListener("click", (e) => {
+    const q = e.target.closest("[data-quitar]"); if (!q) return;
+    const c = DS.getCart(); c.splice(+q.dataset.quitar, 1); DS.setCart(c);
+    render(); cotizarEnvio();
+  });
   document.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-copy]"); if (!b) return;
     try { await navigator.clipboard.writeText(b.dataset.copy); } catch {}
