@@ -89,6 +89,11 @@
   <div class="grid" id="similar"></div>
 </section>
 
+<div class="mini-prev" id="miniPrev" hidden aria-hidden="true">
+  <canvas id="miniCv"></canvas>
+  <div class="mini-txt"><b id="miniName"></b><span id="miniOpts"></span><strong id="miniPrice"></strong></div>
+  <button type="button" class="mini-up" id="miniUp" aria-label="Ver la obra más grande">↑</button>
+</div>
 <div id="ds-footer"></div>
 
 <script src="/assets/store.js"></script>
@@ -122,7 +127,7 @@
   if (cat) $("backCol").href = `/coleccion.html?c=${cat.id}`;
   document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
-  $("pName").textContent = p.name;
+  $("pName").textContent = p.name; $("miniName").textContent = p.name;
   $("pDesc").textContent = p.description || st.productDescription;
   $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
@@ -151,6 +156,8 @@
     $("pInst").textContent = DS.instText(total);
     $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
     $("qVal").textContent = state.qty;
+    $("miniPrice").textContent = DS.money(total);
+    $("miniOpts").textContent = ["size", "tipo", "color", "terminacion"].map((g) => lists[g].find((x) => x.id === state[g]).label).join(" · ");
     if (redraw) render();
     const url = new URL(location.href);
     const qs = { id: p.id, medida: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion };
@@ -175,8 +182,33 @@
     if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, state, esc[cur - 1]));
     await Promise.all(jobs);
     if (my !== tok) return;
-    document.body.dataset.ready = "1"; mirror();
+    document.body.dataset.ready = "1"; mirror(); miniDraw();
   }
+  // ---- celular: vista chica fija arriba mientras elegís las opciones
+  function miniDraw() {
+    const src = cur > 0 && !$("sc").hidden ? $("sc") : $("cv"), m = $("miniCv");
+    if (!src.width) return;
+    const dpr = Math.min(devicePixelRatio || 1, 2), h = 96 * dpr, w = Math.round(h * src.width / src.height);
+    m.width = w; m.height = h; m.style.width = w / dpr + "px";
+    m.getContext("2d").drawImage(src, 0, 0, w, h);
+  }
+  const mq = matchMedia("(max-width: 900px)");
+  function miniCheck() {
+    const st = $("stage").getBoundingClientRect(), info = document.querySelector(".pinfo").getBoundingClientRect();
+    const show = mq.matches && st.bottom < 60 && info.bottom > 220;
+    $("miniPrev").hidden = !show;
+    if (show) $("miniPrev").style.top = (document.querySelector(".topbar")?.getBoundingClientRect().bottom || 0) + "px";
+  }
+  addEventListener("scroll", miniCheck, { passive: true }); addEventListener("resize", miniCheck);
+  $("miniUp").onclick = () => $("stage").scrollIntoView({ behavior: "smooth", block: "center" });
+  $("miniCv").onclick = () => $("stage").scrollIntoView({ behavior: "smooth", block: "center" });
+  // en el celular, la descripción va después de las opciones (así el precio y las opciones quedan cerca de la foto)
+  const pdesc = document.querySelector(".pdesc"), pdescHome = pdesc?.parentNode;
+  function placeDesc() {
+    if (!pdesc) return;
+    if (mq.matches) $("backCol").before(pdesc); else if (pdesc.parentNode !== pdescHome) pdescHome.appendChild(pdesc);
+  }
+  mq.addEventListener("change", () => { placeDesc(); miniCheck(); }); placeDesc();
   let cur = 0, lbI = 0;
   function mirror() {
     const t = document.querySelector("#thumbs canvas"); if (!t) return;
