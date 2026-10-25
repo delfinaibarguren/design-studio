@@ -7,7 +7,7 @@ export type Pedido = {
   estado: "esperando_pago" | "pagado" | "cancelado"
   detalle: string; productos: number; envioPrecio: number; total: number
   entrega: "domicilio" | "retiro"; dest?: Destinatario
-  envio?: { opcion: Opcion; items: any[]; declarado: number } | null
+  envio?: { opcion: Opcion; items: any[]; declarado: number; bonif?: number } | null
   envioCreado?: { id: string; estado: string; carrier: string; seguimiento: string; tracking: string; fecha: number } | null
   envioError?: string; creandoDesde?: number; pagoId?: string
 }

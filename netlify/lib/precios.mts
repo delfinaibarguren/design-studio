@@ -73,3 +73,11 @@ export function paquetes(p: Priced[]) {
 export const huella = (p: Priced[]) => p.map((l) => `${l.size}x${l.quantity}`).sort().join(",")
 
 export const store = catalog.store as any
+
+// Envío gratis / bonificado: compras desde store.envioGratis.minimo → gratis en AMBA, al interior se bonifica hasta bonificacionInterior
+export const esAMBA = (cp: string, provincia: string) => provincia === "CABA" || (provincia === "Buenos Aires" && /^1\d{3}$/.test(cp))
+export function bonificacion(productos: number, costo: number, cp: string, provincia: string) {
+  const g = (catalog.store as any).envioGratis
+  if (!g || productos < g.minimo) return 0
+  return esAMBA(cp, provincia) ? costo : Math.min(costo, g.bonificacionInterior || 0)
+}

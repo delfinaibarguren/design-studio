@@ -1,5 +1,5 @@
 import type { Config } from "@netlify/functions"
-import { priceLines, sumLines, paquetes, huella } from "../lib/precios.mts"
+import { priceLines, sumLines, paquetes, huella, bonificacion } from "../lib/precios.mts"
 import { configurado, cotizar } from "../lib/zipnova.mts"
 import { firmar } from "../lib/firma.mts"
 
@@ -17,8 +17,10 @@ export default async (req: Request) => {
   try {
     const op = await cotizar({ cp, ciudad, provincia }, items, sumLines(lines))
     if (!op) return Response.json({ modo: "coordinar", error: "No encontramos envíos a domicilio para ese código postal" })
-    const token = firmar("envio", { op, cp, ciudad, provincia, h: huella(lines), vence: Date.now() + 6 * 3600_000 })
-    return Response.json({ modo: "zipnova", precio: op.precio, carrier: op.carrier, min: op.min, max: op.max, token })
+    const bonif = bonificacion(sumLines(lines), op.precio, cp, provincia)
+    const precio = op.precio - bonif   // lo que paga el cliente
+    const token = firmar("envio", { op, precio, bonif, cp, ciudad, provincia, h: huella(lines), vence: Date.now() + 6 * 3600_000 })
+    return Response.json({ modo: "zipnova", precio, costo: op.precio, bonif, carrier: op.carrier, min: op.min, max: op.max, token })
   } catch (e) {
     console.error("cotizar", e)
     return Response.json({ modo: "coordinar", error: "No pudimos calcular el envío en este momento" })

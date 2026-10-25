@@ -101,3 +101,4 @@ Variables en Netlify: `ADMIN_KEY` (clave de la página de presupuestos) y `PRESU
 - Transferencias: en `/pedidos.html` (clave de administración) → "Pago recibido" crea el envío.
 - Etiqueta PDF: botón en `/pedidos.html` o link en el mail de "Pago aprobado". También en Zipnova → Pendientes.
 - Si Zipnova no responde, el checkout sigue funcionando con "Envío a coordinar".
+- Envío gratis: `catalog.json` → `store.envioGratis` (minimo 250000 → gratis en AMBA = CABA o Buenos Aires con CP 1xxx; al interior se bonifica hasta 25000). El envío se crea igual en Zipnova y lo paga Delfina.

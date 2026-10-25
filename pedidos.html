@@ -94,7 +94,7 @@
       p.entrega === "retiro" ? `<span class="chip">Retira en el estudio</span>`
         : e ? `<span class="chip ok">Envío creado · ${esc(e.carrier)}</span>`
         : p.envioError ? `<span class="chip bad">Error al crear el envío</span>`
-        : p.envio ? `<span class="chip">Envío ${esc(p.envio.opcion.carrier)} ${money(p.envio.opcion.precio)}</span>` : `<span class="chip warn">Envío a coordinar</span>`,
+        : p.envio ? `<span class="chip">Envío ${esc(p.envio.opcion.carrier)} ${money(p.envio.opcion.precio)}${p.envio.bonif ? (p.envio.bonif >= p.envio.opcion.precio ? " · gratis" : " · bonificado") : ""}</span>` : `<span class="chip warn">Envío a coordinar</span>`,
     ].join("");
     const acts = [];
     if (p.estado === "esperando_pago") acts.push(`<button class="btn btn-dark" data-a="pagado" data-o="${esc(p.orden)}">Pago recibido${p.envio && !e ? " → crear envío" : ""}</button>`);
@@ -112,7 +112,7 @@
       <div class="row2">
         ${p.entrega === "domicilio" && d.calle ? `<div><b>Dirección:</b> ${esc(`${d.calle} ${d.numero}${d.depto ? ", " + d.depto : ""}, ${d.cp} ${d.ciudad}, ${d.provincia}`)}</div>` : ""}
         ${d.email || d.telefono ? `<div><b>Contacto:</b> ${esc([d.email, d.telefono, d.dni ? "DNI " + d.dni : ""].filter(Boolean).join(" · "))}</div>` : ""}
-        <div><b>Productos:</b> ${money(p.productos)} · <b>Envío:</b> ${p.envioPrecio ? money(p.envioPrecio) : "—"}</div>
+        <div><b>Productos:</b> ${money(p.productos)} · <b>Envío cobrado:</b> ${p.envioPrecio ? money(p.envioPrecio) : p.envio ? "gratis" : "—"}${p.envio && p.envio.bonif ? ` · <b>pagás vos:</b> ${money(p.envio.bonif)} (costo ${money(p.envio.opcion.precio)})` : ""}</div>
         ${e ? `<div><b>Seguimiento:</b> ${esc(e.seguimiento || "(en proceso)")} · ${esc(e.estado || "")}</div>` : ""}
         ${p.envioError ? `<div style="color:#a12d1c"><b>Error:</b> ${esc(p.envioError)}</div>` : ""}
       </div>

@@ -174,6 +174,7 @@ window.DS = (() => {
         <div class="drawer-foot" id="cartFoot">
           <div class="row"><span>Subtotal <small>(sin envío)</small></span><strong id="cartTotal">$0</strong></div>
           <p class="muted small" id="cartTransfer"></p>
+          <p class="free-ship" id="cartFree" hidden></p>
           <a class="btn btn-dark btn-block" href="/checkout.html">Iniciar compra</a>
           <button class="btn-link" id="keepShopping">Ver más productos</button>
         </div>
@@ -247,6 +248,12 @@ window.DS = (() => {
     document.getElementById("cartTotal").textContent = money(t);
     document.getElementById("cartTransfer").textContent = catalog.store.transferDiscount
       ? `O ${money(t * (1 - catalog.store.transferDiscount))} pagando con transferencia` : "";
+    const g = catalog.store.envioGratis, fr = document.getElementById("cartFree");
+    if (g && fr) {
+      fr.hidden = false;
+      fr.innerHTML = t >= g.minimo ? `🎁 <b>¡Tenés envío gratis en AMBA!</b> Al interior te bonificamos ${money(g.bonificacionInterior)}.`
+        : `Te faltan <b>${money(g.minimo - t)}</b> para el envío gratis en AMBA.`;
+    }
   }
 
   async function submitForm(name, fd) {

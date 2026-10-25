@@ -1,7 +1,7 @@
 {
   "store": {
     "name": "Design Studio",
-    "announcement": "3 cuotas sin interés · 10% OFF pagando con transferencia · Envíos a todo el país",
+    "announcement": "3 cuotas sin interés · 10% OFF pagando con transferencia · Envío gratis en AMBA desde $250.000",
     "transferDiscount": 0.1,
     "maxInstallments": 3,
     "shippingText": "Calculamos el costo con tu código postal",
@@ -19,7 +19,11 @@
     },
     "whatsappLink": "http://wa.link/vp5yn9",
     "guiaMarcos": "/assets/marcos-guia.jpg",
-    "comisionFotografa": 0.08
+    "comisionFotografa": 0.08,
+    "envioGratis": {
+      "minimo": 250000,
+      "bonificacionInterior": 25000
+    }
   },
   "sizes": [
     {

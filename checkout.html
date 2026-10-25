@@ -153,6 +153,7 @@
     }, 500);
   }
   const envioMonto = () => (ENV && ENV.modo === "zipnova" && domicilio() && !PRE ? ENV.precio : 0);
+  const conEnvioZn = () => ENV && ENV.modo === "zipnova" && domicilio() && !PRE;
 
   let lastLines = null;
   function render() {
@@ -178,11 +179,12 @@
     $("sDisc").textContent = "−" + DS.money(disc);
     $("sDiscRow").hidden = !disc;
     $("sShip").textContent = PRE && PRE.envio ? "Incluido" : !domicilio() ? "Gratis"
-      : ENV && ENV.modo === "zipnova" ? DS.money(ENV.precio) : ENV && ENV.modo === "cargando" ? "Calculando…" : ENV ? "A coordinar" : "Ingresá tu CP";
+      : ENV && ENV.modo === "zipnova" ? (ENV.precio ? DS.money(ENV.precio) : "Gratis") : ENV && ENV.modo === "cargando" ? "Calculando…" : ENV ? "A coordinar" : "Ingresá tu CP";
     $("sTotal").textContent = DS.money(sub - disc + envioMonto());
     const q = $("shipQuote");
     q.hidden = PRE || !domicilio() || !ENV;
-    if (ENV) q.innerHTML = ENV.modo === "zipnova" ? `<b>Envío ${DS.money(ENV.precio)}</b> · ${DS.esc(ENV.carrier)}${plazo(ENV) ? ` · llega en ${plazo(ENV)} desde que lo despachamos` : ""}`
+    const precioTxt = (e) => !e.precio ? `<b>Envío gratis</b>` : e.bonif ? `<b>Envío ${DS.money(e.precio)}</b> <s>${DS.money(e.costo)}</s> (te bonificamos ${DS.money(e.bonif)})` : `<b>Envío ${DS.money(e.precio)}</b>`;
+    if (ENV) q.innerHTML = ENV.modo === "zipnova" ? `${precioTxt(ENV)} · ${DS.esc(ENV.carrier)}${plazo(ENV) ? ` · llega en ${plazo(ENV)} desde que lo despachamos` : ""}`
       : ENV.modo === "cargando" ? "Calculando el envío…" : `${DS.esc(ENV.error || "No pudimos calcular el envío")}. Podés seguir igual: te escribimos para coordinarlo.`;
     $("addr").hidden = val("entrega") !== "Envío a domicilio";
     $("payBtn").textContent = transfer ? "Confirmar pedido" : "Continuar al pago";
@@ -222,7 +224,8 @@
     const sub = subTotal();
     const envio = envioMonto();
     const total = (conDesc ? sub * (1 - st.transferDiscount) : sub) + envio;
-    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro por el estudio" : envio ? `${DS.money(envio)} (${ENV.carrier})` : "A coordinar";
+    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro por el estudio"
+      : conEnvioZn() ? `${envio ? DS.money(envio) : "Gratis"} (${ENV.carrier}${ENV.bonif ? `, bonificamos ${DS.money(ENV.bonif)} de ${DS.money(ENV.costo)}` : ""})` : "A coordinar";
     const orden = PRE ? PRE.id : "DS-" + Date.now().toString(36).toUpperCase();
     $("fOrden").value = orden;
     $("fDetalle").value = (PRE ? "PEDIDO A MEDIDA\n" : "") + detalle();
@@ -245,7 +248,7 @@
       });
       const body = {
         ...(PRE ? { presupuesto: PTOK } : { items: cart }), orderId: orden, pago: transfer ? "transferencia" : "mercadopago",
-        entrega: domicilio() ? "domicilio" : "retiro", envio: envioMonto() ? ENV.token : null,
+        entrega: domicilio() ? "domicilio" : "retiro", envio: conEnvioZn() ? ENV.token : null,
         buyer: { name: g("nombre"), email: g("email"), phone: g("telefono"), dni: g("dni") },
         address: { calle: g("direccion"), numero: g("numero"), depto: g("depto"), cp: g("cp"), ciudad: g("ciudad"), provincia: g("provincia") },
       };
@@ -261,7 +264,7 @@
       if (transfer) {
         const bk = st.bank || {};
         $("dTitle").textContent = "Último paso: transferí";
-        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>.<br>Transferí <b>${DS.money(total)}</b>${envio ? " (incluye el envío)" : ""} a esta cuenta y envianos el comprobante para confirmar tu compra.`;
+        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>.<br>Transferí <b>${DS.money(total)}</b>${envio ? " (incluye el envío)" : conEnvioZn() ? " (el envío es gratis)" : ""} a esta cuenta y envianos el comprobante para confirmar tu compra.`;
         const row = (k, v, copy) => `<div class="bank-row"><span>${k}</span><b>${DS.esc(v)}</b>${copy ? `<button type="button" class="copy" data-copy="${DS.esc(v)}">Copiar</button>` : ""}</div>`;
         $("dBank").hidden = false;
         $("dBank").innerHTML = row("Monto", DS.money(total), true).replace(`data-copy="${DS.money(total)}"`, `data-copy="${Math.round(total)}"`)

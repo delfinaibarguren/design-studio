@@ -34,8 +34,8 @@ export default async (req: Request) => {
     if (entrega === "domicilio" && body.envio) {
       const q = verificar("envio", body.envio)
       if (!q || q.h !== huella(lines)) return Response.json({ error: "El costo de envío venció o cambió el carrito. Volvé a calcularlo." }, { status: 400 })
-      envioPrecio = q.op.precio
-      envio = { opcion: q.op, items: paquetes(lines), declarado: productos }
+      envioPrecio = typeof q.precio === "number" ? q.precio : q.op.precio   // lo que paga el cliente (puede ser 0 si es gratis)
+      envio = { opcion: q.op, items: paquetes(lines), declarado: productos, bonif: q.bonif || 0 }
     }
   }
   if (!items.length) return Response.json({ error: "El carrito está vacío" }, { status: 400 })
