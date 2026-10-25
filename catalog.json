@@ -1356,7 +1356,7 @@
     },
     {
       "id": "mariposa",
-      "name": "Mariposa",
+      "name": "Mariposa Negra",
       "category": "terra",
       "photo": "/assets/obras/mariposa-original.jpg",
       "defaults": {
@@ -1395,7 +1395,7 @@
     },
     {
       "id": "salpicadura",
-      "name": "Salpicadura",
+      "name": "Agua I",
       "category": "terra",
       "photo": "/assets/obras/salpicadura-original.jpg",
       "defaults": {
@@ -1434,7 +1434,7 @@
     },
     {
       "id": "gota",
-      "name": "Gota",
+      "name": "Agua II",
       "category": "terra",
       "photo": "/assets/obras/gota-original.jpg",
       "defaults": {
@@ -1551,7 +1551,7 @@
     },
     {
       "id": "mirilla",
-      "name": "Mirilla",
+      "name": "Ojo",
       "category": "terra",
       "photo": "/assets/obras/mirilla-original.jpg",
       "defaults": {
@@ -1590,7 +1590,7 @@
     },
     {
       "id": "faro",
-      "name": "Faro",
+      "name": "Cape Byron",
       "category": "terra",
       "photo": "/assets/obras/faro-original.jpg",
       "defaults": {
@@ -1629,7 +1629,7 @@
     },
     {
       "id": "mariposa-ii",
-      "name": "Mariposa II",
+      "name": "Mariposa Marrón",
       "category": "terra",
       "photo": "/assets/obras/mariposa-ii-original.jpg",
       "defaults": {
@@ -1668,7 +1668,7 @@
     },
     {
       "id": "surf",
-      "name": "Surf",
+      "name": "Session I",
       "category": "terra",
       "photo": "/assets/obras/surf-original.jpg",
       "defaults": {
@@ -1707,7 +1707,7 @@
     },
     {
       "id": "surf-ii",
-      "name": "Surf II",
+      "name": "Session II",
       "category": "terra",
       "photo": "/assets/obras/surf-ii-original.jpg",
       "defaults": {
@@ -1746,7 +1746,7 @@
     },
     {
       "id": "escalera",
-      "name": "Escalera",
+      "name": "Huzzas",
       "category": "terra",
       "photo": "/assets/obras/escalera-original.jpg",
       "defaults": {
@@ -1785,7 +1785,7 @@
     },
     {
       "id": "cerco",
-      "name": "Cerco",
+      "name": "Backyard I",
       "category": "terra",
       "photo": "/assets/obras/cerco-original.jpg",
       "defaults": {
@@ -1863,7 +1863,7 @@
     },
     {
       "id": "cerco-ii",
-      "name": "Cerco II",
+      "name": "Backyard II",
       "category": "terra",
       "photo": "/assets/obras/cerco-ii-original.jpg",
       "defaults": {
@@ -1902,7 +1902,7 @@
     },
     {
       "id": "ramas",
-      "name": "Ramas",
+      "name": "Noosa I",
       "category": "terra",
       "photo": "/assets/obras/ramas-original.jpg",
       "defaults": {
@@ -1941,7 +1941,7 @@
     },
     {
       "id": "costa",
-      "name": "Costa",
+      "name": "Noosa II",
       "category": "terra",
       "photo": "/assets/obras/costa-original.jpg",
       "defaults": {
