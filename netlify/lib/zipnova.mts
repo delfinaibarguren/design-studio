@@ -74,6 +74,7 @@ export async function crearEnvio(p: { orden: string; opcion: Opcion; items: any[
     external_id: p.orden.replace(/[^A-Za-z0-9-]/g, "").slice(0, 30),
     carrier_id: p.opcion.carrier_id, logistic_type: p.opcion.logistic_type || undefined, service_type: "standard_delivery",
     declared_value: Math.round(p.declarado), type_packaging: "none", items: p.items,
+    process_immediately: 1,   // que quede listo para despachar, con etiqueta
     destination: {
       name: d.nombre, document: d.dni, email: d.email, phone: d.telefono,
       street: d.calle, street_number: d.numero, street_extras: d.depto || "",
