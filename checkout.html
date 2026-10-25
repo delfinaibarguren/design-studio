@@ -38,7 +38,7 @@
     <div class="box">
       <h2><span class="step">2</span> Entrega</h2>
       <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span id="shipNote"></span></span></label>
-      <label class="choice"><input type="radio" name="entrega" value="Retiro por el estudio"><span><b>Retiro por el estudio</b><span>Sin cargo. Coordinamos día y horario.</span></span></label>
+      <label class="choice"><input type="radio" name="entrega" value="Retiro por el estudio"><span><b>Retiro en Del Viso, Pilar</b><span>Sin cargo. Coordinamos día y horario por WhatsApp.</span></span></label>
       <div class="fields" id="addr">
         <label class="f">Calle<input name="direccion" autocomplete="address-line1"></label>
         <label class="f">Número<input name="numero" inputmode="numeric"></label>
@@ -224,7 +224,7 @@
     const sub = subTotal();
     const envio = envioMonto();
     const total = (conDesc ? sub * (1 - st.transferDiscount) : sub) + envio;
-    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro por el estudio"
+    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro en Del Viso"
       : conEnvioZn() ? `${envio ? DS.money(envio) : "Gratis"} (${ENV.carrier}${ENV.bonif ? `, bonificamos ${DS.money(ENV.bonif)} de ${DS.money(ENV.costo)}` : ""})` : "A coordinar";
     const orden = PRE ? PRE.id : "DS-" + Date.now().toString(36).toUpperCase();
     $("fOrden").value = orden;

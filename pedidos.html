@@ -91,7 +91,7 @@
       p.estado === "pagado" ? `<span class="chip ok">Pagado</span>` : p.estado === "cancelado" ? `<span class="chip bad">Cancelado</span>` : `<span class="chip warn">Esperando pago</span>`,
       `<span class="chip">${p.pago === "transferencia" ? "Transferencia" : "Mercado Pago"}</span>`,
       p.tipo === "medida" ? `<span class="chip">A medida</span>` : "",
-      p.entrega === "retiro" ? `<span class="chip">Retira en el estudio</span>`
+      p.entrega === "retiro" ? `<span class="chip">Retira en Del Viso</span>`
         : e ? `<span class="chip ok">Envío creado · ${esc(e.carrier)}</span>`
         : p.envioError ? `<span class="chip bad">Error al crear el envío</span>`
         : p.envio ? `<span class="chip">Envío ${esc(p.envio.opcion.carrier)} ${money(p.envio.opcion.precio)}${p.envio.bonif ? (p.envio.bonif >= p.envio.opcion.precio ? " · gratis" : " · bonificado") : ""}</span>` : `<span class="chip warn">Envío a coordinar</span>`,

@@ -43,9 +43,9 @@
       "descuentoSinPaspartu": 5000,
       "paquete": {
         "peso": 3000,
-        "alto": 8,
-        "ancho": 45,
-        "largo": 55
+        "alto": 6,
+        "ancho": 36,
+        "largo": 46
       }
     },
     {
@@ -65,9 +65,9 @@
       "descuentoSinPaspartu": 8000,
       "paquete": {
         "peso": 7500,
-        "alto": 8,
-        "ancho": 65,
-        "largo": 85
+        "alto": 6,
+        "ancho": 56,
+        "largo": 76
       }
     },
     {
@@ -87,9 +87,9 @@
       "descuentoSinPaspartu": 15000,
       "paquete": {
         "peso": 15000,
-        "alto": 10,
-        "ancho": 85,
-        "largo": 115
+        "alto": 7,
+        "ancho": 76,
+        "largo": 106
       }
     }
   ],
