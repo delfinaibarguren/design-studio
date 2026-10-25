@@ -500,3 +500,6 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-plazo { margin-top: .6rem; font-size: .92rem; color: #b8893e; font-weight: 500; }
 .q-hint { display: block; margin-top: .45rem; color: #6b6862; font-size: .82rem; line-height: 1.4; }
 .q-plazo-btn { margin-top: .6rem; text-align: center; font-size: .85rem; color: #6b6862; }
+
+.ship-quote { grid-column: 1 / -1; margin: .2rem 0 0; padding: .7rem .9rem; border-radius: var(--radius); background: #f6f1e6; font-size: .9rem; line-height: 1.45; }
+.ship-quote b { font-weight: 600; }

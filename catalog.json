@@ -4,7 +4,7 @@
     "announcement": "3 cuotas sin interés · 10% OFF pagando con transferencia · Envíos a todo el país",
     "transferDiscount": 0.1,
     "maxInstallments": 3,
-    "shippingText": "Envío a coordinar según tu ubicación",
+    "shippingText": "Calculamos el costo con tu código postal",
     "whatsapp": "",
     "instagram": "",
     "email": "",
@@ -36,7 +36,13 @@
         "chato-pintado": 93000
       },
       "arpillera": 20000,
-      "descuentoSinPaspartu": 5000
+      "descuentoSinPaspartu": 5000,
+      "paquete": {
+        "peso": 2500,
+        "alto": 8,
+        "ancho": 45,
+        "largo": 55
+      }
     },
     {
       "id": "50x70",
@@ -52,7 +58,13 @@
         "chato-pintado": 154000
       },
       "arpillera": 25000,
-      "descuentoSinPaspartu": 8000
+      "descuentoSinPaspartu": 8000,
+      "paquete": {
+        "peso": 5000,
+        "alto": 8,
+        "ancho": 65,
+        "largo": 85
+      }
     },
     {
       "id": "70x100",
@@ -68,7 +80,13 @@
         "chato-pintado": 220000
       },
       "arpillera": 30000,
-      "descuentoSinPaspartu": 15000
+      "descuentoSinPaspartu": 15000,
+      "paquete": {
+        "peso": 9000,
+        "alto": 10,
+        "ancho": 85,
+        "largo": 115
+      }
     }
   ],
   "finishes": [

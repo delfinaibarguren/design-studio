@@ -1,96 +1,74 @@
-import type { Config, Context } from "@netlify/functions"
-import catalog from "../../catalog.json" with { type: "json" }
-import { verificar } from "../lib/presupuesto.mts"
+import type { Config } from "@netlify/functions"
+import { verificar as verificarPresupuesto } from "../lib/presupuesto.mts"
+import { priceLines, sumLines, paquetes, huella, store } from "../lib/precios.mts"
+import { verificar } from "../lib/firma.mts"
+import { guardar, leer, type Pedido } from "../lib/pedidos.mts"
 
-type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; color?: string; terminacion?: string; fondo?: string; qty: number }
+const txt = (s: unknown, n = 120) => String(s ?? "").replace(/\s+/g, " ").trim().slice(0, n)
 
-const products = new Map(catalog.products.map((p) => [p.id, p]))
-const sizes = new Map(catalog.sizes.map((s) => [s.id, s]))
-const frames = new Map(catalog.frames.map((f) => [f.id, f]))
+// Guarda el pedido y, si paga con Mercado Pago, crea el link de pago (precios y envío calculados acá).
+export default async (req: Request) => {
+  let body: any
+  try { body = await req.json() } catch { return Response.json({ error: "Pedido inválido" }, { status: 400 }) }
+  const pago = body.pago === "transferencia" ? "transferencia" : "mercadopago"
+  const orden = txt(body.orderId, 40).replace(/[^A-Za-z0-9-]/g, "") || "DS-" + Date.now().toString(36).toUpperCase()
+  const b = body.buyer || {}, a = body.address || {}
+  const entrega = body.entrega === "retiro" ? "retiro" : "domicilio"
 
-// El precio siempre se calcula acá, nunca se confía en el navegador.
-function priceLine(line: Line) {
-  const product: any = products.get(String(line.productId))
-  const size = sizes.get(String(line.size))
-  if (!product || !size) return null
-  const qtyS = Math.max(1, Math.min(10, Math.floor(Number(line.qty) || 1)))
-  if (product.photo) {
-    const C: any = catalog
-    const find = (list: any[], id: any) => (list || []).find((x) => x.id === String(id))
-    const ft = find(C.frameTypes, line.tipo), col = find(C.frameColors, line.color), ter = find(C.terminaciones, line.terminacion)
-    const fon = ter?.id === "arpillera" ? find(C.fondos, line.fondo) : null
-    if (!ft || !col || !ter || (ter.id === "arpillera" && !fon)) return null
-    const variant = `${size.label}, marco ${ft.label.toLowerCase()} ${col.label.toLowerCase()}, ${ter.label.toLowerCase()}${fon ? " fondo " + fon.label.toLowerCase() : ""}`
-    return {
-      id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id].filter(Boolean).join("-"),
-      title: `${product.name} (${variant})`,
-      quantity: qtyS,
-      unit_price: size.precios[`${ft.id}-${col.grupo || "natural"}`] + (ter.id === "arpillera" ? size.arpillera || 0 : 0) - (ter.id === "sin" ? size.descuentoSinPaspartu || 0 : 0),
-      currency_id: "ARS",
-    }
-  }
-  if (product.styles) {
-    const st = product.styles.find((s: any) => s.id === line.style)
-    if (!st) return null
-    const types: any[] = (catalog as any).frameTypes || []
-    const ft = types.find((t) => t.id === line.tipo)
-    if (types.length && !ft) return null
-    const label = size.label + (ft ? `, tipo ${ft.label.toLowerCase()}` : "")
-    return {
-      id: `${product.id}-${size.id}-${ft ? ft.id + "-" : ""}${st.id}`,
-      title: `${product.name} (${label}, ${st.label})`,
-      quantity: qtyS,
-      unit_price: (st.finish === "marco" ? size.marco : size.lamina) + (ft?.extra || 0),
-      currency_id: "ARS",
-    }
-  }
-  const withFrame = line.finish === "marco"
-  const frame = withFrame ? frames.get(String(line.frame)) : null
-  if (withFrame && !frame) return null
-  const qty = Math.max(1, Math.min(10, Math.floor(Number(line.qty) || 1)))
-  const variant = withFrame ? `${size.label}, marco ${frame!.label.toLowerCase()}` : `${size.label}, solo lámina`
-  return {
-    id: `${product.id}-${size.id}-${line.finish}${frame ? "-" + frame.id : ""}`,
-    title: `${product.name} (${variant})`,
-    quantity: qty,
-    unit_price: withFrame ? size.marco : size.lamina,
-    currency_id: "ARS",
-  }
-}
-
-export default async (req: Request, context: Context) => {
-  const token = Netlify.env.get("MP_ACCESS_TOKEN")
-  if (!token) return Response.json({ mode: "manual" })
-
-  let body: { items?: Line[]; presupuesto?: string; buyer?: { name?: string; email?: string; phone?: string }; orderId?: string }
-  try {
-    body = await req.json()
-  } catch {
-    return Response.json({ error: "Pedido inválido" }, { status: 400 })
-  }
-
-  let items: any[]
+  let items: any[], productos = 0, tipo: Pedido["tipo"] = "catalogo", envioPrecio = 0, envio: Pedido["envio"] = null, descTransfer = true, detalle = ""
   if (body.presupuesto) {
     // pedido a medida: el monto sale del link firmado, nunca del navegador
-    const p = verificar(body.presupuesto)
+    const p = verificarPresupuesto(body.presupuesto)
     if ("error" in p) return Response.json({ error: p.error }, { status: 400 })
+    tipo = "medida"; descTransfer = p.descTransfer
     items = p.items.map((i, k) => ({ id: `${p.id}-${k + 1}`, title: `${i.cant} × ${i.desc}`.slice(0, 250), quantity: 1, unit_price: i.precio, currency_id: "ARS" }))
-    if (p.envio) items.push({ id: `${p.id}-envio`, title: "Envío", quantity: 1, unit_price: p.envio, currency_id: "ARS" })
-    body.orderId = p.id
+    productos = p.items.reduce((s, i) => s + i.precio, 0)
+    envioPrecio = p.envio || 0
+    detalle = p.items.map((i) => `${i.cant} × ${i.desc}`).join("\n")
   } else {
-    items = (Array.isArray(body.items) ? body.items : []).map(priceLine).filter(Boolean)
+    const lines = priceLines(body.items)
+    if (!lines.length) return Response.json({ error: "El carrito está vacío" }, { status: 400 })
+    items = lines.map(({ size, name, ...l }) => l)
+    productos = sumLines(lines)
+    detalle = lines.map((l) => `${l.quantity} × ${l.title}`).join("\n")
+    if (entrega === "domicilio" && body.envio) {
+      const q = verificar("envio", body.envio)
+      if (!q || q.h !== huella(lines)) return Response.json({ error: "El costo de envío venció o cambió el carrito. Volvé a calcularlo." }, { status: 400 })
+      envioPrecio = q.op.precio
+      envio = { opcion: q.op, items: paquetes(lines), declarado: productos }
+    }
   }
-  if (items.length === 0) return Response.json({ error: "El carrito está vacío" }, { status: 400 })
+  if (!items.length) return Response.json({ error: "El carrito está vacío" }, { status: 400 })
+  if (envioPrecio) items.push({ id: `${orden}-envio`, title: envio ? `Envío (${envio.opcion.carrier})` : "Envío", quantity: 1, unit_price: envioPrecio, currency_id: "ARS" })
 
+  const desc = pago === "transferencia" && descTransfer ? Math.round(productos * store.transferDiscount) : 0
+  const pedido: Pedido = {
+    orden, fecha: Date.now(), tipo, pago, estado: "esperando_pago", detalle, productos, envioPrecio, total: productos - desc + envioPrecio, entrega,
+    dest: entrega === "domicilio" ? {
+      nombre: txt(b.name, 80), dni: txt(b.dni, 15).replace(/\D/g, ""), email: txt(b.email, 120), telefono: txt(b.phone, 40),
+      calle: txt(a.calle, 80), numero: txt(a.numero, 10), depto: txt(a.depto, 40), cp: txt(a.cp, 8), ciudad: txt(a.ciudad, 80), provincia: txt(a.provincia, 40),
+    } : undefined,
+    envio,
+  }
+  try {
+    const prev = await leer(orden)
+    if (!prev || prev.estado === "esperando_pago") await guardar(pedido)
+  } catch (e) { console.error("guardar pedido", e) }
+
+  if (pago === "transferencia") return Response.json({ mode: "transfer", total: pedido.total })
+
+  const token = Netlify.env.get("MP_ACCESS_TOKEN")
+  if (!token) return Response.json({ mode: "manual" })
   const origin = new URL(req.url).origin
   const res = await fetch("https://api.mercadopago.com/checkout/preferences", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify({
       items,
-      payer: body.buyer?.email ? { name: body.buyer.name, email: body.buyer.email } : undefined,
-      external_reference: body.orderId ? String(body.orderId).slice(0, 64) : undefined,
-      payment_methods: { installments: catalog.store.maxInstallments },
+      payer: b.email ? { name: txt(b.name, 80), email: txt(b.email, 120) } : undefined,
+      external_reference: orden,
+      notification_url: `${origin}/api/mp-aviso`,
+      payment_methods: { installments: store.maxInstallments },
       back_urls: {
         success: `${origin}/gracias.html?estado=ok`,
         pending: `${origin}/gracias.html?estado=pendiente`,
@@ -100,7 +78,6 @@ export default async (req: Request, context: Context) => {
       statement_descriptor: "DESIGN STUDIO",
     }),
   })
-
   if (!res.ok) {
     console.error("Mercado Pago error", res.status, await res.text())
     return Response.json({ error: "No pudimos iniciar el pago con Mercado Pago" }, { status: 502 })

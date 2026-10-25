@@ -29,6 +29,29 @@
   const t = document.getElementById("t"), m = document.getElementById("m");
   if (e === "pendiente") { t.textContent = "Tu pago está en proceso"; m.textContent = "Cuando Mercado Pago lo confirme te avisamos por email para coordinar el envío."; DS.setCart([]); }
   if (e === "error") { t.textContent = "El pago no se completó"; m.textContent = "No se realizó ningún cobro. Tu carrito sigue guardado: podés intentarlo de nuevo."; }
+  // pago aprobado: confirmamos con Mercado Pago y mostramos el seguimiento del envío
+  const q = new URLSearchParams(location.search), pago = q.get("payment_id") || q.get("collection_id");
+  if (e === "ok" && pago && /^\d+$/.test(pago)) {
+    m.textContent = "Tu pago fue aprobado. Estamos generando tu envío…";
+    let d = null;
+    try { d = await (await fetch("/api/confirmar?pago=" + pago)).json(); } catch {}
+    if (d && d.envio) {
+      const seg = d.envio.tracking ? `<a href="${DS.esc(d.envio.tracking)}" target="_blank" rel="noopener">seguí tu envío acá</a>` : "";
+      m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Preparamos tu cuadro y lo despachamos con <b>${DS.esc(d.envio.carrier)}</b>.`
+        + (d.envio.seguimiento ? `<br>Número de seguimiento: <b>${DS.esc(d.envio.seguimiento)}</b>` : "") + (seg ? `<br>Podés ${seg}.` : "")
+        + `<br><small>Guardá esta página o hacé una captura para tener tu número de seguimiento.</small>`;
+    } else if (d && d.orden) {
+      m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Te escribimos a la brevedad con los datos del envío.`;
+    } else {
+      m.textContent = "Tu pago fue aprobado. Te escribimos a la brevedad con los datos del envío.";
+    }
+    let aviso = false; try { aviso = sessionStorage.getItem("aviso-" + pago) === "1"; sessionStorage.setItem("aviso-" + pago, "1"); } catch {}
+    if (d && d.orden && !aviso) DS.notifyMail(`Pago aprobado (${d.orden})${d.envio ? " — envío creado" : ""}`, {
+      "N° de pedido": d.orden, "Pago Mercado Pago": pago,
+      "Envío": d.envio ? `${d.envio.carrier} · seguimiento ${d.envio.seguimiento || "(en proceso)"}` : d.envioError ? "No se pudo crear: revisalo en la página de pedidos" : "A coordinar / retiro",
+      "Etiqueta para imprimir": d.etiqueta || "", "Página de pedidos": location.origin + "/pedidos.html",
+    });
+  }
 })();
 </script>
 </body>

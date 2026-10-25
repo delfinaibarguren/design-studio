@@ -89,3 +89,14 @@ Hero: "Enmarcados personalizados." con foto de Ponis. Vista previa de links: `as
 2. Cuando acepta, entrá a **/presupuestos.html** (página privada, no aparece en el menú), poné la clave de administración, los ítems con su precio, envío opcional y generá el link.
 3. El link abre el checkout con el pedido y el monto fijo (firmado; no se puede modificar). El cliente completa dirección y paga con Mercado Pago o transferencia. Llega como pedido normal (formulario `pedido`, N° `PR-…`).
 Variables en Netlify: `ADMIN_KEY` (clave de la página de presupuestos) y `PRESUPUESTO_SECRET` (firma de los links; si se cambia, los links viejos dejan de funcionar).
+
+## Envíos con Zipnova
+
+- Variables en Netlify: `ZIPNOVA_TOKEN`, `ZIPNOVA_SECRET`, `ZIPNOVA_ACCOUNT_ID` (22147). Origen: taller de Del Viso (id 382376, se puede cambiar con `ZIPNOVA_ORIGIN_ID`).
+- Medidas y peso de cada caja embalada: `catalog.json` → `sizes[].paquete` (peso en gramos, medidas en cm).
+- En el checkout, al poner CP + ciudad + provincia, `/api/envio` cotiza y devuelve la opción a domicilio más barata (precio firmado).
+- `/api/checkout` guarda el pedido (Netlify Blobs, store "pedidos") y, con Mercado Pago, suma el envío al link de pago.
+- Cuando Mercado Pago aprueba (`/api/mp-aviso` o la página de gracias vía `/api/confirmar`), se crea el envío en Zipnova una sola vez.
+- Transferencias: en `/pedidos.html` (clave de administración) → "Pago recibido" crea el envío.
+- Etiqueta PDF: botón en `/pedidos.html` o link en el mail de "Pago aprobado". También en Zipnova → Pendientes.
+- Si Zipnova no responde, el checkout sigue funcionando con "Envío a coordinar".

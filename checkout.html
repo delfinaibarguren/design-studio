@@ -24,6 +24,7 @@
     <input type="hidden" name="detalle" id="fDetalle">
     <input type="hidden" name="total" id="fTotal">
     <input type="hidden" name="comision_fotografas" id="fComision">
+    <input type="hidden" name="envio" id="fEnvio">
 
     <div class="box">
       <h2><span class="step">1</span> Datos de contacto</h2>
@@ -39,8 +40,10 @@
       <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span id="shipNote"></span></span></label>
       <label class="choice"><input type="radio" name="entrega" value="Retiro por el estudio"><span><b>Retiro por el estudio</b><span>Sin cargo. Coordinamos día y horario.</span></span></label>
       <div class="fields" id="addr">
-        <label class="f full">Calle y número<input name="direccion" autocomplete="street-address"></label>
-        <label class="f">Piso / depto (opcional)<input name="depto"></label>
+        <label class="f">Calle<input name="direccion" autocomplete="address-line1"></label>
+        <label class="f">Número<input name="numero" inputmode="numeric"></label>
+        <label class="f">Piso / depto (opcional)<input name="depto" autocomplete="address-line2"></label>
+        <label class="f">DNI (lo pide el transporte)<input name="dni" inputmode="numeric"></label>
         <label class="f">Código postal<input name="cp" autocomplete="postal-code"></label>
         <label class="f">Ciudad<input name="ciudad" autocomplete="address-level2"></label>
         <label class="f">Provincia
@@ -49,6 +52,7 @@
             <option>CABA</option><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
           </select>
         </label>
+        <p class="ship-quote full" id="shipQuote" hidden></p>
       </div>
     </div>
 
@@ -122,6 +126,34 @@
     ? PRE.items.map((i) => `${i.cant} × ${i.desc} — ${DS.money(i.precio)}`).concat(PRE.envio ? [`Envío — ${DS.money(PRE.envio)}`] : []).join("\n") + (PRE.nota ? `\nNota: ${PRE.nota}` : "")
     : DS.getCart().map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
 
+  // ---- envío: se cotiza con Zipnova cuando están CP, ciudad y provincia
+  let ENV = null, envKey = "", envTimer = 0, envSeq = 0;   // ENV = { modo, precio, carrier, min, max, token } | { modo: "coordinar" } | { modo: "cargando" }
+  const domicilio = () => val("entrega") === "Envío a domicilio";
+  const envDatos = () => ({ cp: form.elements.cp.value.replace(/\D/g, ""), ciudad: form.elements.ciudad.value.trim(), provincia: form.elements.provincia.value });
+  const plazo = (e) => (e.min && e.max ? (e.min === e.max ? `${e.max} días hábiles` : `${e.min} a ${e.max} días hábiles`) : "");
+  function cotizarEnvio() {
+    if (PRE || !domicilio()) return;
+    const d = envDatos();
+    const k = JSON.stringify([d, DS.getCart().map((l) => [l.productId, l.size, l.qty])]);
+    if (k === envKey) return;
+    envKey = k; ENV = null;
+    if (d.cp.length !== 4 || !d.ciudad || !d.provincia) { render(); return; }
+    ENV = { modo: "cargando" }; render();
+    clearTimeout(envTimer);
+    const seq = ++envSeq;
+    envTimer = setTimeout(async () => {
+      let r = null;
+      try {
+        const x = await fetch("/api/envio", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...d, items: DS.getCart() }) });
+        r = await x.json().catch(() => null);
+      } catch {}
+      if (seq !== envSeq) return;
+      ENV = r && r.modo === "zipnova" ? r : { modo: "coordinar", error: (r && r.error) || "" };
+      render();
+    }, 500);
+  }
+  const envioMonto = () => (ENV && ENV.modo === "zipnova" && domicilio() && !PRE ? ENV.precio : 0);
+
   function render() {
     const cart = DS.getCart();
     if (!PRE && !cart.length && $("done").hidden) {
@@ -142,16 +174,21 @@
     $("sDiscRow").hidden = !transfer;
     $("sDisc").textContent = "−" + DS.money(disc);
     $("sDiscRow").hidden = !disc;
-    $("sShip").textContent = PRE && PRE.envio ? "Incluido" : val("entrega") === "Retiro por el estudio" ? "Gratis" : "A coordinar";
-    $("sTotal").textContent = DS.money(sub - disc);
+    $("sShip").textContent = PRE && PRE.envio ? "Incluido" : !domicilio() ? "Gratis"
+      : ENV && ENV.modo === "zipnova" ? DS.money(ENV.precio) : ENV && ENV.modo === "cargando" ? "Calculando…" : ENV ? "A coordinar" : "Ingresá tu CP";
+    $("sTotal").textContent = DS.money(sub - disc + envioMonto());
+    const q = $("shipQuote");
+    q.hidden = PRE || !domicilio() || !ENV;
+    if (ENV) q.innerHTML = ENV.modo === "zipnova" ? `<b>Envío ${DS.money(ENV.precio)}</b> · ${DS.esc(ENV.carrier)}${plazo(ENV) ? ` · llega en ${plazo(ENV)} desde que lo despachamos` : ""}`
+      : ENV.modo === "cargando" ? "Calculando el envío…" : `${DS.esc(ENV.error || "No pudimos calcular el envío")}. Podés seguir igual: te escribimos para coordinarlo.`;
     $("addr").hidden = val("entrega") !== "Envío a domicilio";
     $("payBtn").textContent = transfer ? "Confirmar pedido" : "Continuar al pago";
   }
-  form.addEventListener("change", render);
-  form.addEventListener("input", (e) => { e.target.style.borderColor = ""; });
+  form.addEventListener("change", () => { render(); cotizarEnvio(); });
+  form.addEventListener("input", (e) => { e.target.style.borderColor = ""; if (["cp", "ciudad"].includes(e.target.name)) { clearTimeout(envTimer); envTimer = setTimeout(cotizarEnvio, 900); } });
   render();
   // el carrito lateral también puede cambiar el pedido
-  new MutationObserver(render).observe($("cartBody"), { childList: true });
+  new MutationObserver(() => { render(); cotizarEnvio(); }).observe($("cartBody"), { childList: true });
 
   document.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-copy]"); if (!b) return;
@@ -162,17 +199,22 @@
     e.preventDefault();
     const err = $("err"); err.hidden = true;
     const required = ["email", "nombre", "telefono"];
-    if (val("entrega") === "Envío a domicilio") required.push("direccion", "cp", "ciudad", "provincia");
+    if (val("entrega") === "Envío a domicilio") required.push("direccion", "numero", "cp", "ciudad", "provincia", "dni");
     const missing = required.filter((n) => !form.elements[n].value.trim());
     required.forEach((n) => form.elements[n].style.borderColor = missing.includes(n) ? "#a12d1c" : "");
     if (missing.length || !form.elements.email.checkValidity()) {
       err.textContent = "Completá los campos marcados para continuar."; err.hidden = false; return;
     }
     const cart = DS.getCart(); if (!PRE && !cart.length) return;
+    if (!PRE && domicilio() && (!ENV || ENV.modo === "cargando")) {
+      cotizarEnvio(); err.textContent = "Estamos calculando el envío, esperá un segundo y volvé a intentar."; err.hidden = false; return;
+    }
     const transfer = val("pago") === "Transferencia";
     const conDesc = transfer && discOn();
     const sub = subTotal();
-    const total = conDesc ? sub * (1 - st.transferDiscount) : sub;
+    const envio = envioMonto();
+    const total = (conDesc ? sub * (1 - st.transferDiscount) : sub) + envio;
+    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro por el estudio" : envio ? `${DS.money(envio)} (${ENV.carrier})` : "A coordinar";
     const orden = PRE ? PRE.id : "DS-" + Date.now().toString(36).toUpperCase();
     $("fOrden").value = orden;
     $("fDetalle").value = (PRE ? "PEDIDO A MEDIDA\n" : "") + detalle();
@@ -188,17 +230,20 @@
       await DS.submitForm("pedido", new FormData(form));
       const g = (n) => (form.elements[n] ? form.elements[n].value : "");
       DS.notifyMail(`${PRE ? "Pago de pedido a medida" : "Nueva compra en la web"} (${g("orden")}) — ${g("nombre")} — ${g("total")}`, {
-        "N° de pedido": g("orden"), "Detalle": g("detalle"), "Total": g("total"), "Forma de pago": val("pago"),
+        "N° de pedido": g("orden"), "Detalle": g("detalle"), "Envío": g("envio"), "Total": g("total"), "Forma de pago": val("pago"),
         "Nombre": g("nombre"), "Email": g("email"), "Teléfono": g("telefono"), "Entrega": val("entrega"),
-        "Dirección": [g("direccion"), g("depto"), g("cp"), g("ciudad"), g("provincia")].filter(Boolean).join(", "),
+        "Dirección": [[g("direccion"), g("numero")].filter(Boolean).join(" "), g("depto"), g("cp"), g("ciudad"), g("provincia")].filter(Boolean).join(", "), "DNI": g("dni"),
         "Comentarios": g("comentarios"), "Comisión fotógrafas (interno)": g("comision_fotografas"),
       });
+      const body = {
+        ...(PRE ? { presupuesto: PTOK } : { items: cart }), orderId: orden, pago: transfer ? "transferencia" : "mercadopago",
+        entrega: domicilio() ? "domicilio" : "retiro", envio: envioMonto() ? ENV.token : null,
+        buyer: { name: g("nombre"), email: g("email"), phone: g("telefono"), dni: g("dni") },
+        address: { calle: g("direccion"), numero: g("numero"), depto: g("depto"), cp: g("cp"), ciudad: g("ciudad"), provincia: g("provincia") },
+      };
+      const r = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
+      const data = r ? await r.json().catch(() => ({})) : {};
       if (!transfer) {
-        const r = await fetch("/api/checkout", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...(PRE ? { presupuesto: PTOK } : { items: cart }), orderId: orden, buyer: { name: form.elements.nombre.value, email: form.elements.email.value } }),
-        });
-        const data = await r.json().catch(() => ({}));
         if (data.mode === "mercadopago" && data.url) { location.href = data.url; return; }
         if (data.mode !== "manual") throw new Error(data.error || "pago");
       }
@@ -208,7 +253,7 @@
       if (transfer) {
         const bk = st.bank || {};
         $("dTitle").textContent = "Último paso: transferí";
-        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>.<br>Transferí <b>${DS.money(total)}</b> a esta cuenta y envianos el comprobante para confirmar tu compra.`;
+        $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>.<br>Transferí <b>${DS.money(total)}</b>${envio ? " (incluye el envío)" : ""} a esta cuenta y envianos el comprobante para confirmar tu compra.`;
         const row = (k, v, copy) => `<div class="bank-row"><span>${k}</span><b>${DS.esc(v)}</b>${copy ? `<button type="button" class="copy" data-copy="${DS.esc(v)}">Copiar</button>` : ""}</div>`;
         $("dBank").hidden = false;
         $("dBank").innerHTML = row("Monto", DS.money(total), true).replace(`data-copy="${DS.money(total)}"`, `data-copy="${Math.round(total)}"`)
@@ -219,7 +264,9 @@
         $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Te vamos a escribir a la brevedad con el link de pago.`;
       }
     } catch (x) {
-      err.textContent = "No pudimos iniciar el pago. Probá de nuevo en un momento o elegí transferencia."; err.hidden = false;
+      const m = x && x.message && x.message !== "pago" && !/fetch|network/i.test(x.message) ? x.message : "No pudimos iniciar el pago. Probá de nuevo en un momento o elegí transferencia.";
+      err.textContent = m; err.hidden = false;
+      if (/envío/.test(m)) { envKey = ""; cotizarEnvio(); }
     } finally {
       btn.disabled = false; render();
     }

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pedidos | Dsgn. Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    .adm { max-width: 980px; margin: 0 auto; padding: 40px var(--gutter) 80px; }
+    .adm h1 { font-family: "Playfair Display", Georgia, serif; font-size: 2.4rem; margin: 0 0 .3rem; }
+    .adm .sub { color: var(--ink-soft); margin: 0 0 1.4rem; }
+    .login { display: flex; gap: .6rem; align-items: end; flex-wrap: wrap; }
+    .login .f { flex: 1 1 220px; }
+    .filt { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1.2rem 0 .8rem; }
+    .filt button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: .35rem .9rem; cursor: pointer; font: inherit; font-size: .85rem; }
+    .filt button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .ped { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: .8rem; }
+    .ped-top { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+    .ped-top h3 { margin: 0; font-size: 1.05rem; }
+    .ped-top small { color: var(--ink-soft); }
+    .chips { display: flex; gap: .35rem; flex-wrap: wrap; margin: .5rem 0; }
+    .chip { font-size: .75rem; padding: .2rem .6rem; border-radius: 999px; background: #eee9df; }
+    .chip.ok { background: #dcefe2; color: #1e6b3a; } .chip.warn { background: #f8e7c9; color: #7a4d00; } .chip.bad { background: #f8d7d3; color: #a12d1c; }
+    .ped pre { white-space: pre-wrap; font: inherit; font-size: .88rem; margin: .4rem 0; color: var(--ink-soft); }
+    .ped .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem 1.4rem; font-size: .88rem; }
+    .acts { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .7rem; }
+    .acts .btn { padding: .55rem 1rem; font-size: .8rem; }
+    .test { margin-top: 2rem; }
+    .test pre { max-height: 320px; overflow: auto; background: #f4f1ea; padding: .8rem; border-radius: 8px; font-size: .75rem; }
+    @media (max-width: 640px) { .ped .row2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main class="adm">
+  <h1>Pedidos y envíos</h1>
+  <p class="sub">Acá ves cada compra de la web, su pago y su envío. Cuando te llega una transferencia, tocá <b>"Pago recibido"</b> y el envío se crea solo en Zipnova.</p>
+
+  <div class="box login">
+    <label class="f">Clave<input type="password" id="key" autocomplete="current-password"></label>
+    <button class="btn btn-dark" id="load">Ver pedidos</button>
+  </div>
+  <p class="q-err" id="err" hidden></p>
+
+  <div id="panel" hidden>
+    <div class="filt" id="filt">
+      <button data-f="todos" class="on">Todos</button>
+      <button data-f="esperando">Esperando pago</button>
+      <button data-f="preparar">Para despachar</button>
+      <button data-f="problema">Con problema</button>
+    </div>
+    <div id="list"></div>
+
+    <div class="box test">
+      <h2>Probar la conexión con Zipnova</h2>
+      <p class="sub" style="margin:0 0 .8rem">Cotiza un cuadro 50x70 embalado desde tu taller hasta el destino que pongas.</p>
+      <div class="fields">
+        <label class="f">CP<input id="tCp" value="5000"></label>
+        <label class="f">Ciudad<input id="tCiudad" value="Córdoba"></label>
+        <label class="f">Provincia<input id="tProv" value="Córdoba"></label>
+      </div>
+      <button class="btn btn-outline" id="tGo" style="margin-top:.8rem">Cotizar prueba</button>
+      <p id="tRes"></p>
+      <pre id="tRaw" hidden></pre>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const money = (n) => "$" + Math.round(n || 0).toLocaleString("es-AR");
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  try { $("key").value = localStorage.getItem("ds-admin-key") || ""; } catch {}
+  let PED = [], filtro = "todos";
+
+  async function api(accion, extra = {}) {
+    const r = await fetch("/api/admin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ key: $("key").value.trim(), accion, ...extra }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || "Error " + r.status);
+    return d;
+  }
+  const grupo = (p) => p.estado === "cancelado" ? "cancelado" : p.estado !== "pagado" ? "esperando" : p.envioError ? "problema" : "preparar";
+
+  function card(p) {
+    const f = new Date(p.fecha).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+    const d = p.dest || {}, e = p.envioCreado;
+    const chips = [
+      p.estado === "pagado" ? `<span class="chip ok">Pagado</span>` : p.estado === "cancelado" ? `<span class="chip bad">Cancelado</span>` : `<span class="chip warn">Esperando pago</span>`,
+      `<span class="chip">${p.pago === "transferencia" ? "Transferencia" : "Mercado Pago"}</span>`,
+      p.tipo === "medida" ? `<span class="chip">A medida</span>` : "",
+      p.entrega === "retiro" ? `<span class="chip">Retira en el estudio</span>`
+        : e ? `<span class="chip ok">Envío creado · ${esc(e.carrier)}</span>`
+        : p.envioError ? `<span class="chip bad">Error al crear el envío</span>`
+        : p.envio ? `<span class="chip">Envío ${esc(p.envio.opcion.carrier)} ${money(p.envio.opcion.precio)}</span>` : `<span class="chip warn">Envío a coordinar</span>`,
+    ].join("");
+    const acts = [];
+    if (p.estado === "esperando_pago") acts.push(`<button class="btn btn-dark" data-a="pagado" data-o="${esc(p.orden)}">Pago recibido${p.envio && !e ? " → crear envío" : ""}</button>`);
+    if (p.estado === "pagado" && p.envio && !e) acts.push(`<button class="btn btn-dark" data-a="reintentar" data-o="${esc(p.orden)}">${p.envioError ? "Reintentar envío" : "Crear envío"}</button>`);
+    if (e) acts.push(`<a class="btn btn-dark" href="${esc(p.etiqueta)}" target="_blank" rel="noopener">Etiqueta PDF</a>`);
+    if (e && e.tracking) acts.push(`<a class="btn btn-outline" href="${esc(e.tracking)}" target="_blank" rel="noopener">Seguimiento</a>`);
+    if (e) acts.push(`<button class="btn btn-outline" data-a="actualizar" data-o="${esc(p.orden)}">Actualizar estado</button>`);
+    if (p.estado === "esperando_pago") acts.push(`<button class="btn btn-outline" data-a="cancelar" data-o="${esc(p.orden)}">Cancelar</button>`);
+    if (d.telefono) acts.push(`<a class="btn btn-outline" href="https://wa.me/${esc(((n) => (n.startsWith("54") ? n : "549" + n.replace(/^0/, "")))(String(d.telefono).replace(/\D/g, "")))}" target="_blank" rel="noopener">WhatsApp</a>`);
+    return `<div class="ped">
+      <div class="ped-top"><h3>${esc(p.orden)} · ${esc(d.nombre || "")}</h3><small>${f} · <b>${money(p.total)}</b></small></div>
+      <div class="chips">${chips}</div>
+      <pre>${esc(p.detalle)}</pre>
+      <div class="row2">
+        ${p.entrega === "domicilio" && d.calle ? `<div><b>Dirección:</b> ${esc(`${d.calle} ${d.numero}${d.depto ? ", " + d.depto : ""}, ${d.cp} ${d.ciudad}, ${d.provincia}`)}</div>` : ""}
+        ${d.email || d.telefono ? `<div><b>Contacto:</b> ${esc([d.email, d.telefono, d.dni ? "DNI " + d.dni : ""].filter(Boolean).join(" · "))}</div>` : ""}
+        <div><b>Productos:</b> ${money(p.productos)} · <b>Envío:</b> ${p.envioPrecio ? money(p.envioPrecio) : "—"}</div>
+        ${e ? `<div><b>Seguimiento:</b> ${esc(e.seguimiento || "(en proceso)")} · ${esc(e.estado || "")}</div>` : ""}
+        ${p.envioError ? `<div style="color:#a12d1c"><b>Error:</b> ${esc(p.envioError)}</div>` : ""}
+      </div>
+      <div class="acts">${acts.join("")}</div>
+    </div>`;
+  }
+  function draw() {
+    const l = PED.filter((p) => filtro === "todos" || grupo(p) === filtro);
+    $("list").innerHTML = l.length ? l.map(card).join("") : `<p class="sub">No hay pedidos ${filtro === "todos" ? "todavía" : "en esta categoría"}.</p>`;
+  }
+  async function load() {
+    $("err").hidden = true;
+    try {
+      const d = await api("listar");
+      try { localStorage.setItem("ds-admin-key", $("key").value.trim()); } catch {}
+      PED = d.pedidos || []; $("panel").hidden = false; draw();
+      if (!d.zipnova) { $("err").textContent = "Zipnova todavía no está conectado (faltan las claves en Netlify)."; $("err").hidden = false; }
+    } catch (x) { $("err").textContent = x.message; $("err").hidden = false; }
+  }
+  $("load").onclick = load;
+  $("key").addEventListener("keydown", (e) => { if (e.key === "Enter") load(); });
+  $("filt").onclick = (e) => { const b = e.target.closest("[data-f]"); if (!b) return; filtro = b.dataset.f; [...$("filt").children].forEach((x) => x.classList.toggle("on", x === b)); draw(); };
+  $("list").onclick = async (e) => {
+    const b = e.target.closest("[data-a]"); if (!b) return;
+    if (b.dataset.a === "cancelar" && !confirm("¿Cancelar este pedido?")) return;
+    if (b.dataset.a === "pagado" && !confirm("¿Confirmás que recibiste el pago de " + b.dataset.o + "?")) return;
+    b.disabled = true; const t = b.textContent; b.textContent = "…";
+    try {
+      const d = await api(b.dataset.a, { orden: b.dataset.o });
+      const i = PED.findIndex((p) => p.orden === b.dataset.o); if (i >= 0 && d.pedido) PED[i] = d.pedido; draw();
+    } catch (x) { alert(x.message); b.disabled = false; b.textContent = t; }
+  };
+  $("tGo").onclick = async () => {
+    $("tRes").textContent = "Cotizando…"; $("tRaw").hidden = true;
+    try {
+      const d = await api("probar", { cp: $("tCp").value, ciudad: $("tCiudad").value, provincia: $("tProv").value });
+      $("tRes").innerHTML = d.opcion ? `✅ Más barato a domicilio: <b>${money(d.opcion.precio)}</b> con ${esc(d.opcion.carrier)}${d.opcion.max ? ` (${d.opcion.min}–${d.opcion.max} días hábiles)` : ""}` : "⚠️ Zipnova respondió, pero sin opciones a domicilio para ese destino.";
+      $("tRaw").textContent = JSON.stringify(d.raw, null, 1).slice(0, 20000); $("tRaw").hidden = false;
+    } catch (x) { $("tRes").textContent = "❌ " + x.message; }
+  };
+})();
+</script>
+</body>
+</html>
