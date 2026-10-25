@@ -102,7 +102,7 @@
     if (e) acts.push(`<a class="btn btn-dark" href="${esc(p.etiqueta)}" target="_blank" rel="noopener">Etiqueta PDF</a>`);
     if (e && e.tracking) acts.push(`<a class="btn btn-outline" href="${esc(e.tracking)}" target="_blank" rel="noopener">Seguimiento</a>`);
     if (e) acts.push(`<button class="btn btn-outline" data-a="actualizar" data-o="${esc(p.orden)}">Actualizar estado</button>`);
-    if (p.estado === "esperando_pago") acts.push(`<button class="btn btn-outline" data-a="cancelar" data-o="${esc(p.orden)}">Cancelar</button>`);
+    if (p.estado !== "cancelado") acts.push(`<button class="btn btn-outline" data-a="cancelar" data-o="${esc(p.orden)}">Cancelar pedido</button>`);
     if (d.telefono) acts.push(`<a class="btn btn-outline" href="https://wa.me/${esc(((n) => (n.startsWith("54") ? n : "549" + n.replace(/^0/, "")))(String(d.telefono).replace(/\D/g, "")))}" target="_blank" rel="noopener">WhatsApp</a>`);
     return `<div class="ped">
       <div class="ped-top"><h3>${esc(p.orden)} · ${esc(d.nombre || "")}</h3><small>${f} · <b>${money(p.total)}</b></small></div>
@@ -136,7 +136,7 @@
   $("filt").onclick = (e) => { const b = e.target.closest("[data-f]"); if (!b) return; filtro = b.dataset.f; [...$("filt").children].forEach((x) => x.classList.toggle("on", x === b)); draw(); };
   $("list").onclick = async (e) => {
     const b = e.target.closest("[data-a]"); if (!b) return;
-    if (b.dataset.a === "cancelar" && !confirm("¿Cancelar este pedido?")) return;
+    if (b.dataset.a === "cancelar" && !confirm("¿Cancelar este pedido? Si ya tenía envío creado, acordate de anularlo también en Zipnova (Acciones → Anular envío).")) return;
     if (b.dataset.a === "pagado" && !confirm("¿Confirmás que recibiste el pago de " + b.dataset.o + "?")) return;
     b.disabled = true; const t = b.textContent; b.textContent = "…";
     try {
