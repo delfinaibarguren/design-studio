@@ -1,7 +1,7 @@
 import type { Config } from "@netlify/functions"
 import { listar, leer, guardar, pagadoYEnviar, enviar } from "../lib/pedidos.mts"
 import { firmaCorta } from "../lib/firma.mts"
-import { configurado, cotizar, verEnvio } from "../lib/zipnova.mts"
+import { configurado, cotizar, verEnvio, opciones } from "../lib/zipnova.mts"
 
 // Página privada de pedidos y envíos (requiere ADMIN_KEY).
 export default async (req: Request) => {
@@ -37,7 +37,7 @@ export default async (req: Request) => {
         const items = [{ weight: 5000, height: 8, width: 65, length: 85, description: "Cuadro 50x70", classification_id: 1 }]
         let raw: any = null
         const opcion = await cotizar({ cp: String(b.cp || "5000"), ciudad: String(b.ciudad || "Córdoba"), provincia: String(b.provincia || "Córdoba") }, items, 150000, (d) => (raw = d))
-        return Response.json({ opcion, raw })
+        return Response.json({ opcion, todas: raw ? opciones(raw, true) : [], raw })
       }
     }
   } catch (e) { return Response.json({ error: (e as Error).message }, { status: 400 }) }

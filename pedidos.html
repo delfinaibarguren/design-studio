@@ -149,6 +149,7 @@
     try {
       const d = await api("probar", { cp: $("tCp").value, ciudad: $("tCiudad").value, provincia: $("tProv").value });
       $("tRes").innerHTML = d.opcion ? `✅ Más barato a domicilio: <b>${money(d.opcion.precio)}</b> con ${esc(d.opcion.carrier)}${d.opcion.max ? ` (${d.opcion.min}–${d.opcion.max} días hábiles)` : ""}` : "⚠️ Zipnova respondió, pero sin opciones a domicilio para ese destino.";
+      $("tRes").innerHTML += (d.todas || []).length ? `<br><small>Todas las opciones a domicilio que devolvió Zipnova:</small><br>` + d.todas.map((o) => `<small>• ${esc(o.carrier)} (id ${o.carrier_id}) · ${esc(o.logistic_type)} · <b>${money(o.precio)}</b></small>`).join("<br>") : "";
       $("tRaw").textContent = JSON.stringify(d.raw, null, 1).slice(0, 20000); $("tRaw").hidden = false;
     } catch (x) { $("tRes").textContent = "❌ " + x.message; }
   };

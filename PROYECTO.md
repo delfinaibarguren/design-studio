@@ -93,6 +93,7 @@ Variables en Netlify: `ADMIN_KEY` (clave de la página de presupuestos) y `PRESU
 ## Envíos con Zipnova
 
 - Variables en Netlify: `ZIPNOVA_TOKEN`, `ZIPNOVA_SECRET`, `ZIPNOVA_ACCOUNT_ID` (22147). Origen: taller de Del Viso (id 382376, se puede cambiar con `ZIPNOVA_ORIGIN_ID`).
+- `ZIPNOVA_CARRIERS`: empresas que se ofrecen (ids separados por coma; 233 = Correo Argentino). `ZIPNOVA_LOGISTIC` (opcional): forma de despacho permitida (código que muestra "Cotizar prueba" en /pedidos.html).
 - Medidas y peso de cada caja embalada: `catalog.json` → `sizes[].paquete` (peso en gramos, medidas en cm). Pesos estimados por arriba: 3 kg, 7,5 kg y 15 kg.
 - En el checkout, al poner CP + ciudad + provincia, `/api/envio` cotiza y devuelve la opción a domicilio más barata (precio firmado).
 - `/api/checkout` guarda el pedido (Netlify Blobs, store "pedidos") y, con Mercado Pago, suma el envío al link de pago.

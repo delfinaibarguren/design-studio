@@ -50,10 +50,22 @@ export async function cotizar(dest: { cp: string; ciudad: string; provincia: str
     items, type_packaging: "none",
   }))
   crudo?.(d)
-  const lista: any[] = [...(Array.isArray(d.all_results) ? d.all_results : []), ...Object.values(d.results || {})]
-  const ops = lista
+  const ops = opciones(d)
+  return ops[0] || null
+}
+
+// Empresas permitidas (ZIPNOVA_CARRIERS, ids separados por coma; 233 = Correo Argentino) y
+// formas de despacho permitidas (ZIPNOVA_LOGISTIC, por ej. el código de "despacho en sucursal").
+const lista = (k: string) => env(k).split(",").map((x) => x.trim()).filter(Boolean)
+export function opciones(d: any, todas = false): Opcion[] {
+  const carriers = lista("ZIPNOVA_CARRIERS"), logist = lista("ZIPNOVA_LOGISTIC")
+  const raw: any[] = [...(Array.isArray(d.all_results) ? d.all_results : []), ...Object.values(d.results || {})]
+  const seen = new Set<string>()
+  return raw
     .filter((o) => o && o.selectable !== false)
     .filter((o) => (o.service_type?.code || "") === "standard_delivery" || o.service_type?.id === 1)
+    .filter((o) => todas || !carriers.length || carriers.includes(String(o.carrier?.id)))
+    .filter((o) => todas || !logist.length || logist.includes(String(o.logistic_type)))
     .map((o) => ({
       precio: Math.ceil(Number(o.amounts?.price_incl_tax ?? o.amounts?.price) || 0),
       carrier_id: Number(o.carrier?.id), carrier: String(o.carrier?.name || "Transporte"),
@@ -61,8 +73,8 @@ export async function cotizar(dest: { cp: string; ciudad: string; provincia: str
       min: o.delivery_time?.min ?? null, max: o.delivery_time?.max ?? null,
     }))
     .filter((o) => o.precio > 0 && o.carrier_id)
+    .filter((o) => { const k = `${o.carrier_id}|${o.logistic_type}|${o.precio}`; if (seen.has(k)) return false; seen.add(k); return true })
     .sort((a, b) => a.precio - b.precio)
-  return ops[0] || null
 }
 
 export type Destinatario = { nombre: string; dni: string; email: string; telefono: string; calle: string; numero: string; depto?: string; cp: string; ciudad: string; provincia: string }
