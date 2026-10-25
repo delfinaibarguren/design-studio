@@ -184,7 +184,7 @@
     const q = $("shipQuote");
     q.hidden = PRE || !domicilio() || !ENV;
     const precioTxt = (e) => !e.precio ? `<b>Envío gratis</b>` : e.bonif ? `<b>Envío ${DS.money(e.precio)}</b> <s>${DS.money(e.costo)}</s> (te bonificamos ${DS.money(e.bonif)})` : `<b>Envío ${DS.money(e.precio)}</b>`;
-    if (ENV) q.innerHTML = ENV.modo === "zipnova" ? `${precioTxt(ENV)} · ${DS.esc(ENV.carrier)}${plazo(ENV) ? ` · llega en ${plazo(ENV)} desde que lo despachamos` : ""}`
+    if (ENV) q.innerHTML = ENV.modo === "zipnova" ? `${precioTxt(ENV)} · ${DS.esc(ENV.carrier)}${plazo(ENV) ? ` · llega en ${plazo(ENV)} (incluye la preparación de tu cuadro)` : ""}`
       : ENV.modo === "cargando" ? "Calculando el envío…" : `${DS.esc(ENV.error || "No pudimos calcular el envío")}. Podés seguir igual: te escribimos para coordinarlo.`;
     $("addr").hidden = val("entrega") !== "Envío a domicilio";
     $("payBtn").textContent = transfer ? "Confirmar pedido" : "Continuar al pago";
