@@ -139,7 +139,8 @@
     },
     {
       "id": "origen",
-      "label": "Origen"
+      "label": "Origen",
+      "cover": "/assets/obras/moto-ambiente-1.jpg"
     },
     {
       "id": "isla",
@@ -2209,6 +2210,825 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/tordillo-pastando-ii-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "moto",
+      "name": "Moto",
+      "category": "origen",
+      "photo": "/assets/obras/moto-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/moto-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              272,
+              41
+            ],
+            [
+              735,
+              70
+            ],
+            [
+              731,
+              745
+            ],
+            [
+              272,
+              755
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/moto-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "gallina",
+      "name": "Gallina I",
+      "category": "origen",
+      "photo": "/assets/obras/gallina-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/gallina-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              269,
+              62
+            ],
+            [
+              789,
+              62
+            ],
+            [
+              788,
+              771
+            ],
+            [
+              270,
+              757
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/gallina-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "gallina-ii",
+      "name": "Gallina II",
+      "category": "origen",
+      "photo": "/assets/obras/gallina-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/gallina-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              391,
+              76
+            ],
+            [
+              760,
+              76
+            ],
+            [
+              760,
+              590
+            ],
+            [
+              391,
+              590
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/gallina-ii-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "paraguas-blanco",
+      "name": "Paraguas Blanco",
+      "category": "origen",
+      "photo": "/assets/obras/paraguas-blanco-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/paraguas-blanco-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              350,
+              56
+            ],
+            [
+              799,
+              56
+            ],
+            [
+              799,
+              647
+            ],
+            [
+              350,
+              647
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/paraguas-blanco-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "paraguas-naranja",
+      "name": "Paraguas Naranja",
+      "category": "origen",
+      "photo": "/assets/obras/paraguas-naranja-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/paraguas-naranja-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              342,
+              81
+            ],
+            [
+              848,
+              81
+            ],
+            [
+              847,
+              798
+            ],
+            [
+              345,
+              798
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/paraguas-naranja-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "escondido",
+      "name": "Escondido",
+      "category": "origen",
+      "photo": "/assets/obras/escondido-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/escondido-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              83,
+              105
+            ],
+            [
+              545,
+              120
+            ],
+            [
+              560,
+              808
+            ],
+            [
+              109,
+              863
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/escondido-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "rama",
+      "name": "Rama",
+      "category": "origen",
+      "photo": "/assets/obras/rama-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/rama-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              272,
+              33
+            ],
+            [
+              740,
+              60
+            ],
+            [
+              740,
+              745
+            ],
+            [
+              272,
+              759
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/rama-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "mono-negro",
+      "name": "Mono Negro",
+      "category": "origen",
+      "photo": "/assets/obras/mono-negro-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/mono-negro-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              301,
+              87
+            ],
+            [
+              770,
+              60
+            ],
+            [
+              770,
+              750
+            ],
+            [
+              301,
+              740
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mono-negro-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "helecho",
+      "name": "Helecho",
+      "category": "origen",
+      "photo": "/assets/obras/helecho-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/helecho-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              274,
+              41
+            ],
+            [
+              739,
+              65
+            ],
+            [
+              740,
+              738
+            ],
+            [
+              274,
+              746
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/helecho-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "carrito",
+      "name": "Carrito",
+      "category": "origen",
+      "photo": "/assets/obras/carrito-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/carrito-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              328,
+              140
+            ],
+            [
+              740,
+              108
+            ],
+            [
+              740,
+              745
+            ],
+            [
+              330,
+              745
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/carrito-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cria",
+      "name": "Cría",
+      "category": "origen",
+      "photo": "/assets/obras/cria-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/cria-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              312,
+              80
+            ],
+            [
+              817,
+              80
+            ],
+            [
+              815,
+              787
+            ],
+            [
+              315,
+              796
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/cria-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "viejo",
+      "name": "Viejo",
+      "category": "origen",
+      "photo": "/assets/obras/viejo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/viejo-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              353,
+              136
+            ],
+            [
+              980,
+              136
+            ],
+            [
+              980,
+              528
+            ],
+            [
+              353,
+              528
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/viejo-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "ovejas",
+      "name": "Ovejas",
+      "category": "origen",
+      "photo": "/assets/obras/ovejas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/ovejas-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              313,
+              115
+            ],
+            [
+              950,
+              115
+            ],
+            [
+              947,
+              549
+            ],
+            [
+              315,
+              549
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/ovejas-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "vacas",
+      "name": "Vacas",
+      "category": "origen",
+      "photo": "/assets/obras/vacas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/vacas-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              93,
+              100
+            ],
+            [
+              585,
+              113
+            ],
+            [
+              586,
+              805
+            ],
+            [
+              100,
+              842
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/vacas-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "vacas-ii",
+      "name": "Vacas II",
+      "category": "origen",
+      "photo": "/assets/obras/vacas-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/vacas-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              304,
+              125
+            ],
+            [
+              960,
+              125
+            ],
+            [
+              960,
+              538
+            ],
+            [
+              305,
+              538
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/vacas-ii-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "calle",
+      "name": "Calle",
+      "category": "origen",
+      "photo": "/assets/obras/calle-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/calle-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              296,
+              86
+            ],
+            [
+              956,
+              86
+            ],
+            [
+              950,
+              538
+            ],
+            [
+              302,
+              542
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/calle-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "atardecer",
+      "name": "Atardecer",
+      "category": "origen",
+      "photo": "/assets/obras/atardecer-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/atardecer-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              294,
+              70
+            ],
+            [
+              748,
+              70
+            ],
+            [
+              750,
+              705
+            ],
+            [
+              293,
+              700
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/atardecer-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "mercado",
+      "name": "Mercado",
+      "category": "origen",
+      "photo": "/assets/obras/mercado-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/mercado-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              321,
+              124
+            ],
+            [
+              940,
+              124
+            ],
+            [
+              940,
+              500
+            ],
+            [
+              324,
+              495
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mercado-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "colectivo",
+      "name": "Colectivo",
+      "category": "origen",
+      "photo": "/assets/obras/colectivo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/colectivo-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              262,
+              122
+            ],
+            [
+              819,
+              103
+            ],
+            [
+              818,
+              487
+            ],
+            [
+              262,
+              488
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/colectivo-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "sombrero",
+      "name": "Sombrero",
+      "category": "origen",
+      "photo": "/assets/obras/sombrero-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/sombrero-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              356,
+              103
+            ],
+            [
+              720,
+              76
+            ],
+            [
+              720,
+              590
+            ],
+            [
+              360,
+              582
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/sombrero-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "acantilado",
+      "name": "Acantilado",
+      "category": "origen",
+      "photo": "/assets/obras/acantilado-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/acantilado-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              405,
+              65
+            ],
+            [
+              768,
+              65
+            ],
+            [
+              768,
+              587
+            ],
+            [
+              405,
+              587
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/acantilado-ambiente-1-luz.png"
         }
       ]
     }
