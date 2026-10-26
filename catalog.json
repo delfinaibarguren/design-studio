@@ -150,8 +150,9 @@
       "description": "Donde la tierra guarda historia"
     },
     {
-      "id": "isla",
-      "label": "Isla"
+      "id": "urbe",
+      "label": "Urbe",
+      "description": "El ritmo de las ciudades, en pausa"
     }
   ],
   "products": [
