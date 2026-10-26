@@ -186,7 +186,8 @@
           "apoyado": true
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "molino",
@@ -225,7 +226,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "mate",
@@ -264,7 +266,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "ponis",
@@ -303,7 +306,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Tandil, Prov. de Bs.As."
     },
     {
       "id": "criollo",
@@ -341,7 +345,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "mirada",
@@ -380,7 +385,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "potrero",
@@ -419,7 +425,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "primavera",
@@ -458,7 +465,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "huella",
@@ -497,7 +505,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "tapera",
@@ -536,7 +545,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "gaucho",
@@ -575,7 +585,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "tordillo-i",
@@ -614,7 +625,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "tordillo-ii",
@@ -653,7 +665,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "margarita",
@@ -692,7 +705,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "zaino",
@@ -731,7 +745,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "girasol-i",
@@ -770,7 +785,8 @@
           "apoyado": true
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "girasol-ii",
@@ -809,7 +825,8 @@
           "apoyado": true
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "girasol-iii",
@@ -848,7 +865,8 @@
           "apoyado": true
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "whisky",
@@ -887,7 +905,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "invierno",
@@ -926,7 +945,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "chimango-i",
@@ -965,7 +985,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Navarro, Prov. de Bs.As."
     },
     {
       "id": "chimango-ii",
@@ -1004,7 +1025,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Navarro, Prov. de Bs.As."
     },
     {
       "id": "lantana",
@@ -1043,7 +1065,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Navarro, Prov. de Bs.As."
     },
     {
       "id": "calandria",
@@ -1082,7 +1105,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Navarro, Prov. de Bs.As."
     },
     {
       "id": "regreso",
@@ -1121,7 +1145,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "girasoles",
@@ -1160,7 +1185,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "poste",
@@ -1199,7 +1225,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "nube",
@@ -1238,7 +1265,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "trigal",
@@ -1277,7 +1305,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "tobiano",
@@ -1316,7 +1345,8 @@
           "apoyado": false
         }
       ],
-      "fotografa": ""
+      "fotografa": "",
+      "lugar": "Pampa Argentina"
     },
     {
       "id": "gallina-ii",
