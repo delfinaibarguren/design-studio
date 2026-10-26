@@ -2109,6 +2109,46 @@
       "lugar": "Potosí, Bolivia"
     },
     {
+      "id": "mariposa-ii",
+      "name": "Mariposa Marrón",
+      "category": "origen",
+      "photo": "/assets/obras/mariposa-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/mariposa-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              486,
+              91
+            ],
+            [
+              879,
+              71
+            ],
+            [
+              880,
+              671
+            ],
+            [
+              486,
+              664
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mariposa-ii-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Lombok, Indonesia"
+    },
+    {
       "id": "loros",
       "name": "Loros",
       "category": "terra",
@@ -2145,11 +2185,12 @@
           "apoyado": true,
           "luz": "/assets/obras/loros-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Magnetic Island, Australia"
     },
     {
       "id": "faro",
-      "name": "Cape Byron",
+      "name": "Faro",
       "category": "terra",
       "photo": "/assets/obras/faro-original.jpg",
       "defaults": {
@@ -2184,11 +2225,12 @@
           "apoyado": true,
           "luz": "/assets/obras/faro-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Byron Bay, Australia"
     },
     {
       "id": "surf-ii",
-      "name": "Session II",
+      "name": "Session I",
       "category": "terra",
       "photo": "/assets/obras/surf-ii-original.jpg",
       "defaults": {
@@ -2223,7 +2265,8 @@
           "apoyado": false,
           "luz": "/assets/obras/surf-ii-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Margaret River, Australia"
     },
     {
       "id": "tablas",
@@ -2262,7 +2305,8 @@
           "apoyado": false,
           "luz": "/assets/obras/tablas-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Byron Bay, Australia"
     },
     {
       "id": "mirilla",
@@ -2301,50 +2345,12 @@
           "apoyado": false,
           "luz": "/assets/obras/mirilla-ambiente-1-luz.png"
         }
-      ]
-    },
-    {
-      "id": "mariposa-ii",
-      "name": "Mariposa Marrón",
-      "category": "terra",
-      "photo": "/assets/obras/mariposa-ii-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/mariposa-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
-      "escenas": [
-        {
-          "quad": [
-            [
-              486,
-              91
-            ],
-            [
-              879,
-              71
-            ],
-            [
-              880,
-              671
-            ],
-            [
-              486,
-              664
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/mariposa-ii-ambiente-1-luz.png"
-        }
-      ]
+      "lugar": "Daintree Forest, Australia"
     },
     {
       "id": "surf",
-      "name": "Session I",
+      "name": "Session II",
       "category": "terra",
       "photo": "/assets/obras/surf-original.jpg",
       "defaults": {
@@ -2379,7 +2385,8 @@
           "apoyado": false,
           "luz": "/assets/obras/surf-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Margaret River, Australia"
     },
     {
       "id": "escalera",
@@ -2418,7 +2425,8 @@
           "apoyado": false,
           "luz": "/assets/obras/escalera-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Margaret River, Australia"
     },
     {
       "id": "cerco",
@@ -2457,7 +2465,8 @@
           "apoyado": false,
           "luz": "/assets/obras/cerco-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Byron Bay, Australia"
     },
     {
       "id": "cerco-ii",
@@ -2496,11 +2505,12 @@
           "apoyado": true,
           "luz": "/assets/obras/cerco-ii-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Byron Bay, Australia"
     },
     {
       "id": "ramas",
-      "name": "Noosa I",
+      "name": "Umbral",
       "category": "terra",
       "photo": "/assets/obras/ramas-original.jpg",
       "defaults": {
@@ -2535,11 +2545,12 @@
           "apoyado": false,
           "luz": "/assets/obras/ramas-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Noosa, Australia"
     },
     {
       "id": "costa",
-      "name": "Noosa II",
+      "name": "Jardín",
       "category": "terra",
       "photo": "/assets/obras/costa-original.jpg",
       "defaults": {
@@ -2574,7 +2585,8 @@
           "apoyado": false,
           "luz": "/assets/obras/costa-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Noosa, Australia"
     },
     {
       "id": "koala",
