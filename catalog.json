@@ -1429,44 +1429,44 @@
       "lugar": "Potosí, Bolivia"
     },
     {
-      "id": "vacas",
-      "name": "Vacas I",
+      "id": "acantilado",
+      "name": "Acantilado",
       "category": "origen",
-      "photo": "/assets/obras/vacas-original.jpg",
+      "photo": "/assets/obras/acantilado-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
-        "terminacion": "paspartu-blanco"
+        "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/vacas-ambiente-1.jpg"
+        "/assets/obras/acantilado-ambiente-1.jpg"
       ],
       "fotografa": "",
       "escenas": [
         {
           "quad": [
             [
-              93,
-              100
+              405,
+              65
             ],
             [
-              585,
-              113
+              768,
+              65
             ],
             [
-              586,
-              805
+              768,
+              587
             ],
             [
-              100,
-              842
+              405,
+              587
             ]
           ],
-          "apoyado": true,
-          "luz": "/assets/obras/vacas-ambiente-1-luz.png"
+          "apoyado": false,
+          "luz": "/assets/obras/acantilado-ambiente-1-luz.png"
         }
       ],
-      "lugar": "Lombok, Indonesia"
+      "lugar": "Nusa Penida, Indonesia"
     },
     {
       "id": "paraguas-naranja",
@@ -1504,6 +1504,46 @@
           ],
           "apoyado": true,
           "luz": "/assets/obras/paraguas-naranja-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Lombok, Indonesia"
+    },
+    {
+      "id": "vacas",
+      "name": "Vacas I",
+      "category": "origen",
+      "photo": "/assets/obras/vacas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/vacas-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              93,
+              100
+            ],
+            [
+              585,
+              113
+            ],
+            [
+              586,
+              805
+            ],
+            [
+              100,
+              842
+            ]
+          ],
+          "apoyado": true,
+          "luz": "/assets/obras/vacas-ambiente-1-luz.png"
         }
       ],
       "lugar": "Lombok, Indonesia"
@@ -2147,46 +2187,6 @@
         }
       ],
       "lugar": "Lombok, Indonesia"
-    },
-    {
-      "id": "acantilado",
-      "name": "Acantilado",
-      "category": "origen",
-      "photo": "/assets/obras/acantilado-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/acantilado-ambiente-1.jpg"
-      ],
-      "fotografa": "",
-      "escenas": [
-        {
-          "quad": [
-            [
-              405,
-              65
-            ],
-            [
-              768,
-              65
-            ],
-            [
-              768,
-              587
-            ],
-            [
-              405,
-              587
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/acantilado-ambiente-1-luz.png"
-        }
-      ],
-      "lugar": "Nusa Penida, Indonesia"
     },
     {
       "id": "loros",
