@@ -2996,41 +2996,41 @@
       "lugar": "Bangkok, Tailandia"
     },
     {
-      "id": "normal",
-      "name": "New Normal",
+      "id": "good-vibes",
+      "name": "Good Vibes",
       "category": "urbe",
-      "photo": "/assets/obras/normal-original.jpg",
+      "photo": "/assets/obras/good-vibes-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/normal-ambiente-1.jpg"
+        "/assets/obras/good-vibes-ambiente-1.jpg"
       ],
       "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
             [
-              368,
-              116
+              454,
+              231
             ],
             [
-              786,
-              116
+              821,
+              231
             ],
             [
-              788,
-              705
+              821,
+              732
             ],
             [
-              368,
-              705
+              455,
+              732
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/normal-ambiente-1-luz.png"
+          "luz": "/assets/obras/good-vibes-ambiente-1-luz.png"
         }
       ],
       "lugar": "Melbourne, Australia"
@@ -3236,41 +3236,41 @@
       "lugar": "Melbourne, Australia"
     },
     {
-      "id": "good-vibes",
-      "name": "Good Vibes",
+      "id": "normal",
+      "name": "New Normal",
       "category": "urbe",
-      "photo": "/assets/obras/good-vibes-original.jpg",
+      "photo": "/assets/obras/normal-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/good-vibes-ambiente-1.jpg"
+        "/assets/obras/normal-ambiente-1.jpg"
       ],
       "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
             [
-              454,
-              231
+              368,
+              116
             ],
             [
-              821,
-              231
+              786,
+              116
             ],
             [
-              821,
-              732
+              788,
+              705
             ],
             [
-              455,
-              732
+              368,
+              705
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/good-vibes-ambiente-1-luz.png"
+          "luz": "/assets/obras/normal-ambiente-1-luz.png"
         }
       ],
       "lugar": "Melbourne, Australia"
