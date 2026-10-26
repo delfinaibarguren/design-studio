@@ -1320,7 +1320,7 @@
     },
     {
       "id": "gallina-ii",
-      "name": "Gallina II",
+      "name": "Gallina",
       "category": "origen",
       "photo": "/assets/obras/gallina-ii-original.jpg",
       "defaults": {
@@ -1355,7 +1355,8 @@
           "apoyado": false,
           "luz": "/assets/obras/gallina-ii-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Nusa Penida, Indonesia"
     },
     {
       "id": "sombrero",
@@ -1394,11 +1395,12 @@
           "apoyado": false,
           "luz": "/assets/obras/sombrero-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Potosí, Bolivia"
     },
     {
       "id": "vacas",
-      "name": "Vacas",
+      "name": "Vacas I",
       "category": "origen",
       "photo": "/assets/obras/vacas-original.jpg",
       "defaults": {
@@ -1433,11 +1435,12 @@
           "apoyado": true,
           "luz": "/assets/obras/vacas-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "paraguas-naranja",
-      "name": "Paraguas Naranja",
+      "name": "Oficio I",
       "category": "origen",
       "photo": "/assets/obras/paraguas-naranja-original.jpg",
       "defaults": {
@@ -1472,7 +1475,8 @@
           "apoyado": true,
           "luz": "/assets/obras/paraguas-naranja-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "mariposa",
@@ -1511,7 +1515,8 @@
           "apoyado": false,
           "luz": "/assets/obras/mariposa-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Machu Picchu, Perú"
     },
     {
       "id": "salpicadura",
@@ -1550,7 +1555,8 @@
           "apoyado": false,
           "luz": "/assets/obras/salpicadura-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Bariloche, Argentina"
     },
     {
       "id": "gota",
@@ -1589,11 +1595,12 @@
           "apoyado": false,
           "luz": "/assets/obras/gota-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Bariloche, Argentina"
     },
     {
       "id": "otono",
-      "name": "Otoño",
+      "name": "Hoja",
       "category": "origen",
       "photo": "/assets/obras/otono-original.jpg",
       "defaults": {
@@ -1628,11 +1635,12 @@
           "apoyado": false,
           "luz": "/assets/obras/otono-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lobos, Prov. de Bs.As."
     },
     {
       "id": "moto",
-      "name": "Moto",
+      "name": "Tránsito I",
       "category": "origen",
       "photo": "/assets/obras/moto-original.jpg",
       "defaults": {
@@ -1667,11 +1675,12 @@
           "apoyado": false,
           "luz": "/assets/obras/moto-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "paraguas-blanco",
-      "name": "Paraguas Blanco",
+      "name": "Oficio II",
       "category": "origen",
       "photo": "/assets/obras/paraguas-blanco-original.jpg",
       "defaults": {
@@ -1706,11 +1715,12 @@
           "apoyado": false,
           "luz": "/assets/obras/paraguas-blanco-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "helecho",
-      "name": "Helecho",
+      "name": "Mono",
       "category": "origen",
       "photo": "/assets/obras/helecho-original.jpg",
       "defaults": {
@@ -1745,11 +1755,12 @@
           "apoyado": false,
           "luz": "/assets/obras/helecho-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "carrito",
-      "name": "Carrito",
+      "name": "Tránsito II",
       "category": "origen",
       "photo": "/assets/obras/carrito-original.jpg",
       "defaults": {
@@ -1784,7 +1795,8 @@
           "apoyado": false,
           "luz": "/assets/obras/carrito-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "cria",
@@ -1823,11 +1835,12 @@
           "apoyado": false,
           "luz": "/assets/obras/cria-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "viejo",
-      "name": "Viejo",
+      "name": "Tiempo",
       "category": "origen",
       "photo": "/assets/obras/viejo-original.jpg",
       "defaults": {
@@ -1862,11 +1875,12 @@
           "apoyado": false,
           "luz": "/assets/obras/viejo-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Potosí, Bolivia"
     },
     {
       "id": "ovejas",
-      "name": "Ovejas",
+      "name": "Isla del Sol",
       "category": "origen",
       "photo": "/assets/obras/ovejas-original.jpg",
       "defaults": {
@@ -1901,7 +1915,8 @@
           "apoyado": false,
           "luz": "/assets/obras/ovejas-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Copacabana, Bolivia"
     },
     {
       "id": "vacas-ii",
@@ -1940,7 +1955,8 @@
           "apoyado": false,
           "luz": "/assets/obras/vacas-ii-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Lombok, Indonesia"
     },
     {
       "id": "calle",
@@ -1979,7 +1995,8 @@
           "apoyado": false,
           "luz": "/assets/obras/calle-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Potosí, Bolivia"
     },
     {
       "id": "mercado",
@@ -2018,11 +2035,12 @@
           "apoyado": false,
           "luz": "/assets/obras/mercado-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Potosí, Bolivia"
     },
     {
       "id": "colectivo",
-      "name": "Colectivo",
+      "name": "Encuentro",
       "category": "origen",
       "photo": "/assets/obras/colectivo-original.jpg",
       "defaults": {
@@ -2057,7 +2075,8 @@
           "apoyado": false,
           "luz": "/assets/obras/colectivo-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Potosí, Bolivia"
     },
     {
       "id": "loros",

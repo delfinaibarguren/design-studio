@@ -543,3 +543,6 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
   .hero-sub-3 span + span::before { content: " "; }
   .hero-sub-3 strong { text-transform: uppercase; letter-spacing: .02em; }
 }
+
+.lugar { margin: 0 0 .25rem; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: #b8893e; font-weight: 300; }
+.lugar-pdp { font-size: .9rem; margin: -.1rem 0 .6rem; }
