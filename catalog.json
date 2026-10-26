@@ -1355,8 +1355,8 @@
       "photo": "/assets/obras/gallina-ii-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
         "/assets/obras/gallina-ii-ambiente-1.jpg"
@@ -1435,8 +1435,8 @@
       "photo": "/assets/obras/acantilado-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
         "/assets/obras/acantilado-ambiente-1.jpg"
