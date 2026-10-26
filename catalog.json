@@ -152,7 +152,8 @@
     {
       "id": "urbe",
       "label": "Urbe",
-      "description": "El ritmo de las ciudades, en pausa"
+      "description": "El ritmo de las ciudades, en pausa",
+      "cover": "/assets/obras/tranvia-ambiente-1.jpg"
     }
   ],
   "products": [
@@ -2913,6 +2914,483 @@
         }
       ],
       "lugar": "Sorata, Bolivia"
+    },
+    {
+      "id": "pista",
+      "name": "Pista",
+      "category": "urbe",
+      "photo": "/assets/obras/pista-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/pista-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              349,
+              56
+            ],
+            [
+              720,
+              56
+            ],
+            [
+              721,
+              583
+            ],
+            [
+              349,
+              583
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/pista-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "shotgun-i",
+      "name": "Shotgun I",
+      "category": "urbe",
+      "photo": "/assets/obras/shotgun-i-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/shotgun-i-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              461,
+              111
+            ],
+            [
+              821,
+              111
+            ],
+            [
+              820,
+              613
+            ],
+            [
+              462,
+              613
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/shotgun-i-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Melbourne, Australia"
+    },
+    {
+      "id": "shotgun-ii",
+      "name": "Shotgun II",
+      "category": "urbe",
+      "photo": "/assets/obras/shotgun-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/shotgun-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              521,
+              137
+            ],
+            [
+              966,
+              104
+            ],
+            [
+              968,
+              758
+            ],
+            [
+              520,
+              750
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/shotgun-ii-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Melbourne, Australia"
+    },
+    {
+      "id": "tranvia",
+      "name": "Tranvía",
+      "category": "urbe",
+      "photo": "/assets/obras/tranvia-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tranvia-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              241,
+              136
+            ],
+            [
+              892,
+              136
+            ],
+            [
+              893,
+              580
+            ],
+            [
+              242,
+              580
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tranvia-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Melbourne, Australia"
+    },
+    {
+      "id": "next-stop",
+      "name": "Next Stop",
+      "category": "urbe",
+      "photo": "/assets/obras/next-stop-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/next-stop-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              507,
+              104
+            ],
+            [
+              950,
+              57
+            ],
+            [
+              955,
+              714
+            ],
+            [
+              505,
+              714
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/next-stop-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Melbourne, Australia"
+    },
+    {
+      "id": "good-vibes",
+      "name": "Good Vibes",
+      "category": "urbe",
+      "photo": "/assets/obras/good-vibes-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/good-vibes-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              454,
+              231
+            ],
+            [
+              821,
+              231
+            ],
+            [
+              821,
+              732
+            ],
+            [
+              455,
+              732
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/good-vibes-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "normal",
+      "name": "Normal",
+      "category": "urbe",
+      "photo": "/assets/obras/normal-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/normal-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              368,
+              116
+            ],
+            [
+              786,
+              116
+            ],
+            [
+              788,
+              705
+            ],
+            [
+              368,
+              705
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/normal-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "tuk-tuk-i",
+      "name": "Tuk Tuk I",
+      "category": "urbe",
+      "photo": "/assets/obras/tuk-tuk-i-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tuk-tuk-i-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              290,
+              118
+            ],
+            [
+              788,
+              120
+            ],
+            [
+              789,
+              787
+            ],
+            [
+              290,
+              789
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tuk-tuk-i-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Bangkok, Tailandia"
+    },
+    {
+      "id": "farolas",
+      "name": "Farolas",
+      "category": "urbe",
+      "photo": "/assets/obras/farolas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/farolas-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              480,
+              131
+            ],
+            [
+              858,
+              105
+            ],
+            [
+              859,
+              696
+            ],
+            [
+              479,
+              689
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/farolas-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Bangkok, Tailandia"
+    },
+    {
+      "id": "tuk-tuk-ii",
+      "name": "Tuk Tuk II",
+      "category": "urbe",
+      "photo": "/assets/obras/tuk-tuk-ii-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tuk-tuk-ii-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              435,
+              124
+            ],
+            [
+              884,
+              93
+            ],
+            [
+              885,
+              730
+            ],
+            [
+              435,
+              735
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tuk-tuk-ii-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Bangkok, Tailandia"
+    },
+    {
+      "id": "neon",
+      "name": "Neón",
+      "category": "urbe",
+      "photo": "/assets/obras/neon-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/neon-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              345,
+              212
+            ],
+            [
+              932,
+              186
+            ],
+            [
+              939,
+              609
+            ],
+            [
+              343,
+              609
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/neon-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Bangkok, Tailandia"
+    },
+    {
+      "id": "tradicion",
+      "name": "Tradición",
+      "category": "origen",
+      "photo": "/assets/obras/tradicion-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/tradicion-ambiente-1.jpg"
+      ],
+      "fotografa": "Pilar Mercau",
+      "escenas": [
+        {
+          "quad": [
+            [
+              407,
+              114
+            ],
+            [
+              856,
+              84
+            ],
+            [
+              857,
+              715
+            ],
+            [
+              407,
+              711
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/tradicion-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Chiang Rai, Tailandia"
     }
   ],
   "frameTypes": [
