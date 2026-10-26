@@ -19,11 +19,12 @@
     },
     "whatsappLink": "http://wa.link/vp5yn9",
     "guiaMarcos": "/assets/marcos-guia.jpg",
-    "comisionFotografa": 0.08,
+    "comisionFotografa": 0.1,
     "envioGratis": {
       "minimo": 250000,
       "bonificacionInterior": 25000
-    }
+    },
+    "costoEstimado": 0.43
   },
   "sizes": [
     {
@@ -34,13 +35,13 @@
       "lamina": 50000,
       "marco": 85000,
       "precios": {
-        "box-natural": 89000,
-        "box-pintado": 97000,
-        "chato-natural": 85000,
-        "chato-pintado": 93000
+        "box-natural": 107000,
+        "box-pintado": 115000,
+        "chato-natural": 99000,
+        "chato-pintado": 107000
       },
       "arpillera": 20000,
-      "descuentoSinPaspartu": 5000,
+      "descuentoSinPaspartu": 8000,
       "paquete": {
         "peso": 2500,
         "alto": 6,
@@ -56,13 +57,13 @@
       "lamina": 83000,
       "marco": 144000,
       "precios": {
-        "box-natural": 149000,
-        "box-pintado": 159000,
-        "chato-natural": 144000,
-        "chato-pintado": 154000
+        "box-natural": 179000,
+        "box-pintado": 189000,
+        "chato-natural": 167000,
+        "chato-pintado": 177000
       },
       "arpillera": 25000,
-      "descuentoSinPaspartu": 8000,
+      "descuentoSinPaspartu": 15000,
       "paquete": {
         "peso": 5500,
         "alto": 6,
@@ -78,13 +79,13 @@
       "lamina": 125000,
       "marco": 208000,
       "precios": {
-        "box-natural": 219000,
-        "box-pintado": 231000,
-        "chato-natural": 208000,
-        "chato-pintado": 220000
+        "box-natural": 271000,
+        "box-pintado": 283000,
+        "chato-natural": 245000,
+        "chato-pintado": 257000
       },
       "arpillera": 30000,
-      "descuentoSinPaspartu": 15000,
+      "descuentoSinPaspartu": 25000,
       "paquete": {
         "peso": 10000,
         "alto": 7,
@@ -186,7 +187,7 @@
           "apoyado": true
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -226,7 +227,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -266,7 +267,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -345,7 +346,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -385,7 +386,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -425,7 +426,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -465,7 +466,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -505,7 +506,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -545,7 +546,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -585,7 +586,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -625,7 +626,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -665,7 +666,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -705,7 +706,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -745,7 +746,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -785,7 +786,7 @@
           "apoyado": true
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -825,7 +826,7 @@
           "apoyado": true
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -865,7 +866,7 @@
           "apoyado": true
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -905,7 +906,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -945,7 +946,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1145,7 +1146,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1185,7 +1186,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1225,7 +1226,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1265,7 +1266,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1305,7 +1306,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1345,7 +1346,7 @@
           "apoyado": false
         }
       ],
-      "fotografa": "",
+      "fotografa": "Isabel Turri Vinelli",
       "lugar": "Pampa Argentina"
     },
     {
@@ -1361,7 +1362,7 @@
       "ambientes": [
         "/assets/obras/gallina-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1401,7 +1402,7 @@
       "ambientes": [
         "/assets/obras/sombrero-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1441,7 +1442,7 @@
       "ambientes": [
         "/assets/obras/acantilado-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1481,7 +1482,7 @@
       "ambientes": [
         "/assets/obras/paraguas-naranja-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1521,7 +1522,7 @@
       "ambientes": [
         "/assets/obras/vacas-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1561,7 +1562,7 @@
       "ambientes": [
         "/assets/obras/mariposa-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1601,7 +1602,7 @@
       "ambientes": [
         "/assets/obras/salpicadura-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1641,7 +1642,7 @@
       "ambientes": [
         "/assets/obras/gota-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1681,7 +1682,7 @@
       "ambientes": [
         "/assets/obras/otono-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1721,7 +1722,7 @@
       "ambientes": [
         "/assets/obras/moto-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1761,7 +1762,7 @@
       "ambientes": [
         "/assets/obras/paraguas-blanco-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1801,7 +1802,7 @@
       "ambientes": [
         "/assets/obras/helecho-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1841,7 +1842,7 @@
       "ambientes": [
         "/assets/obras/carrito-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1881,7 +1882,7 @@
       "ambientes": [
         "/assets/obras/cria-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1921,7 +1922,7 @@
       "ambientes": [
         "/assets/obras/viejo-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -1961,7 +1962,7 @@
       "ambientes": [
         "/assets/obras/ovejas-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2001,7 +2002,7 @@
       "ambientes": [
         "/assets/obras/vacas-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2041,7 +2042,7 @@
       "ambientes": [
         "/assets/obras/calle-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2081,7 +2082,7 @@
       "ambientes": [
         "/assets/obras/mercado-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2121,7 +2122,7 @@
       "ambientes": [
         "/assets/obras/colectivo-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2161,7 +2162,7 @@
       "ambientes": [
         "/assets/obras/mariposa-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2201,7 +2202,7 @@
       "ambientes": [
         "/assets/obras/loros-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2241,7 +2242,7 @@
       "ambientes": [
         "/assets/obras/atardecer-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2281,7 +2282,7 @@
       "ambientes": [
         "/assets/obras/faro-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2321,7 +2322,7 @@
       "ambientes": [
         "/assets/obras/surf-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2361,7 +2362,7 @@
       "ambientes": [
         "/assets/obras/tablas-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2401,7 +2402,7 @@
       "ambientes": [
         "/assets/obras/mirilla-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2441,7 +2442,7 @@
       "ambientes": [
         "/assets/obras/surf-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2481,7 +2482,7 @@
       "ambientes": [
         "/assets/obras/escalera-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2521,7 +2522,7 @@
       "ambientes": [
         "/assets/obras/cerco-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2561,7 +2562,7 @@
       "ambientes": [
         "/assets/obras/cerco-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2601,7 +2602,7 @@
       "ambientes": [
         "/assets/obras/ramas-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2641,7 +2642,7 @@
       "ambientes": [
         "/assets/obras/costa-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2681,7 +2682,7 @@
       "ambientes": [
         "/assets/obras/koala-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2721,7 +2722,7 @@
       "ambientes": [
         "/assets/obras/lunita-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2761,7 +2762,7 @@
       "ambientes": [
         "/assets/obras/dupla-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2801,7 +2802,7 @@
       "ambientes": [
         "/assets/obras/canguro-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2841,7 +2842,7 @@
       "ambientes": [
         "/assets/obras/tordillo-pastando-i-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [
@@ -2881,7 +2882,7 @@
       "ambientes": [
         "/assets/obras/tordillo-pastando-ii-ambiente-1.jpg"
       ],
-      "fotografa": "",
+      "fotografa": "Pilar Mercau",
       "escenas": [
         {
           "quad": [

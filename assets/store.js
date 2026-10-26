@@ -321,15 +321,19 @@ window.DS = (() => {
   }
 
   // 8% para la fotógrafa sobre lo que paga el cliente (cálculo interno, no se suma al precio)
+  // Comisión de cada fotógrafa: 10% de la ganancia de sus obras (lo que paga el cliente menos el costo).
+  // Costo estimado = costoEstimado × precio sin el recargo de pintado. Cálculo interno, no se suma al precio.
   function comisiones(lines, factor = 1) {
-    const rate = catalog.store.comisionFotografa || 0, out = {};
+    const st = catalog.store, rate = st.comisionFotografa || 0, k = st.costoEstimado || 0, out = {};
     for (const l of lines) {
-      const p = product(l.productId); if (!p) continue;
-      const who = p.fotografa || "Sin asignar";
+      const p = product(l.productId); if (!p || !p.fotografa) continue;
+      const s = size(l.size); if (!s) continue;
       const paid = unitPrice(l) * l.qty * factor;
-      (out[who] ||= { obras: [], total: 0 });
-      out[who].obras.push(`${l.qty} × ${p.name} (${money(paid)})`);
-      out[who].total += paid * rate;
+      const cost = k * framedPrice(s, l.tipo, "natural", l.terminacion) * l.qty;
+      const gan = Math.max(0, paid - cost);
+      (out[p.fotografa] ||= { obras: [], total: 0 });
+      out[p.fotografa].obras.push(`${l.qty} × ${p.name} (pagó ${money(paid)}, ganancia ${money(gan)})`);
+      out[p.fotografa].total += gan * rate;
     }
     return out;
   }
