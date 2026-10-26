@@ -37,9 +37,24 @@ window.DSFrame = (() => {
   // números pseudoaleatorios estables (la imagen no "tiembla" entre redibujos)
   function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
 
+  // versión en blanco y negro de la foto (se calcula una vez)
+  const grayCache = new Map();
+  function gray(img) {
+    if (grayCache.has(img)) return grayCache.get(img);
+    const c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const x = c.getContext("2d"); x.filter = "grayscale(1) contrast(1.05)"; x.drawImage(img, 0, 0);
+    if (x.filter === "none" || !("filter" in x)) {   // navegadores sin filter en canvas
+      x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height), a = d.data;
+      for (let i = 0; i < a.length; i += 4) { const v = a[i] * 0.299 + a[i + 1] * 0.587 + a[i + 2] * 0.114; a[i] = a[i + 1] = a[i + 2] = v; }
+      x.putImageData(d, 0, 0);
+    }
+    c.naturalWidth = img.naturalWidth; c.naturalHeight = img.naturalHeight;
+    grayCache.set(img, c); return c;
+  }
   async function prep(photoSrc, opts) {
     const o = Object.assign({ tipo: "chato", color: "negro", terminacion: "paspartu-blanco", fondo: "negro" }, opts);
-    const [photo, wood, burlapImg] = await Promise.all([loadImg(photoSrc), loadImg(TEX[o.color]), loadImg(TEX.arpillera)]);
+    let [photo, wood, burlapImg] = await Promise.all([loadImg(photoSrc), loadImg(TEX[o.color]), loadImg(TEX.arpillera)]);
+    if (o.imagen === "bn") photo = gray(photo);
     // ---- geometría en cm (la foto nunca se recorta ni se estira) ----
     const ratio = photo.naturalWidth / photo.naturalHeight;
     const pw = ratio >= 1 ? CM.photoLong : CM.photoLong * ratio;

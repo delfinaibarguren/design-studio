@@ -1,7 +1,7 @@
 // Precio de cada línea del carrito, calculado siempre en el servidor (nunca se confía en el navegador).
 import catalog from "../../catalog.json" with { type: "json" }
 
-export type Line = { productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; color?: string; terminacion?: string; fondo?: string; qty: number }
+export type Line = { imagen?: string; productId: string; size: string; finish: string; frame?: string; style?: string; tipo?: string; color?: string; terminacion?: string; fondo?: string; qty: number }
 export type Priced = { id: string; title: string; quantity: number; unit_price: number; currency_id: "ARS"; size: string; name: string }
 
 const products = new Map(catalog.products.map((p) => [p.id, p]))
@@ -20,10 +20,10 @@ export function priceLine(line: Line): Priced | null {
     const ft = find(C.frameTypes, line.tipo), col = find(C.frameColors, line.color), ter = find(C.terminaciones, line.terminacion)
     const fon = ter?.id === "arpillera" ? find(C.fondos, line.fondo) : null
     if (!ft || !col || !ter || (ter.id === "arpillera" && !fon)) return null
-    const variant = `${size.label}, marco ${ft.label.toLowerCase()} ${col.label.toLowerCase()}, ${ter.label.toLowerCase()}${fon ? " fondo " + fon.label.toLowerCase() : ""}`
+    const variant = `${size.label}, marco ${ft.label.toLowerCase()} ${col.label.toLowerCase()}, ${ter.label.toLowerCase()}${fon ? " fondo " + fon.label.toLowerCase() : ""}${line.imagen === "bn" ? ", blanco y negro" : ""}`
     return {
       ...base,
-      id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id].filter(Boolean).join("-"),
+      id: [product.id, size.id, ft.id, col.id, ter.id, fon?.id, line.imagen === "bn" ? "bn" : ""].filter(Boolean).join("-"),
       title: `${product.name} (${variant})`,
       unit_price: size.precios[`${ft.id}-${col.grupo || "natural"}`] + (ter.id === "arpillera" ? size.arpillera || 0 : 0) - (ter.id === "sin" ? size.descuentoSinPaspartu || 0 : 0),
     }

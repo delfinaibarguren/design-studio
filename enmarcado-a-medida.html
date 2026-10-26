@@ -125,7 +125,7 @@
 
   // ---- cuadros: cada línea = medida + tipo + color + paspartú + cantidad
   const OPTS = {
-    medida: ["20x20", "20x25", "30x20", "30x30", "30x40", "40x40", "40x50", "50x50", "50x70", "60x60", "100x70"],
+    medida: ["20x20", "20x30", "40x50", "50x70", "100x70", "Más grande"],
     tipo: ["Box", "Chato"],
     color: ["Kiri natural", "Negro", "Blanco"],
     paspartu: ["Paspartú blanco", "Paspartú negro", "Sin paspartú"],
@@ -140,17 +140,18 @@
   }
   items.push({ ...first });
   const selHtml = (i, k) => `<label class="f k-${k}">${LBL[k]}<select data-i="${i}" data-k="${k}">${k === "medida" ? '<option value="">Elegí…</option>' : ""}${OPTS[k]
-    .map((o) => `<option value="${o}"${items[i][k] === o ? " selected" : ""}>${k === "medida" ? o.replace("x", " × ") + " cm" : o}</option>`).join("")}</select></label>`;
+    .map((o) => `<option value="${o}"${items[i][k] === o ? " selected" : ""}>${k === "medida" ? (o === "Más grande" ? "Más grande…" : o.replace("x", " × ") + " cm") : o}</option>`).join("")}</select></label>`;
   const drawItems = () => {
     $("qItems").innerHTML = items.map((it, i) => `<div class="q-item">
       <div class="q-item-h"><b>Cuadro ${i + 1}</b>${items.length > 1 ? `<button type="button" data-rm-item="${i}">Quitar</button>` : ""}</div>
       <div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}
         <label class="f">Cantidad<span class="q-step"><button type="button" data-i="${i}" data-d="-1" aria-label="Restar">−</button><b>${it.cant}</b><button type="button" data-i="${i}" data-d="1" aria-label="Sumar">+</button></span></label>
+        ${it.medida === "Más grande" ? `<p class="q-big">Para medidas más grandes te asesoramos por WhatsApp. <a href="https://wa.me/5491153132340?text=${encodeURIComponent("Hola! Quiero consultar por un enmarcado en una medida más grande.")}" target="_blank" rel="noopener">Escribinos acá →</a> También podés contarnos la medida en la aclaración y te respondemos con el presupuesto.</p>` : ""}
         <label class="f k-nota">Aclaración (opcional)<input data-i="${i}" data-k="nota" value="${DS.esc(it.nota)}" placeholder="Ej: van las fotos 1 y 3 / la camiseta azul"></label>
       </div></div>`).join("");
   };
   $("qItems").addEventListener("input", (e) => { const s = e.target.closest("[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
-  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
+  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida") drawItems(); } });
   $("qItems").addEventListener("click", (e) => {
     const d = e.target.closest("button[data-d]");
     if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; }
@@ -158,7 +159,7 @@
   });
   $("qAdd").onclick = () => { const last = items[items.length - 1]; items.push({ ...last, medida: "", cant: 1, nota: "" }); drawItems(); };
   drawItems();
-  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida} cm · ${it.tipo} · ${it.color} · ${it.paspartu}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
+  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida === "Más grande" ? "medida más grande (a consultar)" : it.medida + " cm"} · ${it.tipo} · ${it.color} · ${it.paspartu}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
 
   // ---- archivos (máx. 10). Se suben en su calidad original; la copia achicada es solo un respaldo para el formulario.
   const MAXF = 10; let files = [];
