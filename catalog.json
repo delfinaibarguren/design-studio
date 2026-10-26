@@ -2149,6 +2149,46 @@
       "lugar": "Lombok, Indonesia"
     },
     {
+      "id": "acantilado",
+      "name": "Acantilado",
+      "category": "origen",
+      "photo": "/assets/obras/acantilado-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/acantilado-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              405,
+              65
+            ],
+            [
+              768,
+              65
+            ],
+            [
+              768,
+              587
+            ],
+            [
+              405,
+              587
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/acantilado-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Nusa Penida, Indonesia"
+    },
+    {
       "id": "loros",
       "name": "Loros",
       "category": "terra",
@@ -2187,6 +2227,46 @@
         }
       ],
       "lugar": "Magnetic Island, Australia"
+    },
+    {
+      "id": "atardecer",
+      "name": "Resplandor",
+      "category": "terra",
+      "photo": "/assets/obras/atardecer-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/atardecer-ambiente-1.jpg"
+      ],
+      "fotografa": "",
+      "escenas": [
+        {
+          "quad": [
+            [
+              294,
+              70
+            ],
+            [
+              748,
+              70
+            ],
+            [
+              750,
+              705
+            ],
+            [
+              293,
+              700
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/atardecer-ambiente-1-luz.png"
+        }
+      ],
+      "lugar": "Fitzroy Island, Australia"
     },
     {
       "id": "faro",
@@ -2625,7 +2705,8 @@
           "apoyado": true,
           "luz": "/assets/obras/koala-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Magnetic Island, Australia"
     },
     {
       "id": "lunita",
@@ -2664,11 +2745,12 @@
           "apoyado": false,
           "luz": "/assets/obras/lunita-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Byron Bay, Australia"
     },
     {
       "id": "dupla",
-      "name": "Dupla",
+      "name": "Dupla I",
       "category": "terra",
       "photo": "/assets/obras/dupla-original.jpg",
       "defaults": {
@@ -2703,7 +2785,8 @@
           "apoyado": false,
           "luz": "/assets/obras/dupla-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Sorata, Bolivia"
     },
     {
       "id": "canguro",
@@ -2742,11 +2825,12 @@
           "apoyado": true,
           "luz": "/assets/obras/canguro-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Jervis Bay, Australia"
     },
     {
       "id": "tordillo-pastando-i",
-      "name": "Tordillo Pastando I",
+      "name": "Tordillo I",
       "category": "terra",
       "photo": "/assets/obras/tordillo-pastando-i-original.jpg",
       "defaults": {
@@ -2781,11 +2865,12 @@
           "apoyado": false,
           "luz": "/assets/obras/tordillo-pastando-i-ambiente-1-luz.png"
         }
-      ]
+      ],
+      "lugar": "Sorata, Bolivia"
     },
     {
       "id": "tordillo-pastando-ii",
-      "name": "Tordillo Pastando II",
+      "name": "Tordillo II",
       "category": "terra",
       "photo": "/assets/obras/tordillo-pastando-ii-original.jpg",
       "defaults": {
@@ -2820,85 +2905,8 @@
           "apoyado": false,
           "luz": "/assets/obras/tordillo-pastando-ii-ambiente-1-luz.png"
         }
-      ]
-    },
-    {
-      "id": "atardecer",
-      "name": "Atardecer",
-      "category": "terra",
-      "photo": "/assets/obras/atardecer-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/atardecer-ambiente-1.jpg"
       ],
-      "fotografa": "",
-      "escenas": [
-        {
-          "quad": [
-            [
-              294,
-              70
-            ],
-            [
-              748,
-              70
-            ],
-            [
-              750,
-              705
-            ],
-            [
-              293,
-              700
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/atardecer-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
-      "id": "acantilado",
-      "name": "Acantilado",
-      "category": "terra",
-      "photo": "/assets/obras/acantilado-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/acantilado-ambiente-1.jpg"
-      ],
-      "fotografa": "",
-      "escenas": [
-        {
-          "quad": [
-            [
-              405,
-              65
-            ],
-            [
-              768,
-              65
-            ],
-            [
-              768,
-              587
-            ],
-            [
-              405,
-              587
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/acantilado-ambiente-1-luz.png"
-        }
-      ]
+      "lugar": "Sorata, Bolivia"
     }
   ],
   "frameTypes": [
