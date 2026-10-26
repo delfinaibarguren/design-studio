@@ -2195,8 +2195,8 @@
       "photo": "/assets/obras/loros-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
         "/assets/obras/loros-ambiente-1.jpg"
@@ -2236,7 +2236,7 @@
       "defaults": {
         "tipo": "chato",
         "color": "natural",
-        "terminacion": "sin"
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
         "/assets/obras/atardecer-ambiente-1.jpg"
