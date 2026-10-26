@@ -24,7 +24,11 @@
       "minimo": 250000,
       "bonificacionInterior": 25000
     },
-    "costoEstimado": 0.43
+    "costoEstimado": 0.43,
+    "fotografas": {
+      "Isabel Turri Vinelli": "https://itv-ph.netlify.app/",
+      "Pilar Mercau": "https://www.behance.net/gallery/230004855/Donde-empieza-la-calma"
+    }
   },
   "sizes": [
     {
