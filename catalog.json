@@ -159,7 +159,8 @@
       "id": "deco",
       "label": "Deco",
       "description": "Arte gráfico para tus espacios",
-      "cover": "/assets/obras/leopardo-ambiente-1.jpg"
+      "cover": "/assets/obras/leopardo-ambiente-1.jpg",
+      "sinBN": true
     }
   ],
   "products": [

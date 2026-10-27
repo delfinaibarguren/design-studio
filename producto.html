@@ -124,10 +124,11 @@
     color: pick("color", q.get("color"), d.color || "negro"),
     terminacion: pick("terminacion", q.get("terminacion"), d.terminacion || "paspartu-blanco"),
     fondo: pick("fondo", q.get("fondo"), d.fondo || "negro"),
-    imagen: pick("imagen", q.get("imagen"), "color"),
+    imagen: DS.category(p.category)?.sinBN ? "color" : pick("imagen", q.get("imagen"), "color"),
     qty: 1,
   };
   const cat = DS.category(p.category);
+  if (cat?.sinBN) $("o-imagen").closest("fieldset").hidden = true;
   if (cat) $("backCol").href = `/coleccion.html?c=${cat.id}`;
   document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
