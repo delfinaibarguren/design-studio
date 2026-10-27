@@ -183,7 +183,7 @@
 
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
-    const visual = true;   // la medida también cambia la foto de ambiente
+    const visual = b.dataset.g !== "size";
     state[b.dataset.g] = b.dataset.v; $("added").hidden = true;
     update(visual);
   });
@@ -222,7 +222,7 @@
   const isScene = (i) => i > 0 && i - 1 < amb.length && esc[i - 1];
   // las fotos de ambiente muestran el cuadro en 50 x 70: otra medida lo agranda o achica en proporción
   const largo = (id) => { const s = c.sizes.find((x) => x.id === id); return s ? Math.max(s.w, s.h) : 70; };
-  const escala = () => Math.pow(largo(state.size) / largo("50x70"), 0.7);   // suavizado: que el cuadro no se salga de la foto
+  const escala = () => 1;   // en las fotos de ambiente el cuadro queda siempre igual (la medida cambia solo en "Probalo en tu pared")
   let tok = 0;
   async function render() {
     const my = ++tok;
