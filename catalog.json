@@ -3821,40 +3821,40 @@
       ]
     },
     {
-      "id": "silueta",
-      "name": "Silueta",
+      "id": "mas-de-eso",
+      "name": "Más de eso",
       "category": "deco",
-      "photo": "/assets/obras/silueta-original.jpg",
+      "photo": "/assets/obras/mas-de-eso-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/silueta-ambiente-1.jpg"
+        "/assets/obras/mas-de-eso-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              384,
-              80
+              255,
+              72
             ],
             [
-              796,
-              64
+              775,
+              72
             ],
             [
-              793,
-              632
+              775,
+              835
             ],
             [
-              384,
-              632
+              255,
+              835
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/silueta-ambiente-1-luz.png"
+          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png"
         }
       ]
     },
@@ -3897,40 +3897,40 @@
       ]
     },
     {
-      "id": "mas-de-eso",
-      "name": "Más de eso",
+      "id": "silueta",
+      "name": "Mujer",
       "category": "deco",
-      "photo": "/assets/obras/mas-de-eso-original.jpg",
+      "photo": "/assets/obras/silueta-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/mas-de-eso-ambiente-1.jpg"
+        "/assets/obras/silueta-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              255,
-              72
+              384,
+              80
             ],
             [
-              775,
-              72
+              796,
+              64
             ],
             [
-              775,
-              835
+              793,
+              632
             ],
             [
-              255,
-              835
+              384,
+              632
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png"
+          "luz": "/assets/obras/silueta-ambiente-1-luz.png"
         }
       ]
     },
