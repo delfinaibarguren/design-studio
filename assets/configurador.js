@@ -154,6 +154,8 @@ window.DSFrame = (() => {
     const ctx = canvas.getContext("2d");
     const k = canvas.width / amb.naturalWidth;
     ctx.drawImage(amb, 0, 0, canvas.width, canvas.height);
+    // foto "fiel": si el cliente no cambió nada, se muestra la foto tal cual (ya tiene ese marco)
+    if (sc.fiel && sc.def && ["tipo", "color", "terminacion"].every((g) => !sc.def[g] || opts[g] === sc.def[g]) && opts.imagen !== "bn") return;
 
     const q = sc.quad.map(([x, y]) => [x * k, y * k]);
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);

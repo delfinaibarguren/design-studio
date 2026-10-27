@@ -177,7 +177,7 @@
     $("shPin").href = `https://pinterest.com/pin/create/button/?url=${link}&description=${text}`;
   }
   const amb = p.ambientes || [];
-  const esc = amb.map((src, i) => (p.escenas && p.escenas[i] ? { src, ...p.escenas[i] } : null));
+  const esc = amb.map((src, i) => (p.escenas && p.escenas[i] ? { src, def: p.defaults, ...p.escenas[i] } : null));
   const extras = st.guiaMarcos ? [st.guiaMarcos] : [];
   const views = [...amb, ...extras];   // índice 1.. en la galería
   const isScene = (i) => i > 0 && i - 1 < amb.length && esc[i - 1];

@@ -3419,24 +3419,25 @@
         {
           "quad": [
             [
-              385,
-              78
+              365,
+              61
             ],
             [
-              810,
-              78
+              823,
+              61
             ],
             [
-              809,
-              691
+              823,
+              710
             ],
             [
-              385,
-              688
+              365,
+              710
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/rostros-ambiente-1-luz.png"
+          "luz": "/assets/obras/rostros-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3457,24 +3458,25 @@
         {
           "quad": [
             [
-              362,
-              86
+              364,
+              111
             ],
             [
-              783,
-              86
+              780,
+              82
             ],
             [
-              783,
-              716
+              784,
+              699
             ],
             [
-              362,
-              716
+              363,
+              697
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/no-risk-ambiente-1-luz.png"
+          "luz": "/assets/obras/no-risk-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3495,24 +3497,25 @@
         {
           "quad": [
             [
-              338,
-              78
+              341,
+              90
             ],
             [
-              824,
-              78
+              812,
+              76
             ],
             [
-              824,
-              764
+              811,
+              751
             ],
             [
-              338,
-              761
+              340,
+              743
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/leopardo-ambiente-1-luz.png"
+          "luz": "/assets/obras/leopardo-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3533,24 +3536,25 @@
         {
           "quad": [
             [
+              352,
+              78
+            ],
+            [
+              829,
+              67
+            ],
+            [
+              829,
+              748
+            ],
+            [
               351,
-              68
-            ],
-            [
-              813,
-              68
-            ],
-            [
-              813,
-              737
-            ],
-            [
-              351,
-              732
+              741
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/pasos-ambiente-1-luz.png"
+          "luz": "/assets/obras/pasos-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3572,23 +3576,24 @@
           "quad": [
             [
               378,
-              98
+              105
             ],
             [
-              722,
-              82
+              737,
+              80
             ],
             [
-              722,
-              557
+              734,
+              570
             ],
             [
-              378,
-              558
+              379,
+              567
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/chill-ambiente-1-luz.png"
+          "luz": "/assets/obras/chill-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3609,24 +3614,25 @@
         {
           "quad": [
             [
-              306,
+              307,
+              91
+            ],
+            [
+              764,
               88
             ],
             [
-              751,
-              88
+              765,
+              695
             ],
             [
-              751,
-              697
-            ],
-            [
-              306,
-              694
+              305,
+              693
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/dalmata-ambiente-1-luz.png"
+          "luz": "/assets/obras/dalmata-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3647,24 +3653,25 @@
         {
           "quad": [
             [
-              368,
-              78
+              369,
+              75
             ],
             [
-              791,
-              78
+              807,
+              57
             ],
             [
-              791,
-              671
+              801,
+              686
             ],
             [
-              368,
-              668
+              370,
+              680
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
+          "luz": "/assets/obras/rosas-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3685,24 +3692,25 @@
         {
           "quad": [
             [
-              392,
-              87
+              394,
+              102
             ],
             [
-              799,
-              75
+              810,
+              73
             ],
             [
-              797,
-              716
+              817,
+              736
             ],
             [
-              395,
-              716
+              394,
+              719
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cafe-ambiente-1-luz.png"
+          "luz": "/assets/obras/cafe-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3723,24 +3731,25 @@
         {
           "quad": [
             [
-              413,
-              82
+              414,
+              106
             ],
             [
-              807,
-              82
+              821,
+              77
             ],
             [
-              807,
-              596
+              821,
+              609
             ],
             [
-              413,
-              596
+              415,
+              607
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png"
+          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3761,24 +3770,25 @@
         {
           "quad": [
             [
-              386,
-              78
+              388,
+              90
             ],
             [
-              812,
-              65
+              829,
+              61
             ],
             [
-              816,
+              832,
+              757
+            ],
+            [
+              389,
               744
-            ],
-            [
-              386,
-              733
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/brindis-ambiente-1-luz.png"
+          "luz": "/assets/obras/brindis-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3800,23 +3810,24 @@
           "quad": [
             [
               365,
-              86
+              99
             ],
             [
-              754,
-              67
+              769,
+              64
             ],
             [
-              754,
-              623
+              770,
+              638
             ],
             [
-              365,
-              623
+              373,
+              633
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cool-ambiente-1-luz.png"
+          "luz": "/assets/obras/cool-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3837,24 +3848,25 @@
         {
           "quad": [
             [
-              255,
-              72
+              260,
+              62
             ],
             [
-              775,
-              72
+              782,
+              62
             ],
             [
-              775,
-              835
+              785,
+              819
             ],
             [
-              255,
-              835
+              260,
+              819
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png"
+          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3875,24 +3887,25 @@
         {
           "quad": [
             [
-              319,
-              80
+              302,
+              90
             ],
             [
-              753,
-              80
+              767,
+              63
             ],
             [
-              752,
-              700
+              768,
+              714
             ],
             [
-              319,
-              702
+              301,
+              709
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/perfil-ambiente-1-luz.png"
+          "luz": "/assets/obras/perfil-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3913,24 +3926,25 @@
         {
           "quad": [
             [
-              384,
-              80
+              377,
+              74
             ],
             [
-              796,
-              64
+              805,
+              41
             ],
             [
-              793,
-              632
+              801,
+              650
             ],
             [
-              384,
-              632
+              378,
+              637
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/silueta-ambiente-1-luz.png"
+          "luz": "/assets/obras/silueta-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3951,24 +3965,25 @@
         {
           "quad": [
             [
-              387,
-              76
+              389,
+              93
             ],
             [
-              820,
-              61
+              838,
+              56
             ],
             [
-              823,
-              730
+              842,
+              744
             ],
             [
-              387,
-              725
+              398,
+              735
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/metele-amor-ambiente-1-luz.png"
+          "luz": "/assets/obras/metele-amor-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -3989,24 +4004,25 @@
         {
           "quad": [
             [
-              420,
-              82
+              425,
+              81
             ],
             [
-              799,
-              82
+              801,
+              91
             ],
             [
-              799,
-              650
+              801,
+              621
             ],
             [
-              422,
-              650
+              424,
+              630
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/pato-ambiente-1-luz.png"
+          "luz": "/assets/obras/pato-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -4027,24 +4043,25 @@
         {
           "quad": [
             [
-              399,
-              109
+              391,
+              95
             ],
             [
-              827,
-              92
+              826,
+              80
             ],
             [
-              827,
-              715
+              826,
+              729
             ],
             [
-              399,
-              712
+              390,
+              723
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/live-simply-ambiente-1-luz.png"
+          "luz": "/assets/obras/live-simply-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     },
@@ -4065,24 +4082,25 @@
         {
           "quad": [
             [
-              430,
-              94
+              416,
+              96
             ],
             [
-              801,
+              800,
               73
             ],
             [
               801,
-              624
+              640
             ],
             [
-              430,
-              622
+              417,
+              635
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/jinete-ambiente-1-luz.png"
+          "luz": "/assets/obras/jinete-ambiente-1-luz.png",
+          "fiel": true
         }
       ]
     }
