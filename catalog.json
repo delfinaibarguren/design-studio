@@ -45,7 +45,7 @@
         "chato-pintado": 107000
       },
       "arpillera": 20000,
-      "descuentoSinPaspartu": 8000,
+      "descuentoSinPaspartu": 3000,
       "paquete": {
         "peso": 2500,
         "alto": 6,
@@ -67,7 +67,7 @@
         "chato-pintado": 177000
       },
       "arpillera": 25000,
-      "descuentoSinPaspartu": 15000,
+      "descuentoSinPaspartu": 8000,
       "paquete": {
         "peso": 5500,
         "alto": 6,
@@ -89,7 +89,7 @@
         "chato-pintado": 257000
       },
       "arpillera": 30000,
-      "descuentoSinPaspartu": 25000,
+      "descuentoSinPaspartu": 15000,
       "paquete": {
         "peso": 10000,
         "alto": 7,
