@@ -3593,40 +3593,40 @@
       ]
     },
     {
-      "id": "cool",
-      "name": "Cool",
+      "id": "rosas",
+      "name": "Rosas",
       "category": "deco",
-      "photo": "/assets/obras/cool-original.jpg",
+      "photo": "/assets/obras/rosas-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/cool-ambiente-1.jpg"
+        "/assets/obras/rosas-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              365,
-              86
+              368,
+              78
             ],
             [
-              754,
-              67
+              791,
+              78
             ],
             [
-              754,
-              623
+              791,
+              671
             ],
             [
-              365,
-              623
+              368,
+              668
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cool-ambiente-1-luz.png"
+          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
         }
       ]
     },
@@ -3707,40 +3707,40 @@
       ]
     },
     {
-      "id": "rosas",
-      "name": "Rosas",
+      "id": "cin-cin",
+      "name": "Cin Cin",
       "category": "deco",
-      "photo": "/assets/obras/rosas-original.jpg",
+      "photo": "/assets/obras/cin-cin-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/rosas-ambiente-1.jpg"
+        "/assets/obras/cin-cin-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              368,
-              78
+              413,
+              82
             ],
             [
-              791,
-              78
+              807,
+              82
             ],
             [
-              791,
-              671
+              807,
+              596
             ],
             [
-              368,
-              668
+              413,
+              596
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
+          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png"
         }
       ]
     },
@@ -3783,40 +3783,40 @@
       ]
     },
     {
-      "id": "cin-cin",
-      "name": "Cin Cin",
+      "id": "cool",
+      "name": "Cool",
       "category": "deco",
-      "photo": "/assets/obras/cin-cin-original.jpg",
+      "photo": "/assets/obras/cool-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/cin-cin-ambiente-1.jpg"
+        "/assets/obras/cool-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              413,
-              82
+              365,
+              86
             ],
             [
-              807,
-              82
+              754,
+              67
             ],
             [
-              807,
-              596
+              754,
+              623
             ],
             [
-              413,
-              596
+              365,
+              623
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png"
+          "luz": "/assets/obras/cool-ambiente-1-luz.png"
         }
       ]
     },
