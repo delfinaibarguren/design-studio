@@ -154,6 +154,12 @@
       "label": "Urbe",
       "description": "El ritmo de la ciudad, en pausa",
       "cover": "/assets/obras/tranvia-ambiente-1.jpg"
+    },
+    {
+      "id": "deco",
+      "label": "Deco",
+      "description": "Arte gráfico para tus espacios",
+      "cover": "/assets/obras/leopardo-ambiente-1.jpg"
     }
   ],
   "products": [
@@ -3394,6 +3400,690 @@
         }
       ],
       "lugar": "Bangkok, Tailandia"
+    },
+    {
+      "id": "chill",
+      "name": "Chill",
+      "category": "deco",
+      "photo": "/assets/obras/chill-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/chill-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              378,
+              98
+            ],
+            [
+              722,
+              82
+            ],
+            [
+              722,
+              557
+            ],
+            [
+              378,
+              558
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/chill-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cool",
+      "name": "Cool",
+      "category": "deco",
+      "photo": "/assets/obras/cool-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/cool-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              365,
+              86
+            ],
+            [
+              754,
+              67
+            ],
+            [
+              754,
+              623
+            ],
+            [
+              365,
+              623
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/cool-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "dalmata",
+      "name": "Dálmata",
+      "category": "deco",
+      "photo": "/assets/obras/dalmata-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/dalmata-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              306,
+              88
+            ],
+            [
+              751,
+              88
+            ],
+            [
+              751,
+              697
+            ],
+            [
+              306,
+              694
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/dalmata-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "leopardo",
+      "name": "Leopardo",
+      "category": "deco",
+      "photo": "/assets/obras/leopardo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/leopardo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              338,
+              78
+            ],
+            [
+              824,
+              78
+            ],
+            [
+              824,
+              764
+            ],
+            [
+              338,
+              761
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/leopardo-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cafe",
+      "name": "Café",
+      "category": "deco",
+      "photo": "/assets/obras/cafe-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/cafe-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              392,
+              87
+            ],
+            [
+              799,
+              75
+            ],
+            [
+              797,
+              716
+            ],
+            [
+              395,
+              716
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/cafe-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "rosas",
+      "name": "Rosas",
+      "category": "deco",
+      "photo": "/assets/obras/rosas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/rosas-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              368,
+              78
+            ],
+            [
+              791,
+              78
+            ],
+            [
+              791,
+              671
+            ],
+            [
+              368,
+              668
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "pasos",
+      "name": "Pasos",
+      "category": "deco",
+      "photo": "/assets/obras/pasos-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/pasos-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              351,
+              68
+            ],
+            [
+              813,
+              68
+            ],
+            [
+              813,
+              737
+            ],
+            [
+              351,
+              732
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/pasos-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "brindis",
+      "name": "Brindis",
+      "category": "deco",
+      "photo": "/assets/obras/brindis-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/brindis-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              386,
+              78
+            ],
+            [
+              812,
+              65
+            ],
+            [
+              816,
+              744
+            ],
+            [
+              386,
+              733
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/brindis-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "cin-cin",
+      "name": "Cin Cin",
+      "category": "deco",
+      "photo": "/assets/obras/cin-cin-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/cin-cin-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              413,
+              82
+            ],
+            [
+              807,
+              82
+            ],
+            [
+              807,
+              596
+            ],
+            [
+              413,
+              596
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "silueta",
+      "name": "Silueta",
+      "category": "deco",
+      "photo": "/assets/obras/silueta-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/silueta-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              384,
+              80
+            ],
+            [
+              796,
+              64
+            ],
+            [
+              793,
+              632
+            ],
+            [
+              384,
+              632
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/silueta-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "rostros",
+      "name": "Rostros",
+      "category": "deco",
+      "photo": "/assets/obras/rostros-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/rostros-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              385,
+              78
+            ],
+            [
+              810,
+              78
+            ],
+            [
+              809,
+              691
+            ],
+            [
+              385,
+              688
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/rostros-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "perfil",
+      "name": "Perfil",
+      "category": "deco",
+      "photo": "/assets/obras/perfil-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/perfil-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              319,
+              80
+            ],
+            [
+              753,
+              80
+            ],
+            [
+              752,
+              700
+            ],
+            [
+              319,
+              702
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/perfil-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "mas-de-eso",
+      "name": "Más de eso",
+      "category": "deco",
+      "photo": "/assets/obras/mas-de-eso-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/mas-de-eso-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              255,
+              72
+            ],
+            [
+              775,
+              72
+            ],
+            [
+              775,
+              835
+            ],
+            [
+              255,
+              835
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "metele-amor",
+      "name": "Metele amor",
+      "category": "deco",
+      "photo": "/assets/obras/metele-amor-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/metele-amor-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              387,
+              76
+            ],
+            [
+              820,
+              61
+            ],
+            [
+              823,
+              730
+            ],
+            [
+              387,
+              725
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/metele-amor-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "live-simply",
+      "name": "Live Simply",
+      "category": "deco",
+      "photo": "/assets/obras/live-simply-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/live-simply-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              399,
+              109
+            ],
+            [
+              827,
+              92
+            ],
+            [
+              827,
+              715
+            ],
+            [
+              399,
+              712
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/live-simply-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "pato",
+      "name": "Pato",
+      "category": "deco",
+      "photo": "/assets/obras/pato-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/pato-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              420,
+              82
+            ],
+            [
+              799,
+              82
+            ],
+            [
+              799,
+              650
+            ],
+            [
+              422,
+              650
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/pato-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "jinete",
+      "name": "Jinete",
+      "category": "deco",
+      "photo": "/assets/obras/jinete-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/jinete-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              430,
+              94
+            ],
+            [
+              801,
+              73
+            ],
+            [
+              801,
+              624
+            ],
+            [
+              430,
+              622
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/jinete-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "no-risk",
+      "name": "No Risk",
+      "category": "deco",
+      "photo": "/assets/obras/no-risk-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/no-risk-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              362,
+              86
+            ],
+            [
+              783,
+              86
+            ],
+            [
+              783,
+              716
+            ],
+            [
+              362,
+              716
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/no-risk-ambiente-1-luz.png"
+        }
+      ]
     }
   ],
   "frameTypes": [
