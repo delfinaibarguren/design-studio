@@ -22,7 +22,7 @@ Para subir algo **sin** publicar, poner `[skip netlify]` en el mensaje del commi
 - `catalog.json` — **todo el contenido**: textos de la tienda, medidas y precios, tipos/colores de marco, terminaciones, colecciones y obras.
 - `index.html` inicio · `coleccion.html?c=<id>` · `producto.html?id=<id>` · `checkout.html` · `gracias.html` · `ayuda.html` · `enmarcado-a-medida.html`
 - `assets/store.js` — header, footer, carrito, tarjetas de obra/colección, precios.
-- `assets/configurador.js` — dibuja el cuadro en canvas (`DSFrame.draw`) y el cuadro dentro de la foto de ambiente (`DSFrame.scene`). Medidas en cm: marco 2 cm (box 2,5 de profundidad, chato 1,5), paspartú 5 cm, arpillera 5,5 cm + 1 cm de fondo, flecos 0,5–1 cm.
+- `assets/configurador.js` — dibuja el cuadro en canvas (`DSFrame.draw`) y el cuadro dentro de la foto de ambiente (`DSFrame.scene`). Medidas en cm: marco 2 cm (box 3 de profundidad, chato 1,5), paspartú 5 cm, arpillera 5,5 cm + 1 cm de fondo, flecos 0,5–1 cm.
 - `assets/frames/` texturas de madera y arpillera · `assets/obras/` fotos de cada obra · `assets/marcos-guia.jpg` guía de marcos (se muestra en todas las obras).
 - `netlify/functions/checkout.mts` — crea el pago en Mercado Pago; **recalcula el precio en el servidor** desde `catalog.json` (máx. 3 cuotas).
 - `tools/escena_luz.py` — genera el mapa de luz de la foto de ambiente.
