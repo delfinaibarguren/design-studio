@@ -146,7 +146,9 @@ window.DSFrame = (() => {
   // ---- el cuadro elegido, puesto en la foto de ambiente ----
   // sc = { src, quad: [[x,y]x4] (TL,TR,BR,BL en px de la foto), luz, apoyado }
   async function scene(canvas, photoSrc, opts, sc) {
-    const [amb, luz] = await Promise.all([loadImg(sc.src), sc.luz ? loadImg(sc.luz).catch(() => null) : null]);
+    const esc = sc.escala || 1;   // medida elegida / medida de la foto (1 = la misma)
+    const [amb, luz, pared] = await Promise.all([loadImg(sc.src), sc.luz ? loadImg(sc.luz).catch(() => null) : null,
+      esc < 1 && sc.pared ? loadImg(sc.pared.src).catch(() => null) : null]);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssW = canvas.clientWidth || 600;
     canvas.width = Math.round(cssW * dpr);
@@ -155,7 +157,7 @@ window.DSFrame = (() => {
     const k = canvas.width / amb.naturalWidth;
     ctx.drawImage(amb, 0, 0, canvas.width, canvas.height);
     // foto "fiel": si el cliente no cambió nada, se muestra la foto tal cual (ya tiene ese marco)
-    if (sc.fiel && sc.def && ["tipo", "color", "terminacion"].every((g) => !sc.def[g] || opts[g] === sc.def[g]) && opts.imagen !== "bn") return;
+    if (esc === 1 && sc.fiel && sc.def && ["tipo", "color", "terminacion"].every((g) => !sc.def[g] || opts[g] === sc.def[g]) && opts.imagen !== "bn") return;
 
     const q = sc.quad.map(([x, y]) => [x * k, y * k]);
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
@@ -169,7 +171,13 @@ window.DSFrame = (() => {
     const mu = 0.012 * (u1 - u0), mv = 0.012 * (u1 - u0) * (qw / qh);
     u0 -= mu; u1 += mu; v1 += sc.apoyado ? 0 : mv; v0 -= sc.apoyado ? 2 * mv : mv;
     const bil = (u, v) => [0, 1].map((i) => (1 - u) * (1 - v) * q[0][i] + u * (1 - v) * q[1][i] + u * v * q[2][i] + (1 - u) * v * q[3][i]);
-    const T = [bil(u0, v0), bil(u1, v0), bil(u1, v1), bil(u0, v1)];
+    let T = [bil(u0, v0), bil(u1, v0), bil(u1, v1), bil(u0, v1)];
+    if (esc !== 1) {   // otra medida: el cuadro crece o se achica desde su centro (apoyado: desde la base)
+      const cx = (T[0][0] + T[1][0] + T[2][0] + T[3][0]) / 4;
+      const cy = sc.apoyado ? (T[2][1] + T[3][1]) / 2 : (T[0][1] + T[1][1] + T[2][1] + T[3][1]) / 4;
+      T = T.map(([x, y]) => [cx + (x - cx) * esc, cy + (y - cy) * esc]);
+      if (pared) ctx.drawImage(pared, sc.pared.x * k, sc.pared.y * k, sc.pared.w * k, sc.pared.h * k);   // tapa el cuadro original
+    }
 
     // capa del cuadro, del tamaño de la escena
     const t = document.createElement("canvas"); t.width = canvas.width; t.height = canvas.height;
@@ -188,7 +196,7 @@ window.DSFrame = (() => {
 
     // sombra sobre la pared
     const poly = (c2, P) => { c2.beginPath(); P.forEach(([a, b], i) => i ? c2.lineTo(a, b) : c2.moveTo(a, b)); c2.closePath(); };
-    const sz = Math.max(qw, qh) / 60;
+    const sz = Math.max(qw, qh) * esc / 60;
     ctx.save();
     ctx.shadowColor = `rgba(35,25,15,${L.box ? .42 : .3})`;
     ctx.shadowBlur = sz * (L.box ? 2.6 : 1.6); ctx.shadowOffsetX = sz * .35; ctx.shadowOffsetY = sz * (L.box ? 1.2 : .8);

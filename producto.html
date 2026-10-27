@@ -29,6 +29,7 @@
   <div class="gallery single" id="gallery">
     <div class="thumbs" id="thumbs" role="tablist" aria-label="Vistas" hidden></div>
     <div class="stage cfg-stage" id="stage"><canvas id="cv" role="img" aria-label="Vista previa del cuadro"></canvas><canvas id="sc" role="img" aria-label="El cuadro en un ambiente" hidden></canvas><button class="zoom-hint" id="zoomBtn" aria-label="Ver más grande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21M11 8v6M8 11h6"/></svg></button></div>
+    <button class="try-btn" id="tryBtn" type="button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><rect x="8.5" y="7.5" width="7" height="9" rx=".5"/></svg>Probalo en tu pared</button>
     <div class="pdesc">
       <h3>Descripción del producto:</h3>
       <p id="pDesc"></p>
@@ -100,6 +101,44 @@
 <div id="ds-footer"></div>
 
 <script src="/assets/store.js"></script>
+<div class="tw" id="tw" hidden role="dialog" aria-modal="true" aria-label="Probalo en tu pared">
+  <div class="tw-box">
+    <div class="tw-head"><h2>Probalo en tu pared</h2><button class="tw-x" id="twX" aria-label="Cerrar">×</button></div>
+    <div class="tw-start" id="twStart">
+      <label class="tw-drop" for="twFile">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8a2 2 0 0 1 2-2h2.2l1.4-2h6.8l1.4 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.6"/></svg>
+        <b>Subí o sacá una foto de tu pared</b>
+        <span>Mejor si es de frente y con luz natural.</span>
+      </label>
+      <input type="file" id="twFile" accept="image/*" hidden>
+      <p class="tw-priv">Tu foto no se sube a ningún lado: se queda en tu dispositivo.</p>
+    </div>
+    <div class="tw-work" id="twWork" hidden>
+      <div class="tw-stage" id="twStage"><canvas id="twCv"></canvas><canvas id="twUi"></canvas></div>
+      <p class="tw-hint" id="twHint">Arrastrá el cuadro para moverlo. Usá las esquinas para agrandarlo o achicarlo.</p>
+      <div class="tw-opts">
+        <div class="pills tw-pills" id="twSize"></div>
+        <div class="pills tw-pills" id="twTipo"></div>
+        <div class="swatch-row" id="twColor"></div>
+        <div class="pills tw-pills" id="twTer"></div>
+      </div>
+      <div class="tw-ref" id="twRefBox" hidden>
+        <span id="twRefTxt">Tocá los dos extremos de algo que sepas cuánto mide (un sillón, una mesa, una puerta…)</span>
+        <span id="twRefIn" hidden>Mide <input type="number" id="twRefCm" min="5" max="1000" inputmode="decimal" placeholder="cm"> cm <button class="btn btn-dark" id="twRefOk">Listo</button></span>
+      </div>
+      <div class="tw-tools">
+        <button class="tw-tool" id="twMeasure" type="button">📏 Tamaño real</button>
+        <button class="tw-tool" id="twTilt" type="button" aria-pressed="false">Inclinar esquinas</button>
+        <button class="tw-tool" id="twReset" type="button">Centrar</button>
+        <label class="tw-tool" for="twFile">Cambiar foto</label>
+      </div>
+      <div class="tw-actions">
+        <button class="btn btn-outline" id="twSave" type="button">Descargar imagen</button>
+        <button class="btn btn-dark" id="twAdd" type="button">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada">
   <button class="lb-x" id="lbX" aria-label="Cerrar">&times;</button>
   <button class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">&#8249;</button>
@@ -144,7 +183,7 @@
 
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
-    const visual = b.dataset.g !== "size";
+    const visual = true;   // la medida también cambia la foto de ambiente
     state[b.dataset.g] = b.dataset.v; $("added").hidden = true;
     update(visual);
   });
@@ -181,11 +220,14 @@
   const extras = st.guiaMarcos ? [st.guiaMarcos] : [];
   const views = [...amb, ...extras];   // índice 1.. en la galería
   const isScene = (i) => i > 0 && i - 1 < amb.length && esc[i - 1];
+  // las fotos de ambiente muestran el cuadro en 50 x 70: otra medida lo agranda o achica en proporción
+  const largo = (id) => { const s = c.sizes.find((x) => x.id === id); return s ? Math.max(s.w, s.h) : 70; };
+  const escala = () => Math.pow(largo(state.size) / largo("50x70"), 0.7);   // suavizado: que el cuadro no se salga de la foto
   let tok = 0;
   async function render() {
     const my = ++tok;
     const jobs = [DSFrame.draw($("cv"), p.photo, state)];
-    if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, state, esc[cur - 1]));
+    if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, state, { ...esc[cur - 1], escala: escala() }));
     await Promise.all(jobs);
     if (my !== tok) return;
     document.body.dataset.ready = "1"; mirror(); miniDraw();
@@ -230,7 +272,7 @@
     cur = i;
     document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
     $("cv").hidden = i !== 0; $("sc").hidden = i === 0;
-    if (i > 0) { if (isScene(i)) DSFrame.scene($("sc"), p.photo, state, esc[i - 1]); else drawImg($("sc"), views[i - 1]); }
+    if (i > 0) { if (isScene(i)) DSFrame.scene($("sc"), p.photo, state, { ...esc[i - 1], escala: escala() }); else drawImg($("sc"), views[i - 1]); }
   }
   if (views.length) {
     $("gallery").classList.remove("single"); $("thumbs").hidden = false;
@@ -253,7 +295,7 @@
       cvs.hidden = false; img.hidden = true;
       const side = Math.min(innerWidth, innerHeight) * 0.92;
       cvs.style.width = cvs.style.height = side + "px";
-      if (isScene(lbI)) DSFrame.scene(cvs, p.photo, state, esc[lbI - 1]); else drawImg(cvs, views[lbI - 1]);
+      if (isScene(lbI)) DSFrame.scene(cvs, p.photo, state, { ...esc[lbI - 1], escala: escala() }); else drawImg(cvs, views[lbI - 1]);
     }
     $("lbPrev").hidden = $("lbNext").hidden = nViews < 2;
   }
@@ -281,6 +323,114 @@
   };
   $("seeCart").onclick = (e) => { e.preventDefault(); DS.openCart(); };
   $("buyBtn").onclick = () => { DS.addToCart(line()); location.href = "/checkout.html"; };
+
+
+  // ---- Probalo en tu pared: el cliente sube una foto y ubica el cuadro ----
+  (() => {
+    const tw = $("tw"), cv = $("twCv"), ui = $("twUi"), stageEl = $("twStage");
+    let photoURL = null, imW = 0, imH = 0, Q = null, pxcm = 0, tilt = false, ref = null, refPts = [], aspect = 0.75, busy = false, again = false;
+    const long = () => largo(state.size);
+    async function getAspect() { const L = await DSFrame.layer(p.photo, state, 200); return L.W / L.H; }
+    // tamaño del cuadro en px de la foto: real si midieron, si no aproximado
+    function framePx() { const lp = pxcm ? long() * pxcm : imH * 0.36 * Math.pow(long() / 70, 0.85); return aspect >= 1 ? [lp, lp / aspect] : [lp * aspect, lp]; }
+    function placeAt(cx, cy) { const [w, h] = framePx(); Q = [[cx - w / 2, cy - h / 2], [cx + w / 2, cy - h / 2], [cx + w / 2, cy + h / 2], [cx - w / 2, cy + h / 2]]; }
+    const center = () => [Q.reduce((s, q) => s + q[0], 0) / 4, Q.reduce((s, q) => s + q[1], 0) / 4];
+    function resizeKeep() { // nueva medida / opciones: mismo centro, nuevo tamaño (conserva la inclinación)
+      const [cx, cy] = center(), [w, h] = framePx();
+      const curW = (Math.hypot(Q[1][0] - Q[0][0], Q[1][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[3][0], Q[2][1] - Q[3][1])) / 2;
+      const curH = (Math.hypot(Q[3][0] - Q[0][0], Q[3][1] - Q[0][1]) + Math.hypot(Q[2][0] - Q[1][0], Q[2][1] - Q[1][1])) / 2;
+      const sx = w / curW, sy = h / curH; Q = Q.map(([x, y]) => [cx + (x - cx) * sx, cy + (y - cy) * sy]);
+    }
+    async function draw() {
+      if (!photoURL || !Q) return;
+      if (busy) { again = true; return; } busy = true;
+      await DSFrame.scene(cv, p.photo, state, { src: photoURL, quad: Q });
+      busy = false; drawUi(); if (again) { again = false; draw(); }
+    }
+    function drawUi() {
+      ui.width = cv.width; ui.height = cv.height; const x = ui.getContext("2d"), k = cv.width / imW;
+      const r = Math.max(9, cv.width / 70);
+      if (refPts.length) { x.strokeStyle = "#d6452b"; x.fillStyle = "#d6452b"; x.lineWidth = r / 3; x.beginPath(); refPts.forEach(([a, b], i) => (i ? x.lineTo(a * k, b * k) : x.moveTo(a * k, b * k))); x.stroke(); refPts.forEach(([a, b]) => { x.beginPath(); x.arc(a * k, b * k, r * .6, 0, 7); x.fill(); }); }
+      if (ref) return;
+      x.fillStyle = "#fff"; x.strokeStyle = "rgba(0,0,0,.45)"; x.lineWidth = 1.5;
+      Q.forEach(([a, b]) => { x.beginPath(); x.arc(a * k, b * k, r, 0, 7); x.fill(); x.stroke(); });
+    }
+    function size() { const wrap = stageEl.parentNode.clientWidth, maxH = innerHeight * (innerWidth < 700 ? .5 : .58); const w = Math.min(wrap, maxH * imW / imH); cv.style.width = ui.style.width = w + "px"; stageEl.style.width = w + "px"; stageEl.style.height = w * imH / imW + "px"; }
+    async function load(file) {
+      const bmp = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = URL.createObjectURL(file); });
+      const s = Math.min(1, 1800 / Math.max(bmp.naturalWidth, bmp.naturalHeight));
+      const t = document.createElement("canvas"); t.width = Math.round(bmp.naturalWidth * s); t.height = Math.round(bmp.naturalHeight * s);
+      t.getContext("2d").drawImage(bmp, 0, 0, t.width, t.height); URL.revokeObjectURL(bmp.src);
+      const blob = await new Promise((ok) => t.toBlob(ok, "image/jpeg", .9));
+      if (photoURL) URL.revokeObjectURL(photoURL);
+      photoURL = URL.createObjectURL(blob); imW = t.width; imH = t.height; pxcm = 0; refPts = []; ref = null;
+      $("twStart").hidden = true; $("twWork").hidden = false; size();
+      aspect = await getAspect(); placeAt(imW / 2, imH * .42); draw();
+    }
+    const pt = (e) => { const r = ui.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * imW, (e.clientY - r.top) / r.height * imH]; };
+    const inside = ([x, y]) => { let c = false; for (let i = 0, j = 3; i < 4; j = i++) { const [xi, yi] = Q[i], [xj, yj] = Q[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; };
+    let drag = null;
+    ui.addEventListener("pointerdown", (e) => {
+      if (!Q) return; const P = pt(e); e.preventDefault();
+      if (ref) { refPts.push(P); if (refPts.length === 2) { ref = "cm"; $("twRefTxt").hidden = true; $("twRefIn").hidden = false; $("twRefCm").focus(); } drawUi(); return; }
+      const tol = imW / 22; const ci = Q.findIndex(([x, y]) => Math.hypot(x - P[0], y - P[1]) < tol);
+      if (ci >= 0) drag = { type: "corner", i: ci, start: P, Q0: Q.map((q) => q.slice()) };
+      else if (inside(P)) drag = { type: "move", start: P, Q0: Q.map((q) => q.slice()) };
+      else return;
+      ui.setPointerCapture(e.pointerId);
+    });
+    ui.addEventListener("pointermove", (e) => {
+      if (!drag) return; const P = pt(e), dx = P[0] - drag.start[0], dy = P[1] - drag.start[1];
+      if (drag.type === "move") Q = drag.Q0.map(([x, y]) => [x + dx, y + dy]);
+      else if (tilt) { Q = drag.Q0.map((q) => q.slice()); Q[drag.i] = [drag.Q0[drag.i][0] + dx, drag.Q0[drag.i][1] + dy]; }
+      else { // agrandar/achicar desde la esquina opuesta, sin deformar
+        const o = drag.Q0[(drag.i + 2) % 4], c0 = drag.Q0[drag.i];
+        const d0 = Math.hypot(c0[0] - o[0], c0[1] - o[1]), d1 = Math.hypot(P[0] - o[0], P[1] - o[1]);
+        const f = Math.max(.15, d1 / d0); Q = drag.Q0.map(([x, y]) => [o[0] + (x - o[0]) * f, o[1] + (y - o[1]) * f]);
+        if (pxcm) { pxcm = 0; $("twMeasure").textContent = "📏 Tamaño real"; }   // lo cambiaron a mano: ya no es la escala real
+      }
+      draw();
+    });
+    const end = () => (drag = null); ui.addEventListener("pointerup", end); ui.addEventListener("pointercancel", end);
+    // opciones dentro del probador (las mismas de la página)
+    const pills = (g, el) => ($(el).innerHTML = lists[g].map((x) => `<button class="pill" data-tw="${g}" data-v="${x.id}">${DS.esc(x.label)}</button>`).join(""));
+    function opts() {
+      pills("size", "twSize"); pills("tipo", "twTipo"); pills("terminacion", "twTer");
+      $("twColor").innerHTML = c.frameColors.map((x) => `<button class="swatch" data-tw="color" data-v="${x.id}" style="background:${x.color}" title="${DS.esc(x.label)}" aria-label="${DS.esc(x.label)}"></button>`).join("");
+      mark();
+    }
+    const mark = () => tw.querySelectorAll("[data-tw]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.tw] === b.dataset.v));
+    tw.querySelector(".tw-opts").addEventListener("click", async (e) => {
+      const b = e.target.closest("[data-tw]"); if (!b) return;
+      state[b.dataset.tw] = b.dataset.v; update(true); mark();
+      aspect = await getAspect(); if (Q) { resizeKeep(); draw(); }
+    });
+    $("twMeasure").onclick = () => { ref = "pts"; refPts = []; $("twRefBox").hidden = false; $("twRefTxt").hidden = false; $("twRefIn").hidden = true; drawUi(); };
+    $("twRefOk").onclick = () => {
+      const cm = parseFloat(String($("twRefCm").value).replace(",", ".")); if (!(cm > 0) || refPts.length < 2) return;
+      pxcm = Math.hypot(refPts[1][0] - refPts[0][0], refPts[1][1] - refPts[0][1]) / cm;
+      ref = null; refPts = []; $("twRefBox").hidden = true; $("twRefCm").value = "";
+      $("twMeasure").textContent = "📏 Tamaño real ✓"; resizeKeep(); draw();
+    };
+    $("twTilt").onclick = () => { tilt = !tilt; $("twTilt").setAttribute("aria-pressed", tilt); $("twHint").textContent = tilt ? "Arrastrá cada esquina para seguir el ángulo de la pared." : "Arrastrá el cuadro para moverlo. Usá las esquinas para agrandarlo o achicarlo."; };
+    $("twReset").onclick = () => { placeAt(imW / 2, imH * .42); draw(); };
+    $("twFile").onchange = (e) => { const f = e.target.files[0]; if (f) load(f).catch(() => DS.toast("No pudimos abrir esa foto")); e.target.value = ""; };
+    $("twSave").onclick = () => {
+      const t = document.createElement("canvas"); t.width = cv.width; t.height = cv.height; t.getContext("2d").drawImage(cv, 0, 0);
+      t.toBlob(async (b) => {
+        const f = new File([b], `${p.id}-en-mi-pared.jpg`, { type: "image/jpeg" });
+        if (navigator.canShare && navigator.canShare({ files: [f] }) && matchMedia("(pointer: coarse)").matches) { try { await navigator.share({ files: [f], title: p.name }); return; } catch {} }
+        const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = f.name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      }, "image/jpeg", .92);
+    };
+    $("twAdd").onclick = () => { DS.addToCart(line()); $("added").hidden = false; DS.toast("Agregado al carrito"); };
+    const open = () => { tw.hidden = false; document.body.style.overflow = "hidden"; opts(); if (photoURL) { size(); draw(); } };
+    const close = () => { tw.hidden = true; document.body.style.overflow = ""; };
+    $("tryBtn").onclick = open; $("twX").onclick = close;
+    tw.addEventListener("click", (e) => { if (e.target === tw) close(); });
+    addEventListener("keydown", (e) => { if (!tw.hidden && e.key === "Escape") close(); });
+    addEventListener("resize", () => { if (!tw.hidden && photoURL) { size(); draw(); } });
+  })();
 
   const sim = c.products.filter((x) => x.id !== p.id).sort((a, b) => (b.category === p.category) - (a.category === p.category)).slice(0, 4);
   $("similar").innerHTML = sim.map(DS.productCard).join("");

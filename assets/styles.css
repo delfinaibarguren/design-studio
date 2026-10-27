@@ -589,3 +589,33 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .foto-by { margin: -.2rem 0 .9rem; font-size: .85rem; color: var(--ink-soft); }
 .foto-by b { font-weight: 500; color: var(--ink); }
 .foto-by a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---- Probalo en tu pared ---- */
+.try-btn { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; margin: .7rem 0 0; padding: .75rem 1rem; border: 1px solid var(--line, #d9d5cc); border-radius: 999px; background: #fff; color: #1e1d1c; font: inherit; font-size: .92rem; cursor: pointer; }
+.try-btn:hover { border-color: #1e1d1c; }
+.tw { position: fixed; inset: 0; z-index: 90; background: rgba(20,18,16,.55); display: grid; place-items: center; padding: 1rem; overflow-y: auto; }
+.tw[hidden] { display: none; }
+.tw-box { background: #fbfaf7; border-radius: 14px; width: min(980px, 100%); padding: 1.1rem 1.2rem 1.3rem; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+.tw-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .8rem; }
+.tw-head h2 { margin: 0; font-size: 1.25rem; font-weight: 400; }
+.tw-x { border: 0; background: none; font-size: 1.8rem; line-height: 1; cursor: pointer; color: #1e1d1c; padding: 0 .3rem; }
+.tw-drop { display: flex; flex-direction: column; align-items: center; gap: .4rem; padding: 2.6rem 1rem; border: 1.5px dashed #c9c3b6; border-radius: 12px; text-align: center; cursor: pointer; background: #fff; }
+.tw-drop span, .tw-priv { color: #77716a; font-size: .85rem; }
+.tw-priv { text-align: center; margin: .7rem 0 0; }
+.tw-stage { position: relative; margin: 0 auto; touch-action: none; }
+.tw-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 8px; }
+#twUi { cursor: move; }
+.tw-hint { text-align: center; color: #77716a; font-size: .82rem; margin: .5rem 0 .6rem; }
+.tw-opts { display: flex; flex-wrap: wrap; gap: .5rem 1rem; justify-content: center; align-items: center; }
+.tw-pills .pill { padding: .35rem .7rem; font-size: .8rem; }
+.tw-opts .swatch { width: 26px; height: 26px; }
+.tw-tools { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin: .8rem 0 0; }
+.tw-tool { border: 1px solid #d9d5cc; background: #fff; border-radius: 999px; padding: .35rem .8rem; font: inherit; font-size: .8rem; cursor: pointer; color: #1e1d1c; }
+.tw-tool[aria-pressed="true"] { background: #1e1d1c; color: #fff; border-color: #1e1d1c; }
+.tw-ref { margin: .7rem auto 0; max-width: 560px; text-align: center; font-size: .85rem; background: #fff3ee; border: 1px solid #f0cfc4; border-radius: 10px; padding: .6rem .8rem; }
+.tw-ref input { width: 5.5rem; padding: .3rem .4rem; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
+.tw-ref .btn { padding: .35rem .8rem; margin-left: .3rem; }
+.tw-actions { display: flex; gap: .6rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+@media (max-width: 700px) { .tw { padding: 0; place-items: stretch; } .tw-box { border-radius: 0; min-height: 100%; padding: .8rem .8rem 1.2rem; } .tw-actions .btn { flex: 1; } }
+.gallery .try-btn { grid-column: -2 / -1; margin-top: 0; }
+@media (max-width: 560px) { .gallery .try-btn { order: 2; } }
