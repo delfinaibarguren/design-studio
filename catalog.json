@@ -159,7 +159,7 @@
       "id": "deco",
       "label": "Deco",
       "description": "Arte gráfico para tus espacios",
-      "cover": "/assets/obras/leopardo-ambiente-1.jpg",
+      "cover": "/assets/obras/no-risk-ambiente-1.jpg",
       "sinBN": true
     }
   ],
@@ -3403,6 +3403,158 @@
       "lugar": "Bangkok, Tailandia"
     },
     {
+      "id": "rostros",
+      "name": "Caras",
+      "category": "deco",
+      "photo": "/assets/obras/rostros-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/rostros-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              385,
+              78
+            ],
+            [
+              810,
+              78
+            ],
+            [
+              809,
+              691
+            ],
+            [
+              385,
+              688
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/rostros-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "no-risk",
+      "name": "No Risk",
+      "category": "deco",
+      "photo": "/assets/obras/no-risk-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/no-risk-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              362,
+              86
+            ],
+            [
+              783,
+              86
+            ],
+            [
+              783,
+              716
+            ],
+            [
+              362,
+              716
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/no-risk-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "leopardo",
+      "name": "Leopardo",
+      "category": "deco",
+      "photo": "/assets/obras/leopardo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/leopardo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              338,
+              78
+            ],
+            [
+              824,
+              78
+            ],
+            [
+              824,
+              764
+            ],
+            [
+              338,
+              761
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/leopardo-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "pasos",
+      "name": "Pasos",
+      "category": "deco",
+      "photo": "/assets/obras/pasos-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/pasos-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              351,
+              68
+            ],
+            [
+              813,
+              68
+            ],
+            [
+              813,
+              737
+            ],
+            [
+              351,
+              732
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/pasos-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
       "id": "chill",
       "name": "Chill",
       "category": "deco",
@@ -3517,44 +3669,6 @@
       ]
     },
     {
-      "id": "leopardo",
-      "name": "Leopardo",
-      "category": "deco",
-      "photo": "/assets/obras/leopardo-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "negro",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/leopardo-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              338,
-              78
-            ],
-            [
-              824,
-              78
-            ],
-            [
-              824,
-              764
-            ],
-            [
-              338,
-              761
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/leopardo-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
       "id": "cafe",
       "name": "Café",
       "category": "deco",
@@ -3627,44 +3741,6 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/rosas-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
-      "id": "pasos",
-      "name": "Pasos",
-      "category": "deco",
-      "photo": "/assets/obras/pasos-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/pasos-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              351,
-              68
-            ],
-            [
-              813,
-              68
-            ],
-            [
-              813,
-              737
-            ],
-            [
-              351,
-              732
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/pasos-ambiente-1-luz.png"
         }
       ]
     },
@@ -3779,44 +3855,6 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/silueta-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
-      "id": "rostros",
-      "name": "Rostros",
-      "category": "deco",
-      "photo": "/assets/obras/rostros-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/rostros-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              385,
-              78
-            ],
-            [
-              810,
-              78
-            ],
-            [
-              809,
-              691
-            ],
-            [
-              385,
-              688
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/rostros-ambiente-1-luz.png"
         }
       ]
     },
@@ -4045,44 +4083,6 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/jinete-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
-      "id": "no-risk",
-      "name": "No Risk",
-      "category": "deco",
-      "photo": "/assets/obras/no-risk-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "negro",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/no-risk-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              362,
-              86
-            ],
-            [
-              783,
-              86
-            ],
-            [
-              783,
-              716
-            ],
-            [
-              362,
-              716
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/no-risk-ambiente-1-luz.png"
         }
       ]
     }
