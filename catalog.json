@@ -3593,44 +3593,6 @@
       ]
     },
     {
-      "id": "rosas",
-      "name": "Rosas",
-      "category": "deco",
-      "photo": "/assets/obras/rosas-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/rosas-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              368,
-              78
-            ],
-            [
-              791,
-              78
-            ],
-            [
-              791,
-              671
-            ],
-            [
-              368,
-              668
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
       "id": "dalmata",
       "name": "Dálmata",
       "category": "deco",
@@ -3665,6 +3627,44 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/dalmata-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "rosas",
+      "name": "Rosas",
+      "category": "deco",
+      "photo": "/assets/obras/rosas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/rosas-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              368,
+              78
+            ],
+            [
+              791,
+              78
+            ],
+            [
+              791,
+              671
+            ],
+            [
+              368,
+              668
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/rosas-ambiente-1-luz.png"
         }
       ]
     },
