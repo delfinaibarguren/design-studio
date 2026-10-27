@@ -3973,44 +3973,6 @@
       ]
     },
     {
-      "id": "live-simply",
-      "name": "Live Simply",
-      "category": "deco",
-      "photo": "/assets/obras/live-simply-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/live-simply-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              399,
-              109
-            ],
-            [
-              827,
-              92
-            ],
-            [
-              827,
-              715
-            ],
-            [
-              399,
-              712
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/live-simply-ambiente-1-luz.png"
-        }
-      ]
-    },
-    {
       "id": "pato",
       "name": "Pato",
       "category": "deco",
@@ -4045,6 +4007,44 @@
           ],
           "apoyado": false,
           "luz": "/assets/obras/pato-ambiente-1-luz.png"
+        }
+      ]
+    },
+    {
+      "id": "live-simply",
+      "name": "Live Simply",
+      "category": "deco",
+      "photo": "/assets/obras/live-simply-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/live-simply-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              399,
+              109
+            ],
+            [
+              827,
+              92
+            ],
+            [
+              827,
+              715
+            ],
+            [
+              399,
+              712
+            ]
+          ],
+          "apoyado": false,
+          "luz": "/assets/obras/live-simply-ambiente-1-luz.png"
         }
       ]
     },
