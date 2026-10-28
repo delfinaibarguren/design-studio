@@ -333,7 +333,8 @@ window.DS = (() => {
       const gan = Math.max(0, paid - cost);
       (out[p.fotografa] ||= { obras: [], total: 0 });
       out[p.fotografa].obras.push(`${l.qty} × ${p.name} (pagó ${money(paid)}, ganancia ${money(gan)})`);
-      out[p.fotografa].total += gan * rate;
+      const cr = category(p.category)?.comision;   // ilustraciones (Trazo) 20%, fotografías 10%
+      out[p.fotografa].total += gan * (cr ?? rate);
     }
     return out;
   }

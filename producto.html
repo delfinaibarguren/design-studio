@@ -171,7 +171,7 @@
   if (cat) $("backCol").href = `/coleccion.html?c=${cat.id}`;
   document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
-  $("pName").textContent = p.name; if (p.lugar) { $("pLugar").textContent = p.lugar; $("pLugar").hidden = false; } if (p.fotografa) { const web = (st.fotografas || {})[p.fotografa]; $("pFoto").innerHTML = `Fotografía: <b>${DS.esc(p.fotografa)}</b>${web ? ` · <a href="${DS.esc(web)}" target="_blank" rel="noopener">Ver su trabajo →</a>` : ""}`; $("pFoto").hidden = false; } $("miniName").textContent = p.name;
+  $("pName").textContent = p.name; if (p.lugar) { $("pLugar").textContent = p.lugar; $("pLugar").hidden = false; } if (p.fotografa) { const web = (st.fotografas || {})[p.fotografa]; $("pFoto").innerHTML = `${DS.esc(DS.category(p.category)?.credito || "Fotografía")}: <b>${DS.esc(p.fotografa)}</b>${web ? ` · <a href="${DS.esc(web)}" target="_blank" rel="noopener">Ver su trabajo →</a>` : ""}`; $("pFoto").hidden = false; } $("miniName").textContent = p.name;
   $("pDesc").textContent = p.description || st.productDescription;
   $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;

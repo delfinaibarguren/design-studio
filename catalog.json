@@ -27,7 +27,8 @@
     "costoEstimado": 0.43,
     "fotografas": {
       "Isabel Turri Vinelli": "https://itv-ph.netlify.app/",
-      "Pilar Mercau": "https://www.behance.net/gallery/230004855/Donde-empieza-la-calma"
+      "Pilar Mercau": "https://www.behance.net/gallery/230004855/Donde-empieza-la-calma",
+      "soy_pini": "https://www.instagram.com/soy_pini/"
     }
   },
   "sizes": [
@@ -169,7 +170,9 @@
       "autor": {
         "nombre": "soy_pini",
         "url": "https://www.instagram.com/soy_pini/"
-      }
+      },
+      "comision": 0.2,
+      "credito": "Ilustración"
     }
   ],
   "products": [

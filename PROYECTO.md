@@ -48,7 +48,7 @@ El servidor (`checkout.mts`) recalcula el precio desde la misma tabla antes de c
 
 ## Comisión de fotógrafas (interna)
 
-10% de la ganancia de cada obra (`store.comisionFotografa`): lo que paga el cliente (con el descuento por transferencia aplicado) menos el costo estimado (`store.costoEstimado` × precio sin recargo de pintado). No se suma al precio. Origen y Terra: Pilar Mercau. Pampa: Isabel Turri Vinelli, salvo Ponis, Chimango I y II, Lantana y Calandria (de Delfina, sin comisión).
+10% de la ganancia de cada obra para fotografías (`store.comisionFotografa`); 20% para ilustraciones de Trazo (soy_pini, `categories[].comision`): lo que paga el cliente (con el descuento por transferencia aplicado) menos el costo estimado (`store.costoEstimado` × precio sin recargo de pintado). No se suma al precio. Origen y Terra: Pilar Mercau. Pampa: Isabel Turri Vinelli, salvo Ponis, Chimango I y II, Lantana y Calandria (de Delfina, sin comisión).
 Cada obra tiene `"fotografa": "Nombre"` en `catalog.json` (vacío = "Sin asignar").
 Cada pedido llega a Netlify Forms (formulario **pedido**) con el campo **comision_fotografas**: cuánto le corresponde a cada fotógrafa y por qué obras. Para sumar por mes: Netlify → Forms → pedido → exportar CSV.
 
