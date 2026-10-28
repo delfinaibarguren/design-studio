@@ -161,6 +161,15 @@
       "description": "Arte gráfico para tus espacios",
       "cover": "/assets/obras/no-risk-ambiente-1.jpg",
       "sinBN": true
+    },
+    {
+      "id": "trazo",
+      "label": "Trazo",
+      "description": "Obras de soy_pini",
+      "autor": {
+        "nombre": "soy_pini",
+        "url": "https://www.instagram.com/soy_pini/"
+      }
     }
   ],
   "products": [

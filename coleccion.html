@@ -41,6 +41,7 @@
   document.getElementById("crumbs").innerHTML = `<a href="/">Inicio</a> / <a href="/#colecciones">Colecciones</a> / <span>${DS.esc(col.label)}</span>`;
   document.getElementById("cTitle").innerHTML = `<span class="h-light">Colección</span><span class="h-bold">${DS.esc(col.label)}.</span>`;
   document.getElementById("cDesc").textContent = col.description || "";
+  if (col.autor) document.getElementById("cDesc").innerHTML = `Obras de <a href="${DS.esc(col.autor.url)}" target="_blank" rel="noopener">${DS.esc(col.autor.nombre)}</a>`;
   const items = c.products.filter((p) => p.category === col.id);
   document.getElementById("grid").innerHTML = items.map(DS.productCard).join("") ||
     `<p class="muted">Estamos preparando esta colección. Muy pronto vas a ver las obras acá.</p>`;
