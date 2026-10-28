@@ -172,7 +172,11 @@
         "url": "https://www.instagram.com/soy_pini/"
       },
       "comision": 0.2,
-      "credito": "Ilustración"
+      "credito": "Ilustración",
+      "sizes": [
+        "30x40",
+        "50x70"
+      ]
     }
   ],
   "products": [

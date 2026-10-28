@@ -12,6 +12,8 @@ export function priceLine(line: Line): Priced | null {
   const product: any = products.get(String(line.productId))
   const size: any = sizes.get(String(line.size))
   if (!product || !size) return null
+  const okSizes = product.sizes || (catalog as any).categories.find((c: any) => c.id === product.category)?.sizes
+  if (okSizes && !okSizes.includes(size.id)) return null
   if ((catalog as any).categories.find((c: any) => c.id === product.category)?.sinBN) line = { ...line, imagen: undefined }
   const qty = Math.max(1, Math.min(10, Math.floor(Number(line.qty) || 1)))
   const base = { quantity: qty, currency_id: "ARS" as const, size: size.id, name: product.name }
