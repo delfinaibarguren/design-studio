@@ -4430,47 +4430,47 @@
       ]
     },
     {
-      "id": "botas",
-      "name": "Botas",
+      "id": "metele-amor",
+      "name": "Amor a todo",
       "category": "deco",
-      "photo": "/assets/obras/botas-original.jpg",
+      "photo": "/assets/obras/metele-amor-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "negro",
-        "terminacion": "paspartu-blanco"
+        "color": "natural",
+        "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/botas-ambiente-1.jpg"
+        "/assets/obras/metele-amor-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              313,
-              80
+              389,
+              93
             ],
             [
-              768,
-              80
+              838,
+              56
             ],
             [
-              769,
-              706
+              842,
+              744
             ],
             [
-              313,
-              706
+              398,
+              735
             ]
           ],
           "apoyado": false,
+          "luz": "/assets/obras/metele-amor-ambiente-1-luz.png",
           "fiel": true,
-          "luz": "/assets/obras/botas-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/botas-ambiente-1-pared.jpg",
-            "x": 283,
-            "y": 43,
-            "w": 516,
-            "h": 700
+            "src": "/assets/obras/metele-amor-ambiente-1-pared.jpg",
+            "x": 359,
+            "y": 16,
+            "w": 513,
+            "h": 766
           }
         }
       ]
@@ -4568,47 +4568,47 @@
       ]
     },
     {
-      "id": "metele-amor",
-      "name": "Metele amor",
+      "id": "botas",
+      "name": "Botas",
       "category": "deco",
-      "photo": "/assets/obras/metele-amor-original.jpg",
+      "photo": "/assets/obras/botas-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/metele-amor-ambiente-1.jpg"
+        "/assets/obras/botas-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              389,
-              93
+              313,
+              80
             ],
             [
-              838,
-              56
+              768,
+              80
             ],
             [
-              842,
-              744
+              769,
+              706
             ],
             [
-              398,
-              735
+              313,
+              706
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/metele-amor-ambiente-1-luz.png",
           "fiel": true,
+          "luz": "/assets/obras/botas-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/metele-amor-ambiente-1-pared.jpg",
-            "x": 359,
-            "y": 16,
-            "w": 513,
-            "h": 766
+            "src": "/assets/obras/botas-ambiente-1-pared.jpg",
+            "x": 283,
+            "y": 43,
+            "w": 516,
+            "h": 700
           }
         }
       ]
