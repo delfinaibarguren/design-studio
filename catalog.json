@@ -4338,47 +4338,47 @@
       ]
     },
     {
-      "id": "cin-cin",
-      "name": "Cin Cin",
+      "id": "smile",
+      "name": "Smile",
       "category": "deco",
-      "photo": "/assets/obras/cin-cin-original.jpg",
+      "photo": "/assets/obras/smile-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/cin-cin-ambiente-1.jpg"
+        "/assets/obras/smile-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              414,
-              106
+              315,
+              83
             ],
             [
-              821,
-              77
+              765,
+              83
             ],
             [
-              821,
-              609
+              766,
+              712
             ],
             [
-              415,
-              607
+              314,
+              712
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png",
           "fiel": true,
+          "luz": "/assets/obras/smile-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/cin-cin-ambiente-1-pared.jpg",
-            "x": 386,
-            "y": 44,
-            "w": 463,
-            "h": 597
+            "src": "/assets/obras/smile-ambiente-1-pared.jpg",
+            "x": 284,
+            "y": 46,
+            "w": 512,
+            "h": 703
           }
         }
       ]
@@ -4430,47 +4430,47 @@
       ]
     },
     {
-      "id": "cool",
-      "name": "Cool",
+      "id": "botas",
+      "name": "Botas",
       "category": "deco",
-      "photo": "/assets/obras/cool-original.jpg",
+      "photo": "/assets/obras/botas-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/cool-ambiente-1.jpg"
+        "/assets/obras/botas-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              365,
-              99
+              313,
+              80
+            ],
+            [
+              768,
+              80
             ],
             [
               769,
-              64
+              706
             ],
             [
-              770,
-              638
-            ],
-            [
-              373,
-              633
+              313,
+              706
             ]
           ],
           "apoyado": false,
-          "luz": "/assets/obras/cool-ambiente-1-luz.png",
           "fiel": true,
+          "luz": "/assets/obras/botas-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/cool-ambiente-1-pared.jpg",
-            "x": 337,
-            "y": 29,
-            "w": 461,
-            "h": 643
+            "src": "/assets/obras/botas-ambiente-1-pared.jpg",
+            "x": 283,
+            "y": 43,
+            "w": 516,
+            "h": 700
           }
         }
       ]
@@ -4707,7 +4707,7 @@
     },
     {
       "id": "punto-de-vista",
-      "name": "From Another Point of View",
+      "name": "Point of View",
       "category": "deco",
       "photo": "/assets/obras/punto-de-vista-original.jpg",
       "defaults": {
@@ -4844,47 +4844,47 @@
       ]
     },
     {
-      "id": "botas",
-      "name": "Botas",
+      "id": "cool",
+      "name": "Cool",
       "category": "deco",
-      "photo": "/assets/obras/botas-original.jpg",
+      "photo": "/assets/obras/cool-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "negro",
-        "terminacion": "paspartu-blanco"
+        "color": "natural",
+        "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/botas-ambiente-1.jpg"
+        "/assets/obras/cool-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              313,
-              80
-            ],
-            [
-              768,
-              80
+              365,
+              99
             ],
             [
               769,
-              706
+              64
             ],
             [
-              313,
-              706
+              770,
+              638
+            ],
+            [
+              373,
+              633
             ]
           ],
           "apoyado": false,
+          "luz": "/assets/obras/cool-ambiente-1-luz.png",
           "fiel": true,
-          "luz": "/assets/obras/botas-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/botas-ambiente-1-pared.jpg",
-            "x": 283,
-            "y": 43,
-            "w": 516,
-            "h": 700
+            "src": "/assets/obras/cool-ambiente-1-pared.jpg",
+            "x": 337,
+            "y": 29,
+            "w": 461,
+            "h": 643
           }
         }
       ]
@@ -4936,47 +4936,47 @@
       ]
     },
     {
-      "id": "smile",
-      "name": "Smile",
+      "id": "cin-cin",
+      "name": "Cin Cin",
       "category": "deco",
-      "photo": "/assets/obras/smile-original.jpg",
+      "photo": "/assets/obras/cin-cin-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "sin"
       },
       "ambientes": [
-        "/assets/obras/smile-ambiente-1.jpg"
+        "/assets/obras/cin-cin-ambiente-1.jpg"
       ],
       "escenas": [
         {
           "quad": [
             [
-              315,
-              83
+              414,
+              106
             ],
             [
-              765,
-              83
+              821,
+              77
             ],
             [
-              766,
-              712
+              821,
+              609
             ],
             [
-              314,
-              712
+              415,
+              607
             ]
           ],
           "apoyado": false,
+          "luz": "/assets/obras/cin-cin-ambiente-1-luz.png",
           "fiel": true,
-          "luz": "/assets/obras/smile-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/smile-ambiente-1-pared.jpg",
-            "x": 284,
-            "y": 46,
-            "w": 512,
-            "h": 703
+            "src": "/assets/obras/cin-cin-ambiente-1-pared.jpg",
+            "x": 386,
+            "y": 44,
+            "w": 463,
+            "h": 597
           }
         }
       ]
