@@ -4476,52 +4476,6 @@
       ]
     },
     {
-      "id": "mas-de-eso",
-      "name": "Más de eso",
-      "category": "deco",
-      "photo": "/assets/obras/mas-de-eso-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/mas-de-eso-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              260,
-              62
-            ],
-            [
-              782,
-              62
-            ],
-            [
-              785,
-              819
-            ],
-            [
-              260,
-              819
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/mas-de-eso-ambiente-1-luz.png",
-          "fiel": true,
-          "pared": {
-            "src": "/assets/obras/mas-de-eso-ambiente-1-pared.jpg",
-            "x": 228,
-            "y": 20,
-            "w": 590,
-            "h": 841
-          }
-        }
-      ]
-    },
-    {
       "id": "perfil",
       "name": "Perfil",
       "category": "deco",
@@ -4706,52 +4660,6 @@
       ]
     },
     {
-      "id": "live-simply",
-      "name": "Live Simply",
-      "category": "deco",
-      "photo": "/assets/obras/live-simply-original.jpg",
-      "defaults": {
-        "tipo": "chato",
-        "color": "natural",
-        "terminacion": "sin"
-      },
-      "ambientes": [
-        "/assets/obras/live-simply-ambiente-1.jpg"
-      ],
-      "escenas": [
-        {
-          "quad": [
-            [
-              391,
-              95
-            ],
-            [
-              826,
-              80
-            ],
-            [
-              826,
-              729
-            ],
-            [
-              390,
-              723
-            ]
-          ],
-          "apoyado": false,
-          "luz": "/assets/obras/live-simply-ambiente-1-luz.png",
-          "fiel": true,
-          "pared": {
-            "src": "/assets/obras/live-simply-ambiente-1-pared.jpg",
-            "x": 361,
-            "y": 42,
-            "w": 494,
-            "h": 724
-          }
-        }
-      ]
-    },
-    {
       "id": "jinete",
       "name": "Jinete",
       "category": "deco",
@@ -4793,6 +4701,282 @@
             "y": 38,
             "w": 439,
             "h": 636
+          }
+        }
+      ]
+    },
+    {
+      "id": "punto-de-vista",
+      "name": "From Another Point of View",
+      "category": "deco",
+      "photo": "/assets/obras/punto-de-vista-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/punto-de-vista-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              353,
+              81
+            ],
+            [
+              829,
+              65
+            ],
+            [
+              830,
+              748
+            ],
+            [
+              353,
+              743
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/punto-de-vista-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/punto-de-vista-ambiente-1-pared.jpg",
+            "x": 322,
+            "y": 26,
+            "w": 539,
+            "h": 761
+          }
+        }
+      ]
+    },
+    {
+      "id": "bauhaus",
+      "name": "Bauhaus",
+      "category": "deco",
+      "photo": "/assets/obras/bauhaus-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/bauhaus-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              352,
+              81
+            ],
+            [
+              830,
+              67
+            ],
+            [
+              830,
+              749
+            ],
+            [
+              351,
+              744
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/bauhaus-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/bauhaus-ambiente-1-pared.jpg",
+            "x": 320,
+            "y": 28,
+            "w": 541,
+            "h": 760
+          }
+        }
+      ]
+    },
+    {
+      "id": "one-percent",
+      "name": "1% Better",
+      "category": "deco",
+      "photo": "/assets/obras/one-percent-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/one-percent-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              378,
+              80
+            ],
+            [
+              739,
+              78
+            ],
+            [
+              740,
+              570
+            ],
+            [
+              380,
+              567
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/one-percent-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/one-percent-ambiente-1-pared.jpg",
+            "x": 352,
+            "y": 47,
+            "w": 414,
+            "h": 554
+          }
+        }
+      ]
+    },
+    {
+      "id": "botas",
+      "name": "Botas",
+      "category": "deco",
+      "photo": "/assets/obras/botas-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "negro",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/botas-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              313,
+              80
+            ],
+            [
+              768,
+              80
+            ],
+            [
+              769,
+              706
+            ],
+            [
+              313,
+              706
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/botas-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/botas-ambiente-1-pared.jpg",
+            "x": 283,
+            "y": 43,
+            "w": 516,
+            "h": 700
+          }
+        }
+      ]
+    },
+    {
+      "id": "it-is",
+      "name": "It Is What It Is",
+      "category": "deco",
+      "photo": "/assets/obras/it-is-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/it-is-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              388,
+              88
+            ],
+            [
+              830,
+              63
+            ],
+            [
+              831,
+              755
+            ],
+            [
+              389,
+              743
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/it-is-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/it-is-ambiente-1-pared.jpg",
+            "x": 359,
+            "y": 24,
+            "w": 501,
+            "h": 770
+          }
+        }
+      ]
+    },
+    {
+      "id": "smile",
+      "name": "Smile",
+      "category": "deco",
+      "photo": "/assets/obras/smile-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "sin"
+      },
+      "ambientes": [
+        "/assets/obras/smile-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              315,
+              83
+            ],
+            [
+              765,
+              83
+            ],
+            [
+              766,
+              712
+            ],
+            [
+              314,
+              712
+            ]
+          ],
+          "apoyado": false,
+          "fiel": true,
+          "luz": "/assets/obras/smile-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/smile-ambiente-1-pared.jpg",
+            "x": 284,
+            "y": 46,
+            "w": 512,
+            "h": 703
           }
         }
       ]
