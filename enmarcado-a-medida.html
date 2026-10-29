@@ -66,10 +66,28 @@
     <div class="box">
       <h2><span class="step">2</span> Medidas y terminación</h2>
       <p class="q-hint">Armá cada cuadro: medida, tipo de marco, color, paspartú y cantidad. Si querés distintas combinaciones, agregá otra línea.</p>
+      <div class="mp" id="mp" hidden>
+        <div class="mp-tabs" id="mpTabs" role="tablist"></div>
+        <div class="mp-stage" id="mpStage"><canvas id="mpCv"></canvas><canvas id="mpUi" hidden></canvas></div>
+        <div class="mp-wall" id="mpWall" hidden>
+          <label class="q-drop"><input type="file" id="mpWallFile" accept="image/*"><span>📷 Subí o sacá una foto de tu pared</span></label>
+          <small class="q-hint">Tu foto de la pared no se sube a ningún lado: queda en tu dispositivo.</small>
+        </div>
+        <div class="mp-tools" id="mpTools" hidden>
+          <button type="button" class="tw-tool" id="mpMeasure">📏 Tamaño real</button>
+          <button type="button" class="tw-tool" id="mpSave">Descargar imagen</button>
+          <label class="tw-tool" for="mpWallFile">Cambiar foto</label>
+        </div>
+        <div class="tw-ref" id="mpRef" hidden><span id="mpRefTxt">Tocá los dos extremos de algo que sepas cuánto mide (un sillón, una mesa, una puerta…)</span><span id="mpRefIn" hidden>Mide <input type="number" id="mpRefCm" min="5" max="1000" inputmode="decimal" placeholder="cm"> cm <button type="button" class="btn btn-dark" id="mpRefOk">Listo</button></span></div>
+        <p class="mp-hint" id="mpHint"></p>
+        <div class="mp-pics" id="mpPics"></div>
+        <p class="mp-warn" id="mpWarn" hidden></p>
+      </div>
       <div class="q-items" id="qItems"></div>
       <button type="button" class="q-add" id="qAdd">+ Agregar otra medida</button>
       <input type="hidden" name="medidas" id="qMedidas">
       <input type="hidden" name="fotos_links">
+      <input type="hidden" name="encuadre" id="qEncuadre">
     </div>
 
     <div class="box">
@@ -97,6 +115,7 @@
 
 <div id="ds-footer"></div>
 <script src="/assets/store.js"></script>
+<script src="/assets/configurador.js"></script>
 <script>
 (async () => {
   const c = await DS.init();
@@ -115,7 +134,7 @@
     const obra = form.que.value === "Obra de Dsgn. Studio";
     $("qObra").hidden = !obra; $("qPropio").hidden = obra;
   };
-  form.addEventListener("change", toggle);
+  form.addEventListener("change", (e) => { toggle(); if (e.target.name === "que" || e.target.name === "obra") { drawItems(); mpFiles(); } });
   // si viene desde una obra: la deja elegida con sus opciones
   const p = DS.product(q.get("obra"));
   if (p) {
@@ -124,6 +143,7 @@
   if (q.has("obra") || q.has("consulta")) setTimeout(() => $("consulta").scrollIntoView({ behavior: "smooth" }), 300);
   toggle();
 
+  let nFotos = 0, mpRefresh = () => {}, mpFiles = () => {}, mpEncuadre = () => "", mpActive = 0;
   // ---- cuadros: cada línea = medida + tipo + color + paspartú + cantidad
   const OPTS = {
     medida: ["20x25", "20x30", "30x40", "50x70", "100x70", "Más grande"],
@@ -145,22 +165,24 @@
   const drawItems = () => {
     $("qItems").innerHTML = items.map((it, i) => `<div class="q-item">
       <div class="q-item-h"><b>Cuadro ${i + 1}</b>${items.length > 1 ? `<button type="button" data-rm-item="${i}">Quitar</button>` : ""}</div>
-      <div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}
+      <div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}${nFotos > 1 && form.que.value === "Algo mío" ? `<label class="f k-foto">Foto<select data-i="${i}" data-k="foto">${Array.from({ length: nFotos }, (_, k) => `<option value="${k}"${(it.foto ?? i % nFotos) === k ? " selected" : ""}>Foto ${k + 1}</option>`).join("")}</select></label>` : ""}
         <label class="f">Cantidad<span class="q-step"><button type="button" data-i="${i}" data-d="-1" aria-label="Restar">−</button><b>${it.cant}</b><button type="button" data-i="${i}" data-d="1" aria-label="Sumar">+</button></span></label>
         ${it.medida === "Más grande" ? `<p class="q-big">Para medidas más grandes te asesoramos por WhatsApp. <a href="https://wa.me/5491153132340?text=${encodeURIComponent("Hola! Quiero consultar por un enmarcado en una medida más grande.")}" target="_blank" rel="noopener">Escribinos acá →</a> También podés contarnos la medida en la aclaración y te respondemos con el presupuesto.</p>` : ""}
         <label class="f k-nota">Aclaración (opcional)<input data-i="${i}" data-k="nota" value="${DS.esc(it.nota)}" placeholder="Ej: van las fotos 1 y 3 / la camiseta azul"></label>
       </div></div>`).join("");
+    mpRefresh();
   };
   $("qItems").addEventListener("input", (e) => { const s = e.target.closest("[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
-  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida") drawItems(); } });
+  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { const it = items[+s.dataset.i]; it[s.dataset.k] = s.dataset.k === "foto" ? +s.value : s.value; s.style.borderColor = ""; mpActive = +s.dataset.i; if (s.dataset.k === "medida") drawItems(); else mpRefresh(); } });
+  $("qItems").addEventListener("focusin", (e) => { const s = e.target.closest("[data-i]"); if (s && mpActive !== +s.dataset.i) { mpActive = +s.dataset.i; mpRefresh(); } });
   $("qItems").addEventListener("click", (e) => {
     const d = e.target.closest("button[data-d]");
-    if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; }
+    if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; mpRefresh(); }
     const rm = e.target.closest("[data-rm-item]"); if (rm) { items.splice(+rm.dataset.rmItem, 1); drawItems(); }
   });
   $("qAdd").onclick = () => { const last = items[items.length - 1]; items.push({ ...last, medida: "", cant: 1, nota: "" }); drawItems(); };
   drawItems();
-  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida === "Más grande" ? "medida más grande (a consultar)" : it.medida + " cm"} · ${it.tipo} · ${it.color} · ${it.paspartu}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
+  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida === "Más grande" ? "medida más grande (a consultar)" : it.medida + " cm"} · ${it.tipo} · ${it.color} · ${it.paspartu}${nFotos > 1 && form.que.value === "Algo mío" ? ` · Foto ${(it.foto ?? items.indexOf(it) % nFotos) + 1}` : ""}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
 
   // ---- archivos (máx. 10). Se suben en su calidad original; la copia achicada es solo un respaldo para el formulario.
   const MAXF = 10; let files = [];
@@ -213,9 +235,205 @@
     const pick = [...e.target.files]; e.target.value = "";
     const room = MAXF - files.length;
     if (pick.length > room) DS.toast(`Podés adjuntar hasta ${MAXF} archivos`);
-    files = files.concat(pick.slice(0, room)); drawFiles();
+    files = files.concat(pick.slice(0, room)); drawFiles(); mpFiles();
   });
-  $("qFileList").addEventListener("click", (e) => { const bt = e.target.closest("[data-rm]"); if (bt) { files.splice(+bt.dataset.rm, 1); drawFiles(); } });
+  $("qFileList").addEventListener("click", (e) => { const bt = e.target.closest("[data-rm]"); if (bt) { files.splice(+bt.dataset.rm, 1); drawFiles(); mpFiles(); } });
+
+
+  // ---- vista previa: tu foto enmarcada, en ambientes y en tu pared
+  {
+    const ROOMS = [{ id: "living", label: "Living", h: "molino", v: "sombrero" }, { id: "dormitorio", label: "Dormitorio", h: "primavera", v: "otono" }, { id: "sala", label: "Sala", h: "girasoles", v: "loros" }];
+    const scene = (pid) => { const pr = DS.product(pid); return pr && pr.escenas && { src: pr.ambientes[0], ...pr.escenas[0] }; };
+    const MAP = { tipo: { Box: "box", Chato: "chato" }, color: { "Kiri natural": "natural", Negro: "negro", Blanco: "blanco" }, paspartu: { "Paspartú blanco": "paspartu-blanco", "Paspartú negro": "paspartu-negro", "Sin paspartú": "sin" } };
+    const optsOf = (it) => ({ tipo: MAP.tipo[it.tipo] || "chato", color: MAP.color[it.color] || "natural", terminacion: MAP.paspartu[it.paspartu] || "sin" });
+    let bases = [], tab = "cuadro", wall = null, pxcm = 0, scale = 1, pos = {}, seq = 0;
+    const urlCache = new Map(), layerCache = new Map();
+    const loadImg = (src) => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = src; });
+    async function toBase(src, name) {
+      try {
+        const im = await loadImg(src), k = Math.min(1, 1600 / Math.max(im.naturalWidth, im.naturalHeight));
+        const cv = document.createElement("canvas"); cv.width = Math.round(im.naturalWidth * k); cv.height = Math.round(im.naturalHeight * k);
+        cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height);
+        return { name, cv, w: im.naturalWidth, h: im.naturalHeight, ok: true };
+      } catch { return { name, ok: false }; }
+    }
+    mpFiles = async () => {
+      const my = ++seq; urlCache.clear(); layerCache.clear();
+      let b = [];
+      if (form.que.value === "Algo mío") {
+        for (const f of files.filter((f) => tipoDe(f).startsWith("image/"))) { const u = URL.createObjectURL(f); b.push(await toBase(u, f.name)); URL.revokeObjectURL(u); }
+      } else { const pr = c.products.find((x) => x.name === sel.value); if (pr) b.push(await toBase(pr.photo, pr.name)); }
+      if (my !== seq) return;
+      bases = b; const n = form.que.value === "Algo mío" ? b.length : 0;
+      if (n !== nFotos) { nFotos = n; drawItems(); } else mpRefresh();
+    };
+    const fotoOf = (it, i) => Math.min(bases.length - 1, it.foto ?? (i % Math.max(1, bases.length)));
+    const dims = (it, b) => {   // medida del área de la foto en cm, orientada como la foto
+      const m = /^(\d+)x(\d+)$/.exec(it.medida || ""); if (!m) return null;
+      const a = Math.min(+m[1], +m[2]), z = Math.max(+m[1], +m[2]);
+      return b.w >= b.h ? [z, a] : [a, z];
+    };
+    async function cropURL(it, i) {
+      const b = bases[fotoOf(it, i)]; if (!b || !b.ok) return null;
+      const d = dims(it, b), r = d ? d[0] / d[1] : b.cv.width / b.cv.height;
+      const cx = it.crop?.[0] ?? .5, cy = it.crop?.[1] ?? .5, key = `${fotoOf(it, i)}|${r.toFixed(3)}|${cx.toFixed(3)}|${cy.toFixed(3)}`;
+      if (urlCache.has(key)) return urlCache.get(key);
+      const W = b.cv.width, H = b.cv.height; let sw = W, sh = W / r; if (sh > H) { sh = H; sw = H * r; }
+      const sx = (W - sw) * cx, sy = (H - sh) * cy, k = Math.min(1, 1200 / Math.max(sw, sh));
+      const cv = document.createElement("canvas"); cv.width = Math.round(sw * k); cv.height = Math.round(sh * k);
+      cv.getContext("2d").drawImage(b.cv, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
+      const p = new Promise((ok) => cv.toBlob((bl) => ok(URL.createObjectURL(bl)), "image/jpeg", .9));
+      urlCache.set(key, p); return p;
+    }
+    const recorta = (it, i) => { const b = bases[fotoOf(it, i)], d = b && b.ok && dims(it, b); return d && Math.abs(d[0] / d[1] - b.w / b.h) > .02; };
+    function calidad(it, i) {
+      if (form.que.value !== "Algo mío") return "";   // nuestras obras: tenemos el archivo original en alta
+      const b = bases[fotoOf(it, i)], d = b && b.ok && dims(it, b); if (!d) return "";
+      const r = d[0] / d[1], px = Math.min(b.w, b.h * r), dpi = px / (d[0] / 2.54);
+      if (dpi >= 100) return "";
+      const ok = OPTS.medida.filter((m) => /x/.test(m) && m !== "Más grande").filter((m) => { const [a, z] = m.split("x").map(Number); const dd = b.w >= b.h ? [Math.max(a, z), Math.min(a, z)] : [Math.min(a, z), Math.max(a, z)]; return Math.min(b.w, b.h * dd[0] / dd[1]) / (dd[0] / 2.54) >= 150; });
+      return `Tu foto tiene poca resolución para ${it.medida.replace("x", " × ")} cm y puede verse pixelada.${ok.length ? ` Te recomendamos hasta ${ok[ok.length - 1].replace("x", " × ")} cm.` : ""}`;
+    }
+    const cv = $("mpCv"), ui = $("mpUi");
+    function drawTabs() {
+      const t = [["cuadro", "Tu cuadro"], ...ROOMS.map((r) => [r.id, r.label]), ["pared", "Tu pared"]];
+      $("mpTabs").innerHTML = t.map(([id, l]) => `<button type="button" role="tab" data-tab="${id}" aria-selected="${tab === id}">${l}</button>`).join("");
+    }
+    $("mpTabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) { tab = b.dataset.tab; mpRefresh(); } });
+    $("mpPics").addEventListener("click", (e) => { const b = e.target.closest("[data-act]"); if (b) { mpActive = +b.dataset.act; mpRefresh(); } });
+    let rseq = 0;
+    mpRefresh = async () => {
+      const my = ++rseq;
+      const show = bases.some((b) => b.ok);
+      $("mp").hidden = !bases.length;
+      if (!bases.length) return;
+      mpActive = Math.min(mpActive, items.length - 1);
+      drawTabs();
+      const it = items[mpActive];
+      $("mpPics").innerHTML = items.length > 1 ? items.map((x, i) => `<button type="button" data-act="${i}" aria-pressed="${i === mpActive}">Cuadro ${i + 1}${x.medida && x.medida !== "Más grande" ? " · " + x.medida.replace("x", "×") : ""}</button>`).join("") : "";
+      $("mpPics").hidden = tab === "pared" || items.length < 2;
+      const pared = tab === "pared";
+      $("mpWall").hidden = !pared || !!wall; $("mpTools").hidden = !pared || !wall;
+      $("mpStage").hidden = (pared && !wall) || !show; ui.hidden = !pared;
+      const warn = items.map((x, i) => calidad(x, i) && (items.length > 1 ? `Cuadro ${i + 1}: ` : "") + calidad(x, i)).filter(Boolean);
+      $("mpWarn").textContent = warn.join(" "); $("mpWarn").hidden = !warn.length;
+      if (!show) { $("mpHint").textContent = "No podemos mostrar la vista previa de este formato, pero igual recibimos tu archivo en su calidad original."; return; }
+      if (pared) { $("mpHint").textContent = wall ? "Arrastrá cada cuadro para armar tu composición. Usá la esquina de cualquier cuadro para agrandarlos o achicarlos." : ""; if (wall) await drawWall(my); return; }
+      const url = await cropURL(it, mpActive); if (my !== rseq || !url) return;
+      if (tab === "cuadro") {
+        cv.style.cursor = recorta(it, mpActive) ? "grab" : "";
+        $("mpHint").textContent = recorta(it, mpActive) ? "Tu foto no tiene la misma proporción que la medida elegida: arrastrala para elegir qué parte queda en el cuadro." : !it.medida ? "Elegí la medida para ver cómo queda recortada tu foto." : "";
+        await DSFrame.draw(cv, url, optsOf(it));
+      } else {
+        const r = ROOMS.find((x) => x.id === tab), b = bases[fotoOf(it, mpActive)], d = dims(it, b), ratio = d ? d[0] / d[1] : b.w / b.h;
+        cv.style.cursor = ""; $("mpHint").textContent = "Vista de referencia: el tamaño del cuadro en el ambiente es aproximado.";
+        await DSFrame.scene(cv, url, optsOf(it), scene(ratio >= 1 ? r.h : r.v));
+      }
+    };
+    // encuadre: arrastrar la foto en "Tu cuadro"
+    let cdrag = null;
+    cv.addEventListener("pointerdown", (e) => { const it = items[mpActive]; if (tab !== "cuadro" || !recorta(it, mpActive)) return; cdrag = { x: e.clientX, y: e.clientY, c: it.crop ? it.crop.slice() : [.5, .5] }; cv.setPointerCapture(e.pointerId); cv.style.cursor = "grabbing"; });
+    cv.addEventListener("pointermove", (e) => {
+      if (!cdrag) return; const it = items[mpActive], b = bases[fotoOf(it, mpActive)], d = dims(it, b), r = d[0] / d[1];
+      const W = cv.clientWidth * .6, horiz = b.w / b.h > r;
+      const dx = (e.clientX - cdrag.x) / W, dy = (e.clientY - cdrag.y) / W, cl = (v) => Math.max(0, Math.min(1, v));
+      it.crop = horiz ? [cl(cdrag.c[0] - dx * 1.5), .5] : [.5, cl(cdrag.c[1] - dy * 1.5)];
+      mpRefresh();
+    });
+    cv.addEventListener("pointerup", () => { cdrag = null; cv.style.cursor = "grab"; });
+    mpEncuadre = () => items.map((it, i) => it.crop && recorta(it, i) ? `Cuadro ${i + 1}: recorte ${it.crop[0] !== .5 ? `horizontal ${Math.round(it.crop[0] * 100)}% (0 = izquierda, 100 = derecha)` : `vertical ${Math.round(it.crop[1] * 100)}% (0 = arriba, 100 = abajo)`}` : "").filter(Boolean).join("\n");
+
+    // ---- tu pared: todos los cuadros del pedido, para armar la composición
+    $("mpWallFile").addEventListener("change", async (e) => {
+      const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+      const u = URL.createObjectURL(f); const b = await toBase(u, f.name); URL.revokeObjectURL(u);
+      if (!b.ok) { DS.toast("No pudimos abrir esa foto"); return; }
+      wall = b; pos = {}; pxcm = 0; scale = 1; $("mpMeasure").textContent = "📏 Tamaño real"; mpRefresh();
+    });
+    const frames = () => {   // un marco por unidad (cantidad), con su tamaño real en cm
+      const out = [];
+      items.forEach((it, i) => {
+        const b = bases[fotoOf(it, i)]; if (!b || !b.ok) return;
+        const d = dims(it, b) || (b.w >= b.h ? [50, 50 * b.h / b.w] : [50 * b.w / b.h, 50]);
+        const m = /paspart/i.test(it.paspartu) && !/sin/i.test(it.paspartu) ? 5 : 0, F = 2;
+        for (let k = 0; k < Math.min(it.cant, 12); k++) out.push({ key: `${i}-${k}`, it, i, wcm: d[0] + 2 * (m + F), hcm: d[1] + 2 * (m + F), label: it.medida && it.medida !== "Más grande" ? it.medida.replace("x", "×") : "" });
+      });
+      return out;
+    };
+    const ppc = () => (pxcm || wall.cv.height * .36 / 70) * scale;   // px de la foto de la pared por cm
+    function layout(fs) {
+      const k = ppc(), gap = 8 * k, tot = fs.reduce((a, f) => a + f.wcm * k, 0) + gap * (fs.length - 1);
+      let x = wall.cv.width / 2 - tot / 2;
+      for (const f of fs) { if (!pos[f.key]) pos[f.key] = [x + f.wcm * k / 2, wall.cv.height * .4]; x += f.wcm * k + gap; }
+    }
+    const rectOf = (f) => { const k = ppc(), [cx, cy] = pos[f.key]; return [cx - f.wcm * k / 2, cy - f.hcm * k / 2, f.wcm * k, f.hcm * k]; };
+    async function layerOf(f) {
+      const url = await cropURL(f.it, f.i), o = optsOf(f.it), key = url + JSON.stringify(o);
+      if (!layerCache.has(key)) layerCache.set(key, DSFrame.layer(url, o, 700));
+      return layerCache.get(key);
+    }
+    let refPts = [], refMode = null;
+    async function drawWall(my) {
+      const fs = frames(); layout(fs);
+      const Ls = await Promise.all(fs.map(layerOf)); if (my !== rseq) return;
+      const wrap = $("mpStage").parentNode.clientWidth, w = Math.min(wrap, (innerHeight * .62) * wall.cv.width / wall.cv.height);
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      cv.style.width = ui.style.width = w + "px";
+      cv.width = Math.round(w * dpr); cv.height = Math.round(cv.width * wall.cv.height / wall.cv.width);
+      const x = cv.getContext("2d"), s = cv.width / wall.cv.width;
+      x.drawImage(wall.cv, 0, 0, cv.width, cv.height);
+      fs.forEach((f, j) => {
+        const [rx, ry, rw, rh] = rectOf(f).map((v) => v * s), L = Ls[j];
+        const lw = rh * L.W / L.H > rw ? rw : rh * L.W / L.H, lh = lw * L.H / L.W, ox = rx + (rw - lw) / 2, oy = ry + (rh - lh) / 2;
+        x.save(); x.shadowColor = `rgba(35,25,15,${L.box ? .42 : .3})`; x.shadowBlur = lw / 25; x.shadowOffsetX = lw / 90; x.shadowOffsetY = lw / 45;
+        x.fillStyle = "#000"; x.fillRect(ox, oy, lw, lh); x.restore();
+        x.drawImage(L.canvas, ox, oy, lw, lh);
+      });
+      ui.width = cv.width; ui.height = cv.height;
+      const u = ui.getContext("2d"), r = Math.max(8, cv.width / 80);
+      u.font = `${Math.round(r * 1.5)}px Poppins, sans-serif`; u.textAlign = "center";
+      fs.forEach((f) => {
+        const [rx, ry, rw, rh] = rectOf(f).map((v) => v * s);
+        u.fillStyle = "#fff"; u.strokeStyle = "rgba(0,0,0,.45)"; u.lineWidth = 1.5; u.beginPath(); u.arc(rx + rw, ry + rh, r, 0, 7); u.fill(); u.stroke();
+        if (f.label) { const t = f.label + " cm", tw = u.measureText(t).width + r; u.fillStyle = "rgba(255,255,255,.85)"; u.fillRect(rx + rw / 2 - tw / 2, ry + rh + r * .6, tw, r * 2.2); u.fillStyle = "#1c1b19"; u.fillText(t, rx + rw / 2, ry + rh + r * 2.2); }
+      });
+      if (refPts.length) { u.strokeStyle = u.fillStyle = "#d6452b"; u.lineWidth = r / 3; u.beginPath(); refPts.forEach(([a, b], i) => (i ? u.lineTo(a * s, b * s) : u.moveTo(a * s, b * s))); u.stroke(); refPts.forEach(([a, b]) => { u.beginPath(); u.arc(a * s, b * s, r * .6, 0, 7); u.fill(); }); }
+    }
+    const wpt = (e) => { const r = ui.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * wall.cv.width, (e.clientY - r.top) / r.height * wall.cv.height]; };
+    let wdrag = null;
+    ui.addEventListener("pointerdown", (e) => {
+      if (!wall) return; const P = wpt(e); e.preventDefault();
+      if (refMode) { refPts.push(P); if (refPts.length === 2) { refMode = "cm"; $("mpRefTxt").hidden = true; $("mpRefIn").hidden = false; $("mpRefCm").focus(); } mpRefresh(); return; }
+      const fs = frames(), tol = wall.cv.width / 30;
+      for (const f of fs.slice().reverse()) {
+        const [rx, ry, rw, rh] = rectOf(f);
+        if (Math.hypot(P[0] - (rx + rw), P[1] - (ry + rh)) < tol) { wdrag = { type: "scale", f, P, s0: scale, c: [rx + rw / 2, ry + rh / 2], d0: Math.hypot(P[0] - rx - rw / 2, P[1] - ry - rh / 2) }; break; }
+        if (P[0] > rx && P[0] < rx + rw && P[1] > ry && P[1] < ry + rh) { wdrag = { type: "move", f, P, p0: pos[f.key].slice() }; break; }
+      }
+      if (wdrag) ui.setPointerCapture(e.pointerId);
+    });
+    ui.addEventListener("pointermove", (e) => {
+      if (!wdrag) return; const P = wpt(e);
+      if (wdrag.type === "move") pos[wdrag.f.key] = [wdrag.p0[0] + P[0] - wdrag.P[0], wdrag.p0[1] + P[1] - wdrag.P[1]];
+      else { scale = Math.max(.15, wdrag.s0 * Math.hypot(P[0] - wdrag.c[0], P[1] - wdrag.c[1]) / wdrag.d0); if (pxcm) $("mpMeasure").textContent = "📏 Tamaño real"; }
+      mpRefresh();
+    });
+    const wend = () => (wdrag = null); ui.addEventListener("pointerup", wend); ui.addEventListener("pointercancel", wend);
+    $("mpMeasure").onclick = () => { refMode = "pts"; refPts = []; $("mpRef").hidden = false; $("mpRefTxt").hidden = false; $("mpRefIn").hidden = true; mpRefresh(); };
+    $("mpRefOk").onclick = () => {
+      const cm = parseFloat(String($("mpRefCm").value).replace(",", ".")); if (!(cm > 0) || refPts.length < 2) return;
+      pxcm = Math.hypot(refPts[1][0] - refPts[0][0], refPts[1][1] - refPts[0][1]) / cm; scale = 1;
+      refMode = null; refPts = []; $("mpRef").hidden = true; $("mpRefCm").value = ""; $("mpMeasure").textContent = "📏 Tamaño real ✓"; mpRefresh();
+    };
+    $("mpSave").onclick = () => cv.toBlob(async (b) => {
+      const f = new File([b], "mi-pared-dsgn.jpg", { type: "image/jpeg" });
+      if (navigator.canShare && navigator.canShare({ files: [f] }) && matchMedia("(pointer: coarse)").matches) { try { await navigator.share({ files: [f] }); return; } catch {} }
+      const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = f.name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    }, "image/jpeg", .92);
+    let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(mpRefresh, 200); });
+    await DSFrame.preload();
+    mpFiles();
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -225,7 +443,7 @@
     sinMed.forEach((x) => (x.style.borderColor = "#a12d1c"));
     if (sinMed.length) { $("qErr").textContent = "Elegí la medida de cada cuadro (o quitá la línea que no uses)."; $("qErr").hidden = false; sinMed[0].scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     if (miss.length) { $("qErr").textContent = "Completá tu nombre y WhatsApp para poder responderte."; $("qErr").hidden = false; return; }
-    $("qMedidas").value = medidasTxt();
+    $("qMedidas").value = medidasTxt(); $("qEncuadre").value = mpEncuadre();
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
     const fd = new FormData(form);
     if (form.que.value === "Algo mío") fd.set("obra", ""); else fd.set("objeto", "");
@@ -256,7 +474,7 @@
     const esObra = form.que.value === "Obra de Dsgn. Studio";
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
-      "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt + (links.filter(Boolean).length < files.length ? `${linksTxt ? "\n" : ""}${files.length - links.filter(Boolean).length} foto(s) no se pudieron subir en original: hay una copia chica en Netlify → Forms → consulta` : "")) : "",
+      "Medidas": medidasTxt(), "Encuadre elegido": mpEncuadre(), "Fotos adjuntas": files.length && !esObra ? (linksTxt + (links.filter(Boolean).length < files.length ? `${linksTxt ? "\n" : ""}${files.length - links.filter(Boolean).length} foto(s) no se pudieron subir en original: hay una copia chica en Netlify → Forms → consulta` : "")) : "",
       "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
     });
     const obra = esObra;
