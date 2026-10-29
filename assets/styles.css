@@ -630,3 +630,4 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .arr-form { margin-top: 1.6rem; }
 .arr-form .btn { margin-top: 1rem; }
 .arr-ok h2 { margin-top: 0; }
+.mat-img { margin: .5rem 0 0; font-size: .82rem; color: var(--ink-soft); }

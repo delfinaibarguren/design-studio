@@ -29,7 +29,14 @@
       "Isabel Turri Vinelli": "https://itv-ph.netlify.app/",
       "Pilar Mercau": "https://www.behance.net/gallery/230004855/Donde-empieza-la-calma",
       "soy_pini": "https://www.instagram.com/soy_pini/"
-    }
+    },
+    "anchosPaspartu": [
+      3,
+      5,
+      8,
+      12
+    ],
+    "minImagenCm": 12
   },
   "sizes": [
     {

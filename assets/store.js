@@ -56,7 +56,7 @@ window.DS = (() => {
       const lab = (list, id) => (catalog[list] || []).find((x) => x.id === id)?.label || "";
       const ft = frameType(line.tipo);
       const arp = line.terminacion === "arpillera" ? ` (fondo ${lab("fondos", line.fondo).toLowerCase()})` : "";
-      return `${s.label} · Marco ${ft ? ft.label.toLowerCase() + " " : ""}${lab("frameColors", line.color).toLowerCase()} · ${lab("terminaciones", line.terminacion)}${arp}${line.imagen === "bn" ? " · Blanco y negro" : ""}`;
+      return `${s.label} · Marco ${ft ? ft.label.toLowerCase() + " " : ""}${lab("frameColors", line.color).toLowerCase()} · ${lab("terminaciones", line.terminacion)}${String(line.terminacion).startsWith("paspartu") ? ` ${line.mat || 5} cm` : ""}${arp}${line.imagen === "bn" ? " · Blanco y negro" : ""}`;
     }
     const st = style(p, line.style);
     const ft = frameType(line.tipo);
@@ -69,7 +69,7 @@ window.DS = (() => {
     if (st.interestFree && price >= (st.interestFreeMin || 0)) return `${st.interestFree} cuotas sin interés de ${money(price / st.interestFree)}`;
     return `Hasta ${st.maxInstallments} cuotas con Mercado Pago`;
   }
-  const lineKey = (l) => [l.productId, l.size, l.tipo || "", l.color || "", l.terminacion || "", l.terminacion === "arpillera" ? l.fondo : "", l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : "", l.imagen === "bn" ? "bn" : ""].join("|");
+  const lineKey = (l) => [l.productId, l.size, l.tipo || "", l.color || "", l.terminacion || "", l.terminacion === "arpillera" ? l.fondo : "", l.style || l.finish, !l.style && l.finish === "marco" ? l.frame : "", l.imagen === "bn" ? "bn" : "", String(l.terminacion).startsWith("paspartu") ? l.mat || 5 : ""].join("|");
 
   /* ---------- Carrito ---------- */
   function getCart() {
@@ -129,7 +129,8 @@ window.DS = (() => {
   function framed(p, opts = {}) {
     if (p.photo) {
       const o = Object.assign({ tipo: (catalog.frameTypes || [])[0]?.id || "chato", color: "negro", terminacion: "paspartu-blanco", fondo: "negro" }, p.defaults || {}, opts);
-      return `<canvas class="cfg" role="img" aria-label="${esc(p.name)}" data-photo="${esc(p.photo)}" data-tipo="${esc(o.tipo)}" data-color="${esc(o.color)}" data-terminacion="${esc(o.terminacion)}" data-fondo="${esc(o.fondo)}"${o.imagen === "bn" ? ' data-imagen="bn"' : ""}${o.pared ? ` data-pared="${esc(o.pared)}"` : ""}></canvas>`;
+      if (!o.largo && size(o.size)) { const s = size(o.size); o.largo = Math.max(s.w, s.h); }
+      return `<canvas class="cfg" role="img" aria-label="${esc(p.name)}" data-photo="${esc(p.photo)}" data-tipo="${esc(o.tipo)}" data-color="${esc(o.color)}" data-terminacion="${esc(o.terminacion)}" data-fondo="${esc(o.fondo)}"${o.imagen === "bn" ? ' data-imagen="bn"' : ""}${o.mat ? ` data-mat="${+o.mat}"` : ""}${o.largo ? ` data-largo="${+o.largo}"` : ""}${o.pared ? ` data-pared="${esc(o.pared)}"` : ""}></canvas>`;
     }
     if (p.styles) {
       const st = style(p, opts.style);

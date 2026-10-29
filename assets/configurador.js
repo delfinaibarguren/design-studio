@@ -57,9 +57,12 @@ window.DSFrame = (() => {
     if (o.imagen === "bn") photo = gray(photo);
     // ---- geometría en cm (la foto nunca se recorta ni se estira) ----
     const ratio = photo.naturalWidth / photo.naturalHeight;
-    const pw = ratio >= 1 ? CM.photoLong : CM.photoLong * ratio;
-    const ph = ratio >= 1 ? CM.photoLong / ratio : CM.photoLong;
-    const inset = o.terminacion.startsWith("paspartu") ? CM.mat : o.terminacion === "arpillera" ? CM.burlap + CM.burlapBg : 0;
+    // con medida (largo, en cm) se dibuja a escala real: la medida es la del marco y el paspartú se come la imagen
+    const mat = o.terminacion.startsWith("paspartu") ? (+o.mat || CM.mat) : 0;
+    const long = +o.largo ? +o.largo - 2 * mat : CM.photoLong;
+    const pw = ratio >= 1 ? long : long * ratio;
+    const ph = ratio >= 1 ? long / ratio : long;
+    const inset = mat || (o.terminacion === "arpillera" ? CM.burlap + CM.burlapBg : 0);
     const F = CM.frame;
     return { o, photo, wood, burlapImg, pw, ph, inset, F, W: pw + 2 * (inset + F), H: ph + 2 * (inset + F), box: o.tipo === "box" };
   }
@@ -157,7 +160,7 @@ window.DSFrame = (() => {
     const k = canvas.width / amb.naturalWidth;
     ctx.drawImage(amb, 0, 0, canvas.width, canvas.height);
     // foto "fiel": si el cliente no cambió nada, se muestra la foto tal cual (ya tiene ese marco)
-    if (esc === 1 && sc.fiel && sc.def && ["tipo", "color", "terminacion"].every((g) => !sc.def[g] || opts[g] === sc.def[g]) && opts.imagen !== "bn") return;
+    if (esc === 1 && sc.fiel && sc.def && (+opts.mat || 5) === 5 && ["tipo", "color", "terminacion"].every((g) => !sc.def[g] || opts[g] === sc.def[g]) && opts.imagen !== "bn") return;
 
     const q = sc.quad.map(([x, y]) => [x * k, y * k]);
     const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);

@@ -48,6 +48,7 @@
     <fieldset class="opt"><legend>Tipo de marco: <b id="l-tipo"></b></legend><div class="pills" id="o-tipo" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row" id="o-color" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills" id="o-terminacion" role="radiogroup"></div></fieldset>
+    <fieldset class="opt" id="matSet"><legend>Ancho del paspartú: <b id="l-mat"></b></legend><div class="pills" id="o-mat" role="radiogroup"></div><p class="mat-img" id="matImg"></p></fieldset>
     <fieldset class="opt"><legend>Imagen: <b id="l-imagen"></b></legend><div class="pills" id="o-imagen" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="fondoSet" hidden><legend>Fondo de la arpillera: <b id="l-fondo"></b></legend><div class="pills" id="o-fondo" role="radiogroup"></div></fieldset>
     <a class="btn btn-outline btn-block back-col" id="backCol" href="/#colecciones">← Volver a la colección</a>
@@ -71,7 +72,7 @@
           <li>Fotografía impresa en alta calidad.</li>
           <li>Marco de madera de Kiri natural, con vidrio antirreflejo.</li>
           <li>Se entrega con sistema de colgado instalado.</li>
-          <li>La medida indicada corresponde a la lámina.</li>
+          <li>La medida indicada es la del marco (sin contar la moldura). Con paspartú, la imagen se achica: por ejemplo, un 70 x 100 con paspartú de 5 cm tiene la imagen de 60 x 90.</li>
         </ul>
       </details>
       <details><summary>Envío y cambios</summary>
@@ -165,6 +166,7 @@
     color: pick("color", q.get("color"), d.color || "negro"),
     terminacion: pick("terminacion", q.get("terminacion"), d.terminacion || "paspartu-blanco"),
     fondo: pick("fondo", q.get("fondo"), d.fondo || "negro"),
+    mat: Number(q.get("paspartu")) || Number(d.mat) || 5,
     imagen: DS.category(p.category)?.sinBN ? "color" : pick("imagen", q.get("imagen"), "color"),
     qty: 1,
   };
@@ -185,29 +187,47 @@
 
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
-    const visual = b.dataset.g !== "size";
-    state[b.dataset.g] = b.dataset.v; $("added").hidden = true;
+    const visual = true;   // la medida cambia la proporción del paspartú
+    state[b.dataset.g] = b.dataset.g === "mat" ? Number(b.dataset.v) : b.dataset.v; $("added").hidden = true;
     update(visual);
   });
   $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(false); };
   $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(false); };
 
-  const line = () => ({ productId: p.id, size: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion, fondo: state.fondo, imagen: state.imagen === "bn" ? "bn" : undefined, finish: "marco", qty: state.qty });
+  // ancho del paspartú: solo los que dejan una imagen razonable en la medida elegida
+  const sizeOf = (id) => c.sizes.find((x) => x.id === id);
+  const matsFor = () => { const s = sizeOf(state.size); return (st.anchosPaspartu || [5]).filter((m) => !s || Math.min(s.w, s.h) - 2 * m >= (st.minImagenCm || 0)); };
+  const pasp = () => state.terminacion.startsWith("paspartu");
+  function drawMats() {
+    const ms = matsFor(); if (!ms.includes(state.mat)) state.mat = ms.includes(5) ? 5 : ms[ms.length - 1];
+    $("o-mat").innerHTML = ms.map((m) => `<button class="pill" role="radio" data-g="mat" data-v="${m}" aria-checked="${state.mat === m}">${m} cm</button>`).join("");
+  }
+  const geo = () => {   // medida de la imagen según el paspartú, orientada como la foto
+    const s = sizeOf(state.size); if (!s) return null;
+    const m = pasp() ? state.mat : 0, a = Math.min(s.w, s.h) - 2 * m, z = Math.max(s.w, s.h) - 2 * m;
+    return { a, z, largo: Math.max(s.w, s.h) };
+  };
+  const drawOpts = () => ({ ...state, largo: geo()?.largo });
+  const line = () => ({ productId: p.id, size: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion, mat: pasp() ? state.mat : undefined, fondo: state.fondo, imagen: state.imagen === "bn" ? "bn" : undefined, finish: "marco", qty: state.qty });
   function update(redraw = true) {
     const unit = DS.unitPrice(line()), total = unit * state.qty;
     document.querySelectorAll(".pinfo [data-g]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.g] === b.dataset.v));
+    drawMats();
     for (const g of ["size", "tipo", "color", "terminacion", "fondo", "imagen"]) $("l-" + g).textContent = lists[g].find((x) => x.id === state[g]).label;
+    $("matSet").hidden = !pasp(); $("l-mat").textContent = state.mat + " cm";
+    const gg = geo(); $("matImg").textContent = gg ? `Medida de la imagen: ${gg.a} × ${gg.z} cm` : "";
     $("fondoSet").hidden = state.terminacion !== "arpillera";
     $("pPrice").textContent = DS.money(total);
     $("pInst").textContent = DS.instText(total);
     $("pTransfer").textContent = `${DS.money(total * (1 - st.transferDiscount))} con transferencia`;
     $("qVal").textContent = state.qty;
     $("miniPrice").textContent = DS.money(total);
-    $("miniOpts").textContent = ["size", "tipo", "color", "terminacion"].map((g) => lists[g].find((x) => x.id === state[g]).label).join(" · ") + (state.imagen === "bn" ? " · B/N" : "");
+    $("miniOpts").textContent = ["size", "tipo", "color", "terminacion"].map((g) => lists[g].find((x) => x.id === state[g]).label + (g === "terminacion" && pasp() ? " " + state.mat + " cm" : "")).join(" · ") + (state.imagen === "bn" ? " · B/N" : "");
     if (redraw) render();
     const url = new URL(location.href);
     const qs = { id: p.id, medida: state.size, tipo: state.tipo, color: state.color, terminacion: state.terminacion };
     if (state.terminacion === "arpillera") qs.fondo = state.fondo;
+    if (pasp() && state.mat !== 5) qs.paspartu = state.mat;
     if (state.imagen === "bn") qs.imagen = "bn";
     url.search = new URLSearchParams(qs).toString();
     history.replaceState(null, "", url);
@@ -228,8 +248,8 @@
   let tok = 0;
   async function render() {
     const my = ++tok;
-    const jobs = [DSFrame.draw($("cv"), p.photo, state)];
-    if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, state, { ...esc[cur - 1], escala: escala() }));
+    const jobs = [DSFrame.draw($("cv"), p.photo, drawOpts())];
+    if (isScene(cur)) jobs.push(DSFrame.scene($("sc"), p.photo, drawOpts(), { ...esc[cur - 1], escala: escala() }));
     await Promise.all(jobs);
     if (my !== tok) return;
     document.body.dataset.ready = "1"; mirror(); miniDraw();
@@ -274,7 +294,7 @@
     cur = i;
     document.querySelectorAll("#thumbs button").forEach((b, j) => b.setAttribute("aria-current", j === i));
     $("cv").hidden = i !== 0; $("sc").hidden = i === 0;
-    if (i > 0) { if (isScene(i)) DSFrame.scene($("sc"), p.photo, state, { ...esc[i - 1], escala: escala() }); else drawImg($("sc"), views[i - 1]); }
+    if (i > 0) { if (isScene(i)) DSFrame.scene($("sc"), p.photo, drawOpts(), { ...esc[i - 1], escala: escala() }); else drawImg($("sc"), views[i - 1]); }
   }
   if (views.length) {
     $("gallery").classList.remove("single"); $("thumbs").hidden = false;
@@ -292,12 +312,12 @@
     if (lbI === 0) {
       const side = Math.min(innerWidth, innerHeight) * 0.92;
       cvs.style.width = cvs.style.height = side + "px";
-      DSFrame.draw(cvs, p.photo, state);
+      DSFrame.draw(cvs, p.photo, drawOpts());
     } else {
       cvs.hidden = false; img.hidden = true;
       const side = Math.min(innerWidth, innerHeight) * 0.92;
       cvs.style.width = cvs.style.height = side + "px";
-      if (isScene(lbI)) DSFrame.scene(cvs, p.photo, state, { ...esc[lbI - 1], escala: escala() }); else drawImg(cvs, views[lbI - 1]);
+      if (isScene(lbI)) DSFrame.scene(cvs, p.photo, drawOpts(), { ...esc[lbI - 1], escala: escala() }); else drawImg(cvs, views[lbI - 1]);
     }
     $("lbPrev").hidden = $("lbNext").hidden = nViews < 2;
   }
@@ -332,7 +352,7 @@
     const tw = $("tw"), cv = $("twCv"), ui = $("twUi"), stageEl = $("twStage");
     let photoURL = null, imW = 0, imH = 0, Q = null, pxcm = 0, tilt = false, ref = null, refPts = [], aspect = 0.75, busy = false, again = false;
     const long = () => largo(state.size);
-    async function getAspect() { const L = await DSFrame.layer(p.photo, state, 200); return L.W / L.H; }
+    async function getAspect() { const L = await DSFrame.layer(p.photo, drawOpts(), 200); return L.W / L.H; }
     // tamaño del cuadro en px de la foto: real si midieron, si no aproximado
     function framePx() { const lp = pxcm ? long() * pxcm : imH * 0.36 * Math.pow(long() / 70, 0.85); return aspect >= 1 ? [lp, lp / aspect] : [lp * aspect, lp]; }
     function placeAt(cx, cy) { const [w, h] = framePx(); Q = [[cx - w / 2, cy - h / 2], [cx + w / 2, cy - h / 2], [cx + w / 2, cy + h / 2], [cx - w / 2, cy + h / 2]]; }
@@ -346,7 +366,7 @@
     async function draw() {
       if (!photoURL || !Q) return;
       if (busy) { again = true; return; } busy = true;
-      await DSFrame.scene(cv, p.photo, state, { src: photoURL, quad: Q });
+      await DSFrame.scene(cv, p.photo, drawOpts(), { src: photoURL, quad: Q });
       busy = false; drawUi(); if (again) { again = false; draw(); }
     }
     function drawUi() {
