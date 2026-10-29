@@ -620,3 +620,13 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .gallery .try-btn { grid-column: -2 / -1; margin-top: 0; }
 @media (max-width: 560px) { .gallery .try-btn { order: 2; } }
 .col-head .hero-sub a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- botón de arrepentimiento y legales ---- */
+.announce-arr { color: inherit; text-decoration: underline; text-underline-offset: 2px; margin-left: 1.2rem; white-space: nowrap; }
+.nav .nav-arr { display: none; }
+@media (max-width: 900px) { .announce-arr { display: none; } .nav .nav-arr { display: block; font-size: .85rem; } }
+.footer2-legal { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
+.data-fiscal img { display: block; height: 52px; width: auto; }
+.arr-form { margin-top: 1.6rem; }
+.arr-form .btn { margin-top: 1rem; }
+.arr-ok h2 { margin-top: 0; }

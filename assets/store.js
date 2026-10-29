@@ -151,7 +151,7 @@ window.DS = (() => {
     const cats = catalog.categories.filter((c) => catalog.products.some((p) => p.category === c.id)).map((c) => `<a href="/?categoria=${c.id}#obras">${esc(c.label)}</a>`).join("");
     const head = document.getElementById("ds-header");
     if (head) head.outerHTML = `
-      ${st.announcement ? `<div class="announce">${esc(st.announcement)}</div>` : ""}
+      ${st.announcement ? `<div class="announce">${esc(st.announcement)}<a class="announce-arr" href="/arrepentimiento.html">Botón de arrepentimiento</a></div>` : ""}
       <header class="topbar">
         <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir menú"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6"/></svg></button>
         <a href="/" class="brand brand-logo"><img src="/assets/logo.png" alt="Dsgn. Studio" width="354" height="160"></a>
@@ -162,6 +162,7 @@ window.DS = (() => {
           <a href="/ayuda.html#envios">Envíos</a>
           <a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Contacto</a>
           <a href="/enmarcado-a-medida.html" class="nav-strong">Enmarcado a medida</a>
+          <a href="/arrepentimiento.html" class="nav-arr">Botón de arrepentimiento</a>
         </nav>
         <button class="icon-btn cart-btn" id="openCart" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 7Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 7V6a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -191,7 +192,7 @@ window.DS = (() => {
           <div><h4>Ayuda</h4><a href="/ayuda.html">Preguntas frecuentes</a><a href="/ayuda.html#devoluciones">Política de devolución</a><a href="/ayuda.html#compra">Cómo comprar</a></div>
           <div><h4>Contacto</h4><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Whatsapp</a><a href="https://www.instagram.com/_designstu?psln=MThpOHZrcGxvcGh1Mg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a><a href="mailto:designstudioenmarcados@gmail.com">designstudioenmarcados@gmail.com</a><span>Buenos Aires, Argentina</span></div>
         </div>
-        <div class="footer2-bottom"><span>© ${new Date().getFullYear()} Dsgn. Studio</span><a href="http://wa.link/vp5yn9" target="_blank" rel="noopener">Botón de arrepentimiento</a></div>
+        <div class="footer2-bottom"><span>© ${new Date().getFullYear()} Dsgn. Studio</span><span class="footer2-legal"><a href="/terminos.html">Términos y condiciones</a><a href="/terminos.html#privacidad">Privacidad</a><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor" target="_blank" rel="noopener">Defensa del consumidor</a><a href="/arrepentimiento.html"><b>Botón de arrepentimiento</b></a></span>${st.dataFiscal ? `<a class="data-fiscal" href="${esc(st.dataFiscal.url)}" target="_blank" rel="noopener"><img src="${esc(st.dataFiscal.img)}" alt="Data Fiscal" width="50" height="68"></a>` : ""}</div>
       </footer>
       ${st.whatsapp ? `<a class="wa-float" href="https://wa.me/${esc(st.whatsapp)}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="28" height="28"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6a10.6 10.6 0 0 1-5.4-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.5 3.5 0 0 0-1.1 2.6 6 6 0 0 0 1.3 3.2 13.8 13.8 0 0 0 5.3 4.7c2 .8 2.7.9 3.7.8a3.1 3.1 0 0 0 2.1-1.5 2.6 2.6 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.3Z"/></svg></a>` : ""}`;
 

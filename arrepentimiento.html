@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Botón de arrepentimiento | Design Studio</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Design Studio">
+  <meta property="og:title" content="Design Studio | Enmarcados personalizados.">
+  <meta property="og:description" content="Fotografías enmarcadas a tu medida: elegí la obra, el marco y la terminación. 3 cuotas sin interés y 10% OFF por transferencia. Envíos a todo el país.">
+  <meta property="og:image" content="https://design-studio-cuadros.netlify.app/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,800&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+</head>
+<body>
+<div id="ds-header"></div>
+<main class="help arr">
+  <h1>Botón de arrepentimiento</h1>
+  <p>Si compraste en nuestra web, podés cancelar tu compra dentro de los <b>10 días corridos</b> desde que la hiciste o desde que recibiste el producto (lo que ocurra último), sin costo y sin tener que explicar el motivo, según el artículo 34 de la Ley 24.240 de Defensa del Consumidor y la Resolución 424/2020.</p>
+  <p>Completá este formulario y te enviamos por email un <b>código de identificación</b> de tu solicitud. Nos ponemos en contacto para coordinar la devolución del producto y el reintegro del dinero por el mismo medio de pago.</p>
+  <p class="muted"><small>Los cuadros confeccionados según tus especificaciones o personalizados (por ejemplo, enmarcados a medida o con una foto tuya) pueden estar exceptuados del derecho de revocación según el artículo 1116 del Código Civil y Comercial. Igual podés escribirnos y lo vemos juntos.</small></p>
+
+  <form id="aForm" name="arrepentimiento" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="box arr-form" novalidate>
+    <input type="hidden" name="form-name" value="arrepentimiento">
+    <input type="hidden" name="codigo" id="aCodigo">
+    <p hidden><label>No completar: <input name="bot-field"></label></p>
+    <div class="fields">
+      <label class="f">Nombre y apellido<input name="nombre" required autocomplete="name"></label>
+      <label class="f">DNI<input name="dni" inputmode="numeric" autocomplete="off"></label>
+      <label class="f">Email<input name="email" type="email" required autocomplete="email"></label>
+      <label class="f">Teléfono / WhatsApp<input name="telefono" type="tel" autocomplete="tel"></label>
+      <label class="f">Número de pedido<input name="pedido" required placeholder="Ej: DS-MAB12C3"></label>
+      <label class="f">Fecha de compra<input name="fecha" type="date"></label>
+      <label class="f full">Comentarios (opcional)<textarea name="comentarios" rows="3"></textarea></label>
+    </div>
+    <button class="btn btn-dark btn-block" id="aSend" type="submit">Cancelar compra</button>
+    <p class="q-err" id="aErr" hidden></p>
+  </form>
+  <div class="box arr-ok" id="aOk" hidden>
+    <h2>Recibimos tu solicitud</h2>
+    <p>Tu código de identificación es <b id="aCode"></b>. También te lo enviamos por email. Nos vamos a comunicar con vos dentro de las próximas 24 horas hábiles para coordinar la devolución.</p>
+  </div>
+</main>
+<div id="ds-footer"></div>
+<script src="/assets/store.js"></script>
+<script>
+(async () => {
+  await DS.init();
+  const f = document.getElementById("aForm"), $ = (id) => document.getElementById(id);
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const req = ["nombre", "email", "pedido"], miss = req.filter((n) => !f[n].value.trim());
+    req.forEach((n) => (f[n].style.borderColor = miss.includes(n) ? "#a12d1c" : ""));
+    if (miss.length || !f.email.checkValidity()) { $("aErr").textContent = "Completá nombre, email y número de pedido."; $("aErr").hidden = false; return; }
+    const code = "ARR-" + Date.now().toString(36).toUpperCase();
+    $("aCodigo").value = code; $("aErr").hidden = true; $("aSend").disabled = true; $("aSend").textContent = "Enviando…";
+    try { const r = await fetch("/", { method: "POST", body: new FormData(f) }); if (!r.ok) throw 0; }
+    catch { $("aSend").disabled = false; $("aSend").textContent = "Cancelar compra"; $("aErr").textContent = "No pudimos enviar la solicitud. Probá de nuevo o escribinos por WhatsApp."; $("aErr").hidden = false; return; }
+    DS.notifyMail(`Botón de arrepentimiento — ${code} — pedido ${f.pedido.value}`, {
+      "Código": code, "Nombre": f.nombre.value, "DNI": f.dni.value, "email": f.email.value, "Teléfono": f.telefono.value, "Pedido": f.pedido.value, "Fecha de compra": f.fecha.value, "Comentarios": f.comentarios.value,
+      _replyto: f.email.value,
+      _autoresponse: `Hola ${f.nombre.value}! Recibimos tu solicitud de cancelación (botón de arrepentimiento) del pedido ${f.pedido.value}. Tu código de identificación es ${code}. Nos comunicamos con vos dentro de las próximas 24 horas hábiles. — Dsgn. Studio`,
+    });
+    $("aCode").textContent = code; f.hidden = true; $("aOk").hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
