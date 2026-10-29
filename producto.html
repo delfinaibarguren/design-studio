@@ -124,6 +124,8 @@
         <div class="pills tw-pills" id="twTipo"></div>
         <div class="swatch-row" id="twColor"></div>
         <div class="pills tw-pills" id="twTer"></div>
+        <div class="tw-mat" id="twMatBox"><span class="tw-mat-l">Paspartú:</span><div class="pills tw-pills" id="twMat"></div>
+          <span class="mat-otro" id="twMatOtro" hidden><input type="number" id="twMatIn" inputmode="numeric" min="2" step="2"> cm <small class="mat-err" id="twMatErr"></small></span></div>
       </div>
       <div class="tw-ref" id="twRefBox" hidden>
         <span id="twRefTxt">Tocá los dos extremos de algo que sepas cuánto mide (un sillón, una mesa, una puerta…)</span>
@@ -438,15 +440,37 @@
     const pills = (g, el) => ($(el).innerHTML = lists[g].map((x) => `<button class="pill" data-tw="${g}" data-v="${x.id}">${DS.esc(x.label)}</button>`).join(""));
     function opts() {
       pills("size", "twSize"); pills("tipo", "twTipo"); pills("terminacion", "twTer");
+      drawTwMat();
       $("twColor").innerHTML = c.frameColors.map((x) => `<button class="swatch" data-tw="color" data-v="${x.id}" style="background:${x.color}" title="${DS.esc(x.label)}" aria-label="${DS.esc(x.label)}"></button>`).join("");
       mark();
     }
-    const mark = () => tw.querySelectorAll("[data-tw]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.tw] === b.dataset.v));
+    // ancho del paspartú en el probador (mismas opciones que en la página, y otra medida en número par)
+    function drawTwMat() {
+      $("twMatBox").hidden = !pasp();
+      $("twMat").innerHTML = matsFor().map((m) => `<button class="pill" data-twm="${m}" aria-checked="${!matOtro && state.mat === m}">${m} cm</button>`).join("")
+        + `<button class="pill" data-twm="otro" aria-checked="${matOtro}">Otra</button>`;
+      $("twMatOtro").hidden = !matOtro; $("twMatIn").max = matMax();
+      if (matOtro && document.activeElement !== $("twMatIn")) $("twMatIn").value = state.mat;
+    }
+    const mark = () => { tw.querySelectorAll("[data-tw]").forEach((b) => b.setAttribute("aria-checked", state[b.dataset.tw] === b.dataset.v)); drawTwMat(); };
+    const redrawTw = async () => { aspect = await getAspect(); if (Q) { resizeKeep(); draw(); } };
     tw.querySelector(".tw-opts").addEventListener("click", async (e) => {
+      const m = e.target.closest("[data-twm]");
+      if (m) {
+        matOtro = m.dataset.twm === "otro"; if (!matOtro) state.mat = Number(m.dataset.twm);
+        update(true); mark(); if (matOtro) { $("twMatIn").focus(); $("twMatIn").select(); } return redrawTw();
+      }
       const b = e.target.closest("[data-tw]"); if (!b) return;
       state[b.dataset.tw] = b.dataset.v; update(true); mark();
-      aspect = await getAspect(); if (Q) { resizeKeep(); draw(); }
+      redrawTw();
     });
+    $("twMatIn").addEventListener("input", () => {
+      const v = Number($("twMatIn").value), max = matMax();
+      const err = !$("twMatIn").value ? "" : !Number.isInteger(v) || v % 2 ? "Tiene que ser un número par." : v < 2 ? "Mínimo 2 cm." : v > max ? `Máximo ${max} cm en esta medida.` : "";
+      $("twMatErr").textContent = err;
+      if (!err && $("twMatIn").value) { state.mat = v; update(true); mark(); redrawTw(); }
+    });
+    $("twMatIn").addEventListener("blur", () => { $("twMatIn").value = state.mat; $("twMatErr").textContent = ""; });
     $("twMeasure").onclick = () => { ref = "pts"; refPts = []; $("twRefBox").hidden = false; $("twRefTxt").hidden = false; $("twRefIn").hidden = true; drawUi(); };
     $("twRefOk").onclick = () => {
       const cm = parseFloat(String($("twRefCm").value).replace(",", ".")); if (!(cm > 0) || refPts.length < 2) return;
