@@ -620,19 +620,3 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .gallery .try-btn { grid-column: -2 / -1; margin-top: 0; }
 @media (max-width: 560px) { .gallery .try-btn { order: 2; } }
 .col-head .hero-sub a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-
-/* ---- vista previa en Enmarcado a medida ---- */
-.mp { margin: .4rem 0 1.2rem; }
-.mp-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .8rem; }
-.mp-tabs button, .mp-pics button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: .38rem .9rem; font: inherit; font-size: .82rem; cursor: pointer; color: var(--ink); }
-.mp-tabs button[aria-selected="true"], .mp-pics button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
-.mp-stage { position: relative; margin: 0 auto; max-width: 560px; touch-action: none; }
-.mp-stage canvas { display: block; width: 100%; border-radius: 8px; background: var(--paper-2); }
-#mpUi { position: absolute; inset: 0; height: 100%; background: transparent; cursor: move; }
-.mp-hint { text-align: center; color: var(--ink-soft); font-size: .82rem; margin: .5rem 0; }
-.mp-pics { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
-.mp-pics[hidden] { display: none; }
-.mp-warn { background: #fff3ee; border: 1px solid #f0cfc4; color: #8a3a22; border-radius: 8px; padding: .55rem .8rem; font-size: .84rem; margin: .6rem 0 0; }
-.mp-tools { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin: .7rem 0 0; }
-.mp-wall { margin: .4rem 0; }
-.k-foto select { min-width: 0; }
