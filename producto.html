@@ -48,7 +48,9 @@
     <fieldset class="opt"><legend>Tipo de marco: <b id="l-tipo"></b></legend><div class="pills" id="o-tipo" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Color del marco: <b id="l-color"></b></legend><div class="swatch-row" id="o-color" role="radiogroup"></div></fieldset>
     <fieldset class="opt"><legend>Terminación: <b id="l-terminacion"></b></legend><div class="pills" id="o-terminacion" role="radiogroup"></div></fieldset>
-    <fieldset class="opt" id="matSet"><legend>Ancho del paspartú: <b id="l-mat"></b></legend><div class="pills" id="o-mat" role="radiogroup"></div><p class="mat-img" id="matImg"></p></fieldset>
+    <fieldset class="opt" id="matSet"><legend>Ancho del paspartú: <b id="l-mat"></b></legend><div class="pills" id="o-mat" role="radiogroup"></div>
+      <div class="mat-otro" id="matOtro" hidden><input type="number" id="matIn" inputmode="numeric" min="2" step="2" placeholder="Ej: 10"> cm <small id="matErr" class="mat-err"></small></div>
+      <p class="mat-img" id="matImg"></p></fieldset>
     <fieldset class="opt"><legend>Imagen: <b id="l-imagen"></b></legend><div class="pills" id="o-imagen" role="radiogroup"></div></fieldset>
     <fieldset class="opt" id="fondoSet" hidden><legend>Fondo de la arpillera: <b id="l-fondo"></b></legend><div class="pills" id="o-fondo" role="radiogroup"></div></fieldset>
     <a class="btn btn-outline btn-block back-col" id="backCol" href="/#colecciones">← Volver a la colección</a>
@@ -188,19 +190,37 @@
   document.querySelector(".pinfo").addEventListener("click", (e) => {
     const b = e.target.closest("[data-g]"); if (!b) return;
     const visual = true;   // la medida cambia la proporción del paspartú
-    state[b.dataset.g] = b.dataset.g === "mat" ? Number(b.dataset.v) : b.dataset.v; $("added").hidden = true;
+    if (b.dataset.g === "mat") { matOtro = b.dataset.v === "otro"; if (!matOtro) state.mat = Number(b.dataset.v); else { $("added").hidden = true; update(true); $("matIn").focus(); $("matIn").select(); return; } }
+    else state[b.dataset.g] = b.dataset.v;
+    $("added").hidden = true;
     update(visual);
   });
+  // otra medida de paspartú: solo números pares
+  $("matIn").addEventListener("input", () => {
+    const v = Number($("matIn").value), max = matMax();
+    const err = !$("matIn").value ? "" : !Number.isInteger(v) || v % 2 ? "Tiene que ser un número par (2, 4, 6, 8…)." : v < 2 ? "Mínimo 2 cm." : v > max ? `Máximo ${max} cm en esta medida.` : "";
+    $("matErr").textContent = err;
+    if (!err && $("matIn").value) { state.mat = v; $("added").hidden = true; update(true); }
+  });
+  $("matIn").addEventListener("blur", () => { $("matIn").value = state.mat; $("matErr").textContent = ""; });
   $("qMinus").onclick = () => { state.qty = Math.max(1, state.qty - 1); update(false); };
   $("qPlus").onclick = () => { state.qty = Math.min(10, state.qty + 1); update(false); };
 
   // ancho del paspartú: solo los que dejan una imagen razonable en la medida elegida
   const sizeOf = (id) => c.sizes.find((x) => x.id === id);
-  const matsFor = () => { const s = sizeOf(state.size); return (st.anchosPaspartu || [5]).filter((m) => !s || Math.min(s.w, s.h) - 2 * m >= (st.minImagenCm || 0)); };
+  const matFits = (m) => { const s = sizeOf(state.size); return !s || Math.min(s.w, s.h) - 2 * m >= (st.minImagenCm || 0); };
+  const matsFor = () => (st.anchosPaspartu || [5]).filter(matFits);
+  const matMax = () => { let m = st.paspartuMax || 20; while (m > 2 && !matFits(m)) m -= 2; return m; };
+  let matOtro = !(st.anchosPaspartu || [5]).includes(state.mat);
   const pasp = () => state.terminacion.startsWith("paspartu");
   function drawMats() {
-    const ms = matsFor(); if (!ms.includes(state.mat)) state.mat = ms.includes(5) ? 5 : ms[ms.length - 1];
-    $("o-mat").innerHTML = ms.map((m) => `<button class="pill" role="radio" data-g="mat" data-v="${m}" aria-checked="${state.mat === m}">${m} cm</button>`).join("");
+    const ms = matsFor();
+    if (matOtro) { if (!(state.mat % 2 === 0 && state.mat >= 2 && state.mat <= matMax())) state.mat = Math.min(matMax(), Math.max(2, state.mat - state.mat % 2)); }
+    else if (!ms.includes(state.mat)) state.mat = ms.includes(5) ? 5 : ms[ms.length - 1];
+    $("o-mat").innerHTML = ms.map((m) => `<button class="pill" role="radio" data-g="mat" data-v="${m}" aria-checked="${!matOtro && state.mat === m}">${m} cm</button>`).join("")
+      + `<button class="pill" role="radio" data-g="mat" data-v="otro" aria-checked="${matOtro}">Otra medida</button>`;
+    $("matOtro").hidden = !matOtro; $("matIn").max = matMax();
+    if (matOtro && document.activeElement !== $("matIn")) $("matIn").value = state.mat;
   }
   const geo = () => {   // medida de la imagen según el paspartú, orientada como la foto
     const s = sizeOf(state.size); if (!s) return null;

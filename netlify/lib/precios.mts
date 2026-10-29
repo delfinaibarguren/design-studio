@@ -25,7 +25,8 @@ export function priceLine(line: Line): Priced | null {
     if (!ft || !col || !ter || (ter.id === "arpillera" && !fon)) return null
     // ancho del paspartú (cm): de la lista y dejando una imagen de al menos minImagenCm
     const pasp = ter.id.startsWith("paspartu"), mat = pasp ? Number(line.mat || 5) : 0
-    if (pasp && (!(C.store.anchosPaspartu || [5]).includes(mat) || Math.min(size.w, size.h) - 2 * mat < (C.store.minImagenCm || 0))) return null
+    const matOk = (C.store.anchosPaspartu || [5]).includes(mat) || (Number.isInteger(mat) && mat % 2 === 0 && mat >= 2 && mat <= (C.store.paspartuMax || 20))   // otra medida: solo números pares
+    if (pasp && (!matOk || Math.min(size.w, size.h) - 2 * mat < (C.store.minImagenCm || 0))) return null
     const variant = `${size.label}, marco ${ft.label.toLowerCase()} ${col.label.toLowerCase()}, ${ter.label.toLowerCase()}${pasp ? ` de ${mat} cm` : ""}${fon ? " fondo " + fon.label.toLowerCase() : ""}${line.imagen === "bn" ? ", blanco y negro" : ""}`
     return {
       ...base,

@@ -36,7 +36,8 @@
       8,
       12
     ],
-    "minImagenCm": 12
+    "minImagenCm": 12,
+    "paspartuMax": 20
   },
   "sizes": [
     {
