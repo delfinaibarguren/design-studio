@@ -41,7 +41,8 @@
         + (d.envio.seguimiento ? `<br>Número de seguimiento: <b>${DS.esc(d.envio.seguimiento)}</b>` : "") + (seg ? `<br>Podés ${seg}.` : "")
         + `<br><small>Guardá esta página o hacé una captura para tener tu número de seguimiento.</small>`;
     } else if (d && d.orden && d.retiro) {
-      m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Elegiste <b>retirar por el taller en Del Viso, Pilar</b>: cuando tu cuadro esté listo te escribimos por WhatsApp para coordinar día y horario.`;
+      m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Elegiste <b>retirar por el taller en Del Viso, Pilar</b>: cuando tu cuadro esté listo te escribimos por WhatsApp para coordinar día y horario.`
+        + `<br><a class="btn btn-dark" style="margin-top:1rem" target="_blank" rel="noopener" href="https://wa.me/5491153132340?text=${encodeURIComponent(`Hola! Hice el pedido ${d.orden} y elegí retirar por el taller en Del Viso.`)}">Avisanos por WhatsApp</a>`;
     } else if (d && d.orden) {
       m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Te escribimos a la brevedad con los datos del envío.`;
     } else {

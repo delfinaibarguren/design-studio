@@ -47,7 +47,7 @@ export default async (req: Request) => {
     dest: entrega === "domicilio" ? {
       nombre: txt(b.name, 80), dni: txt(b.dni, 15).replace(/\D/g, ""), email: txt(b.email, 120), telefono: txt(b.phone, 40),
       calle: txt(a.calle, 80), numero: txt(a.numero, 10), depto: txt(a.depto, 40), cp: txt(a.cp, 8), ciudad: txt(a.ciudad, 80), provincia: txt(a.provincia, 40),
-    } : undefined,
+    } : { nombre: txt(b.name, 80), email: txt(b.email, 120), telefono: txt(b.phone, 40) } as any,   // retiro: solo contacto
     envio,
   }
   try {

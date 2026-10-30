@@ -270,7 +270,7 @@
         $("dBank").hidden = false;
         $("dBank").innerHTML = row("Monto", DS.money(total), true).replace(`data-copy="${DS.money(total)}"`, `data-copy="${Math.round(total)}"`)
           + row("Alias", bk.alias, true) + row("CBU", bk.cbu, true) + row("Titular", bk.titular) + row("Banco", bk.banco);
-        const msg = encodeURIComponent(`Hola! Te envío el comprobante de transferencia del pedido ${orden} por ${DS.money(total)}.`);
+        const msg = encodeURIComponent(`Hola! Te envío el comprobante de transferencia del pedido ${orden} por ${DS.money(total)}.${domicilio() ? "" : " Elegí retirar por el taller en Del Viso."}`);
         $("dWa").hidden = false; $("dWa").href = `https://wa.me/5491153132340?text=${msg}`;
       } else {
         $("dText").innerHTML = `Tu número de pedido es <b>${orden}</b>. Te vamos a escribir a la brevedad con el link de pago.`;
