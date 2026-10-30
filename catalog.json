@@ -41,44 +41,6 @@
   },
   "sizes": [
     {
-      "id": "20x25",
-      "label": "20 x 25 cm",
-      "w": 20,
-      "h": 25,
-      "precios": {
-        "box-natural": 58000,
-        "box-pintado": 64000,
-        "chato-natural": 55000,
-        "chato-pintado": 61000
-      },
-      "descuentoSinPaspartu": 2000,
-      "paquete": {
-        "peso": 900,
-        "alto": 5,
-        "ancho": 26,
-        "largo": 31
-      }
-    },
-    {
-      "id": "20x30",
-      "label": "20 x 30 cm",
-      "w": 20,
-      "h": 30,
-      "precios": {
-        "box-natural": 62000,
-        "box-pintado": 68000,
-        "chato-natural": 59000,
-        "chato-pintado": 65000
-      },
-      "descuentoSinPaspartu": 2000,
-      "paquete": {
-        "peso": 1000,
-        "alto": 5,
-        "ancho": 26,
-        "largo": 36
-      }
-    },
-    {
       "id": "30x40",
       "label": "30 x 40 cm",
       "w": 30,
@@ -182,45 +144,25 @@
       "id": "pampa",
       "label": "Pampa",
       "description": "Flora y fauna del campo argentino",
-      "cover": "/assets/obras/curioso-ambiente-2.jpg",
-      "sizes": [
-        "30x40",
-        "50x70",
-        "70x100"
-      ]
+      "cover": "/assets/obras/curioso-ambiente-2.jpg"
     },
     {
       "id": "terra",
       "label": "Terra",
       "cover": "/assets/obras/faro-ambiente-1.jpg",
-      "description": "Postales de tierras lejanas",
-      "sizes": [
-        "30x40",
-        "50x70",
-        "70x100"
-      ]
+      "description": "Postales de tierras lejanas"
     },
     {
       "id": "origen",
       "label": "Origen",
       "cover": "/assets/obras/sombrero-ambiente-1.jpg",
-      "description": "Donde la tierra guarda historia",
-      "sizes": [
-        "30x40",
-        "50x70",
-        "70x100"
-      ]
+      "description": "Donde la tierra guarda historia"
     },
     {
       "id": "urbe",
       "label": "Urbe",
       "description": "El ritmo de la ciudad, en pausa",
-      "cover": "/assets/obras/tranvia-ambiente-1.jpg",
-      "sizes": [
-        "30x40",
-        "50x70",
-        "70x100"
-      ]
+      "cover": "/assets/obras/tranvia-ambiente-1.jpg"
     },
     {
       "id": "deco",
