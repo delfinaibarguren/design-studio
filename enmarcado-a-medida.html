@@ -33,7 +33,14 @@
       <a class="hero-btn" href="#consulta">Armá tu pedido</a>
     </div>
   </div>
-  <div class="custom2-img"><img src="/assets/enmarcado-a-medida-v2.jpg" alt="Carta manuscrita enmarcada en marco blanco con paspartú de lino, sobre una mesa de luz"></div>
+  <div class="custom2-img med-car" id="medCar">
+    <img class="on" src="/assets/medida-camiseta.jpg" alt="Camiseta enmarcada en un marco box negro">
+    <img src="/assets/medida-flores.jpg" alt="Ilustración de flores enmarcada en un marco blanco junto a la cama" loading="lazy">
+    <img src="/assets/medida-pasillo.jpg" alt="Dos láminas verticales enmarcadas en un pasillo" loading="lazy">
+    <img src="/assets/medida-pintura.jpg" alt="Pintura al óleo enmarcada con marco blanco y paspartú" loading="lazy">
+    <img src="/assets/medida-jacarandas.jpg" alt="Fotografía de jacarandás enmarcada en un living" loading="lazy">
+    <img src="/assets/medida-geisha.jpg" alt="Ilustración enmarcada en un marco blanco" loading="lazy">
+  </div>
 </main>
 
 <section class="consulta" id="consulta">
@@ -265,6 +272,14 @@
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
     form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
   });
+})();
+</script>
+<script>
+// carrusel: fundido cada 3 segundos (quieto si el usuario pidió menos movimiento)
+(() => {
+  const imgs = [...document.querySelectorAll("#medCar img")]; let i = 0;
+  if (imgs.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  setInterval(() => { if (document.hidden) return; imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 3000);
 })();
 </script>
 </body>
