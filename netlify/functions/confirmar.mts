@@ -17,7 +17,7 @@ export default async (req: Request) => {
   const origin = new URL(req.url).origin
   const e = ped?.envioCreado
   return Response.json({
-    estado: "approved", orden: p.orden,
+    estado: "approved", orden: p.orden, retiro: ped?.entrega === "retiro",
     envio: e ? { carrier: e.carrier, seguimiento: e.seguimiento, tracking: e.tracking } : null,
     etiqueta: e ? `${origin}/api/etiqueta?orden=${encodeURIComponent(p.orden)}&s=${firmaCorta("etiqueta", p.orden)}` : null,
     envioError: ped?.envioError ? true : false,

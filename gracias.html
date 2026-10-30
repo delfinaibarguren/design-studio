@@ -40,6 +40,8 @@
       m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Preparamos tu cuadro y lo despachamos con <b>${DS.esc(d.envio.carrier)}</b>.`
         + (d.envio.seguimiento ? `<br>Número de seguimiento: <b>${DS.esc(d.envio.seguimiento)}</b>` : "") + (seg ? `<br>Podés ${seg}.` : "")
         + `<br><small>Guardá esta página o hacé una captura para tener tu número de seguimiento.</small>`;
+    } else if (d && d.orden && d.retiro) {
+      m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Elegiste <b>retirar por el taller en Del Viso, Pilar</b>: cuando tu cuadro esté listo te escribimos por WhatsApp para coordinar día y horario.`;
     } else if (d && d.orden) {
       m.innerHTML = `Tu pago fue aprobado (pedido <b>${DS.esc(d.orden)}</b>). Te escribimos a la brevedad con los datos del envío.`;
     } else {
@@ -48,7 +50,7 @@
     let aviso = false; try { aviso = sessionStorage.getItem("aviso-" + pago) === "1"; sessionStorage.setItem("aviso-" + pago, "1"); } catch {}
     if (d && d.orden && !aviso) DS.notifyMail(`Pago aprobado (${d.orden})${d.envio ? " — envío creado" : ""}`, {
       "N° de pedido": d.orden, "Pago Mercado Pago": pago,
-      "Envío": d.envio ? `${d.envio.carrier} · seguimiento ${d.envio.seguimiento || "(en proceso)"}` : d.envioError ? "No se pudo crear: revisalo en la página de pedidos" : "A coordinar / retiro",
+      "Envío": d.envio ? `${d.envio.carrier} · seguimiento ${d.envio.seguimiento || "(en proceso)"}` : d.envioError ? "No se pudo crear: revisalo en la página de pedidos" : d.retiro ? "Retiro por el taller (coordinar por WhatsApp)" : "A coordinar",
       "Etiqueta para imprimir": d.etiqueta || "", "Página de pedidos": location.origin + "/pedidos.html",
     });
   }

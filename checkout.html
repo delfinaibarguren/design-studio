@@ -37,8 +37,9 @@
 
     <div class="box">
       <h2><span class="step">2</span> Entrega</h2>
+      <p class="ent-tip">¿Estás cerca de Del Viso o Pilar? Podés retirar tu cuadro sin cargo por nuestro taller.</p>
       <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span id="shipNote"></span></span></label>
-      <label class="choice"><input type="radio" name="entrega" value="Retiro por el estudio"><span><b>Retiro en Del Viso, Pilar</b><span>Sin cargo. Coordinamos día y horario por WhatsApp.</span></span></label>
+      <label class="choice"><input type="radio" name="entrega" value="Retiro por el taller"><span><b>Retiro por el taller en Del Viso, Pilar</b><span>Sin cargo. Cuando tu cuadro esté listo te escribimos por WhatsApp para coordinar día y horario.</span></span></label>
       <div class="fields" id="addr">
         <label class="f">Calle<input name="direccion" autocomplete="address-line1"></label>
         <label class="f">Número<input name="numero" inputmode="numeric"></label>
@@ -224,7 +225,7 @@
     const sub = subTotal();
     const envio = envioMonto();
     const total = (conDesc ? sub * (1 - st.transferDiscount) : sub) + envio;
-    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro en Del Viso"
+    $("fEnvio").value = PRE ? (PRE.envio ? DS.money(PRE.envio) : "") : !domicilio() ? "Retiro por el taller (Del Viso)"
       : conEnvioZn() ? `${envio ? DS.money(envio) : "Gratis"} (${ENV.carrier}${ENV.bonif ? `, bonificamos ${DS.money(ENV.bonif)} de ${DS.money(ENV.costo)}` : ""})` : "A coordinar";
     const orden = PRE ? PRE.id : "DS-" + Date.now().toString(36).toUpperCase();
     $("fOrden").value = orden;

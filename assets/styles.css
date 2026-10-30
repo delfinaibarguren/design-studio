@@ -649,3 +649,4 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .custom2-img.med-car { min-height: 0; aspect-ratio: 1 / 1; align-self: center; }
 .med-car img { opacity: 0; transition: opacity 1.2s ease; }
 .med-car img.on { opacity: 1; }
+.ent-tip { margin: -.2rem 0 .8rem; font-size: .88rem; color: var(--ink-soft); }
