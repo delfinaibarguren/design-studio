@@ -75,7 +75,14 @@
 (() => {
   const imgs = [...document.querySelectorAll("#heroCar img")]; let i = 0;
   if (imgs.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  setInterval(() => { if (document.hidden) return; imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 4000);
+  // efecto carrusel: la foto actual sale hacia la izquierda y la siguiente entra desde la derecha
+  setInterval(() => {
+    if (document.hidden) return;
+    const cur = imgs[i]; i = (i + 1) % imgs.length; const nxt = imgs[i];
+    nxt.classList.add("wait"); void nxt.offsetWidth; nxt.classList.remove("wait");   // la ubica a la derecha sin animar
+    cur.classList.remove("on"); cur.classList.add("out"); nxt.classList.add("on");
+    setTimeout(() => { cur.classList.add("wait"); cur.classList.remove("out"); }, 1000);
+  }, 4000);
 })();
 </script>
 </body>
