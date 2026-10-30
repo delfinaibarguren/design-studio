@@ -17,7 +17,8 @@ window.DS = (() => {
   const frame = (id) => catalog.frames.find((f) => f.id === id);
   const category = (id) => catalog.categories.find((c) => c.id === id);
   const fromPrice = (p) => {
-    if (p && p.photo) return Math.min(...catalog.sizes.flatMap((s) => (catalog.frameTypes || []).flatMap((t) => (catalog.frameColors || []).map((c) => framedPrice(s, t.id, c.id, "sin")))));
+    const ok = p && (p.sizes || category(p.category)?.sizes);   // solo las medidas en que se vende esa obra
+    if (p && p.photo) return Math.min(...catalog.sizes.filter((s) => !ok || ok.includes(s.id)).flatMap((s) => (catalog.frameTypes || []).flatMap((t) => (catalog.frameColors || []).map((c) => framedPrice(s, t.id, c.id, "sin")))));
     const fin = p && p.styles ? [...new Set(p.styles.map((x) => x.finish))] : ["lamina", "marco"];
     return Math.min(...catalog.sizes.flatMap((s) => fin.map((f) => s[f])));
   };

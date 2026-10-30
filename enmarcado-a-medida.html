@@ -104,7 +104,7 @@
   const form = $("qForm"), q = new URLSearchParams(location.search);
   const sel = $("qObraSel");
   for (const cat of c.categories) {
-    if (cat.sizes) continue;   // Trazo: solo en sus medidas, no a medida
+    if (cat.sinAMedida) continue;   // Trazo: solo en sus medidas, no a medida
     const items = c.products.filter((p) => p.category === cat.id); if (!items.length) continue;
     const g = document.createElement("optgroup"); g.label = "Colección " + cat.label;
     for (const p of items) g.append(new Option(p.name, p.name));

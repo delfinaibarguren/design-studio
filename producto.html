@@ -160,12 +160,12 @@
   const $ = (id) => document.getElementById(id);
   const okSizes = p.sizes || DS.category(p.category)?.sizes;   // Trazo: solo 30x40 y 50x70
   const sizesFor = c.sizes.filter((s) => !okSizes || okSizes.includes(s.id));
-  if (okSizes) $("otherSize").hidden = true;
+  if (DS.category(p.category)?.sinAMedida) $("otherSize").hidden = true;
   const lists = { size: sizesFor, tipo: c.frameTypes, color: c.frameColors, terminacion: c.terminaciones, fondo: c.fondos, imagen: [{ id: "color", label: "Color" }, { id: "bn", label: "Blanco y negro" }] };
   const pick = (k, v, def) => (lists[k].some((x) => x.id === v) ? v : def);
   const d = p.defaults || {};
   const state = {
-    size: pick("size", q.get("medida"), (sizesFor[1] || sizesFor[0]).id),
+    size: pick("size", q.get("medida"), (sizesFor.find((s) => s.id === "50x70") || sizesFor[0]).id),
     tipo: pick("tipo", q.get("tipo"), d.tipo || c.frameTypes[0].id),
     color: pick("color", q.get("color"), d.color || "negro"),
     terminacion: pick("terminacion", q.get("terminacion"), d.terminacion || "paspartu-blanco"),
