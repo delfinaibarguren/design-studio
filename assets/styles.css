@@ -639,3 +639,8 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .tw-mat-l { font-size: .8rem; color: var(--ink-soft); }
 .tw-mat .mat-otro { margin: 0; width: auto; }
 .tw-mat .mat-otro input { width: 4.5rem; padding: .3rem .5rem; }
+
+/* carrusel de la portada */
+.hero-carrusel { position: relative; }
+.hero-carrusel img { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; }
+.hero-carrusel img.on { opacity: 1; }
