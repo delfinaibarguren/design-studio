@@ -99,7 +99,7 @@
   const form = $("orderForm");
   const pct = Math.round(st.transferDiscount * 100);
 
-  $("maxInst").textContent = `Hasta ${st.interestFree} cuotas sin interés`;
+  $("maxInst").textContent = `Hasta ${st.maxInstallments} cuotas`;
   $("trTag").textContent = pct ? `${pct}% OFF` : "";
   $("shipNote").textContent = st.shippingText;
 

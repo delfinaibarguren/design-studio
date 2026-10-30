@@ -1,14 +1,14 @@
 {
   "store": {
     "name": "Design Studio",
-    "announcement": "3 cuotas sin interés · 10% OFF pagando con transferencia · Envío gratis en AMBA desde $250.000",
+    "announcement": "Hasta 3 cuotas con tarjeta · 10% OFF pagando con transferencia · Envío gratis en AMBA desde $250.000",
     "transferDiscount": 0.1,
     "maxInstallments": 3,
     "shippingText": "Calculamos el costo con tu código postal",
     "whatsapp": "",
     "instagram": "",
     "email": "",
-    "interestFree": 3,
+    "interestFree": 0,
     "interestFreeMin": 50000,
     "productDescription": "Fotografía impresa en alta calidad, enmarcada en madera de Kiri natural y protegida con vidrio antirreflejo.",
     "bank": {

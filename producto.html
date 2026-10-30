@@ -7,7 +7,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Design Studio">
   <meta property="og:title" content="Design Studio | Enmarcados personalizados.">
-  <meta property="og:description" content="Fotografías enmarcadas a tu medida: elegí la obra, el marco y la terminación. 3 cuotas sin interés y 10% OFF por transferencia. Envíos a todo el país.">
+  <meta property="og:description" content="Fotografías enmarcadas a tu medida: elegí la obra, el marco y la terminación. Hasta 3 cuotas y 10% OFF por transferencia. Envíos a todo el país.">
   <meta property="og:image" content="https://design-studio-cuadros.netlify.app/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -181,7 +181,7 @@
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
   $("pName").textContent = p.name; if (p.lugar) { $("pLugar").textContent = p.lugar; $("pLugar").hidden = false; } if (p.fotografa) { const web = (st.fotografas || {})[p.fotografa]; $("pFoto").innerHTML = `${DS.esc(DS.category(p.category)?.credito || "Fotografía")}: <b>${DS.esc(p.fotografa)}</b>${web ? ` · <a href="${DS.esc(web)}" target="_blank" rel="noopener">Ver su trabajo →</a>` : ""}`; $("pFoto").hidden = false; } $("miniName").textContent = p.name;
   $("pDesc").textContent = p.description || st.productDescription;
-  $("mpText").textContent = `${st.interestFree} cuotas sin interés con tarjeta de crédito. También débito y dinero en cuenta.`;
+  $("mpText").textContent = `Hasta ${st.maxInstallments} cuotas con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
   $("shipText").textContent = st.shippingText;
 

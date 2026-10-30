@@ -99,7 +99,7 @@
       try { localStorage.setItem("ds-admin-key", body.key); } catch {}
       $("link").value = d.url; $("rid").textContent = "· " + d.id; $("ver").href = d.url;
       const nombre = body.cliente.trim().split(" ")[0];
-      const msg = `Hola${nombre ? " " + nombre : ""}! Te paso el link para confirmar tu pedido a medida. Ahí completás tus datos de envío y elegís pagar con tarjeta (hasta 3 cuotas sin interés) o transferencia${body.descTransfer ? " (10% OFF)" : ""}: ${d.url}`;
+      const msg = `Hola${nombre ? " " + nombre : ""}! Te paso el link para confirmar tu pedido a medida. Ahí completás tus datos de envío y elegís pagar con tarjeta (hasta 3 cuotas) o transferencia${body.descTransfer ? " (10% OFF)" : ""}: ${d.url}`;
       $("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
       $("res").hidden = false; $("res").scrollIntoView({ behavior: "smooth" });
     } catch (x) { $("err").textContent = x.message; $("err").hidden = false; }

@@ -290,7 +290,7 @@ window.DS = (() => {
         <div class="card-wall${p.styles || p.photo ? " photo" : ""}${p.ambientes && p.ambientes.length ? " has-amb" : ""}">${framed(p, { frame: "negro", pared: "blanco" })}${p.ambientes && p.ambientes.length ? `<img class="amb" src="${esc(p.ambientes[0])}" alt="${esc(p.name)} en un ambiente" loading="lazy">` : ""}</div>
         <h3>${esc(p.name)}</h3>${p.lugar ? `<p class="lugar">${esc(p.lugar)}</p>` : ""}
         <div class="from"><small>Desde</small> ${money(fromPrice(p))}</div>
-        <div class="inst">${catalog.store.interestFree} cuotas sin interés · ${Math.round(catalog.store.transferDiscount * 100)}% OFF por transferencia</div>
+        <div class="inst">Hasta ${catalog.store.maxInstallments} cuotas · ${Math.round(catalog.store.transferDiscount * 100)}% OFF por transferencia</div>
       </a>`;
   }
   function collectionCard(col) {
