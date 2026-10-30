@@ -73,12 +73,12 @@
 })();
 </script>
 <script>
-// carrusel de la portada: cambia de foto cada 4 segundos (se frena si el usuario pidió menos movimiento)
+// carrusel de la portada: cambia de foto cada 3,5 segundos (se frena si el usuario pidió menos movimiento)
 (() => {
   const imgs = [...document.querySelectorAll("#heroCar img")]; let i = 0;
   if (imgs.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   // fundido: la foto actual se desvanece mientras aparece la siguiente
-  setInterval(() => { if (document.hidden) return; imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 4000);
+  setInterval(() => { if (document.hidden) return; imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 3500);
 })();
 </script>
 </body>
