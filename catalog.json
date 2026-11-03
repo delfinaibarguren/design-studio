@@ -37,7 +37,8 @@
       12
     ],
     "minImagenCm": 10,
-    "paspartuMax": 20
+    "paspartuMax": 20,
+    "cuit": "27-39207879-2"
   },
   "sizes": [
     {

@@ -674,3 +674,7 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
   .hero-v2 .cta-row { order: 4; }
   .hero-v2 .cta-row .hero-btn { font-size: .88rem; padding: .85rem 1.4rem; }
 }
+
+.fact-chk { display: flex; align-items: center; gap: .5rem; font-size: .92rem; margin: .4rem 0 .8rem; cursor: pointer; }
+.fact-chk input { width: auto !important; margin: 0; flex: none; padding: 0; height: auto; }
+#factBox { margin-bottom: .6rem; }

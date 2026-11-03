@@ -61,6 +61,11 @@
       <h2><span class="step">3</span> Pago</h2>
       <label class="choice"><input type="radio" name="pago" value="Mercado Pago" checked><span><b>Mercado Pago</b><span>Tarjetas de crédito, débito o dinero en cuenta. <span id="maxInst"></span>.</span></span></label>
       <label class="choice"><input type="radio" name="pago" value="Transferencia"><span><b>Transferencia bancaria <span class="tag-ok" id="trTag"></span></b><span>Al confirmar te mostramos el alias y CBU para transferir en el momento.</span></span></label>
+      <label class="fact-chk"><input type="checkbox" id="factChk"> Necesito factura a nombre de una empresa</label>
+      <div class="fields" id="factBox" hidden>
+        <label class="f">CUIT<input name="factura_cuit" inputmode="numeric" placeholder="Ej: 30-12345678-9"></label>
+        <label class="f">Razón social<input name="factura_razon"></label>
+      </div>
       <label class="f">Comentarios (opcional)<textarea name="comentarios" rows="2"></textarea></label>
     </div>
 
@@ -245,12 +250,13 @@
         "N° de pedido": g("orden"), "Detalle": g("detalle"), "Envío": g("envio"), "Total": g("total"), "Forma de pago": val("pago"),
         "Nombre": g("nombre"), "Email": g("email"), "Teléfono": g("telefono"), "Entrega": val("entrega"),
         "Dirección": [[g("direccion"), g("numero")].filter(Boolean).join(" "), g("depto"), g("cp"), g("ciudad"), g("provincia")].filter(Boolean).join(", "), "DNI": g("dni"),
-        "Comentarios": g("comentarios"), "Comisión fotógrafas (interno)": g("comision_fotografas"),
+        "Factura a nombre de": [g("factura_razon"), g("factura_cuit")].filter(Boolean).join(" · CUIT "), "Comentarios": g("comentarios"), "Comisión fotógrafas (interno)": g("comision_fotografas"),
       });
       const body = {
         ...(PRE ? { presupuesto: PTOK } : { items: cart }), orderId: orden, pago: transfer ? "transferencia" : "mercadopago",
         entrega: domicilio() ? "domicilio" : "retiro", envio: conEnvioZn() ? ENV.token : null,
         buyer: { name: g("nombre"), email: g("email"), phone: g("telefono"), dni: g("dni") },
+        factura: $("factChk").checked ? { cuit: g("factura_cuit"), razon: g("factura_razon") } : null,
         address: { calle: g("direccion"), numero: g("numero"), depto: g("depto"), cp: g("cp"), ciudad: g("ciudad"), provincia: g("provincia") },
       };
       const r = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
@@ -284,6 +290,11 @@
     }
   });
 })();
+</script>
+<script>
+// factura a nombre de empresa (opcional)
+(() => { const c = document.getElementById("factChk"), b = document.getElementById("factBox");
+  c.addEventListener("change", () => { b.hidden = !c.checked; b.querySelectorAll("input").forEach((i) => { i.required = c.checked; if (!c.checked) i.value = ""; }); }); })();
 </script>
 </body>
 </html>

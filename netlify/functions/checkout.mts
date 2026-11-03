@@ -49,7 +49,8 @@ export default async (req: Request) => {
       calle: txt(a.calle, 80), numero: txt(a.numero, 10), depto: txt(a.depto, 40), cp: txt(a.cp, 8), ciudad: txt(a.ciudad, 80), provincia: txt(a.provincia, 40),
     } : { nombre: txt(b.name, 80), email: txt(b.email, 120), telefono: txt(b.phone, 40) } as any,   // retiro: solo contacto
     envio,
-  }
+    factura: body.factura && (body.factura.cuit || body.factura.razon) ? { cuit: txt(body.factura.cuit, 20).replace(/[^0-9-]/g, ""), razon: txt(body.factura.razon, 120) } : undefined,
+  } as Pedido
   try {
     const prev = await leer(orden)
     if (!prev || prev.estado === "esperando_pago") await guardar(pedido)
