@@ -5061,7 +5061,7 @@
       "photo": "/assets/obras/lechuza-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5155,7 +5155,7 @@
       "photo": "/assets/obras/nandu-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5197,12 +5197,12 @@
     },
     {
       "id": "papagayo",
-      "name": "Papagayo",
+      "name": "Papagay-A",
       "category": "trazo",
       "photo": "/assets/obras/papagayo-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5296,7 +5296,7 @@
       "photo": "/assets/obras/lora-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5338,7 +5338,7 @@
     },
     {
       "id": "cuervo",
-      "name": "Cuervo",
+      "name": "Cuerv-A",
       "category": "trazo",
       "photo": "/assets/obras/cuervo-original.jpg",
       "defaults": {
@@ -5437,7 +5437,7 @@
       "photo": "/assets/obras/calandria-trazo-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5531,7 +5531,7 @@
       "photo": "/assets/obras/hornera-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
@@ -5573,12 +5573,12 @@
     },
     {
       "id": "zorzal",
-      "name": "Zorzal",
+      "name": "Zorzal-A",
       "category": "trazo",
       "photo": "/assets/obras/zorzal-original.jpg",
       "defaults": {
         "tipo": "chato",
-        "color": "natural",
+        "color": "negro",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
