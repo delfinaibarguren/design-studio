@@ -14,8 +14,6 @@
   };
   const waLink = (tel, msg) => `https://wa.me/${wa(tel)}?text=${encodeURIComponent(msg)}`;
   let api, CON = [], filtro = "activos";
-  try { $("impTel").value = localStorage.getItem("ds-imprenta") || ""; } catch {}
-  $("impTel").onchange = () => { try { localStorage.setItem("ds-imprenta", $("impTel").value.trim()); } catch {} draw(); };
 
   const queTxt = (c) => c.que === "Obra de Dsgn. Studio" ? `la obra ${c.obra || ""}`.trim() : (c.objeto || "tu pedido").toLowerCase();
   const msgCliente = (c) => {
@@ -29,17 +27,14 @@
       default: return `Hola ${nom}! `;
     }
   };
-  const msgImprenta = (c) => `Hola! Te paso para imprimir (pedido ${c.id}):\n${c.medidas || ""}\n\n${c.fotos.map((f, i) => `Archivo ${i + 1}: ${f.url}?descargar`).join("\n")}`;
 
   function card(c) {
     const f = new Date(c.fecha).toLocaleString("es-AR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-    const imp = (() => { try { return localStorage.getItem("ds-imprenta") || ""; } catch { return ""; } })();
     const fotos = [...c.fotos.map((x) => `<a href="${esc(x.url)}?descargar" target="_blank" rel="noopener" title="Descargar ${esc(x.nombre)}"><img src="${esc(x.url)}" alt="${esc(x.nombre)}" loading="lazy" onerror="this.replaceWith('Descargar')"></a>`),
       ...(c.fotosForm || []).map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">Copia ${i + 1}</a>`)].join("");
     const acts = [
       `<a class="btn btn-dark" href="/presupuestos.html?c=${encodeURIComponent(c.id)}">${c.presupuesto ? "Rehacer presupuesto" : "Armar presupuesto"}</a>`,
       c.whatsapp ? `<a class="btn btn-outline" href="${esc(waLink(c.whatsapp, msgCliente(c)))}" target="_blank" rel="noopener">WhatsApp al cliente</a>` : "",
-      c.fotos.length ? `<a class="btn btn-outline" href="${esc(imp ? waLink(imp, msgImprenta(c)) : "https://wa.me/?text=" + encodeURIComponent(msgImprenta(c)))}" target="_blank" rel="noopener">Mandar a imprenta</a>` : "",
       c.estado === "descartado" ? `<button class="btn btn-outline" data-borrar="${esc(c.id)}">Eliminar</button>` : "",
     ].join("");
     return `<div class="ped" data-id="${esc(c.id)}">
@@ -48,7 +43,7 @@
       ${c.medidas ? `<pre>${esc(c.medidas)}</pre>` : ""}
       ${c.comentarios ? `<pre>“${esc(c.comentarios)}”</pre>` : ""}
       ${fotos ? `<div class="fotos">${fotos}</div>` : ""}
-      <div class="row2"><div><b>WhatsApp:</b> ${esc(c.whatsapp || "-")}</div>${c.email ? `<div><b>Email:</b> ${esc(c.email)}</div>` : ""}</div>
+      <div class="row2"><div><b>WhatsApp:</b> ${esc(c.whatsapp || "-")}</div>${c.email ? `<div><b>Email:</b> ${esc(c.email)}</div>` : ""}${c.entrega ? `<div><b>Entrega:</b> ${esc(c.entrega === "Retiro por el taller" ? "Retira por el taller" : `Envío · CP ${c.cp || "-"} · ${[c.localidad, c.provincia].filter(Boolean).join(", ")}`)}</div>` : ""}</div>
       <div class="est">Estado: <select data-est="${esc(c.id)}">${Object.entries(EST).map(([k, v]) => `<option value="${k}"${c.estado === k ? " selected" : ""}>${v}</option>`).join("")}</select></div>
       <div class="nota"><textarea data-nota="${esc(c.id)}" placeholder="Notas internas (marco elegido, fecha de entrega, lo que hablaron…)">${esc(c.nota || "")}</textarea></div>
       <div class="acts">${acts}</div>

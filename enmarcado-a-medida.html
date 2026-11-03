@@ -87,6 +87,21 @@
         <label class="f">Nombre<input name="nombre" required autocomplete="name"></label>
         <label class="f">WhatsApp<input name="whatsapp" type="tel" required autocomplete="tel" placeholder="Ej: 11 5555 5555"></label>
         <label class="f full">Email (opcional)<input name="email" type="email" autocomplete="email"></label>
+      </div>
+      <p class="q-lbl" style="margin:1rem 0 .5rem;font-weight:500">¿Cómo lo querés recibir?</p>
+      <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span>Te pasamos el costo del envío junto con el presupuesto.</span></span></label>
+      <label class="choice"><input type="radio" name="entrega" value="Retiro por el taller"><span><b>Retiro por el taller en Del Viso, Pilar</b><span>Sin cargo.</span></span></label>
+      <div class="fields" id="qEnvio">
+        <label class="f">Código postal<input name="cp" inputmode="numeric" autocomplete="postal-code" placeholder="Ej: 1669"></label>
+        <label class="f">Localidad<input name="localidad" autocomplete="address-level2" placeholder="Ej: Del Viso"></label>
+        <label class="f">Provincia
+          <select name="provincia" autocomplete="address-level1">
+            <option value="">Elegí…</option>
+            <option>CABA</option><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+          </select>
+        </label>
+      </div>
+      <div class="fields" style="margin-top:.8rem">
         <label class="f full">Comentarios (opcional)<textarea name="comentarios" rows="3" placeholder="Contanos lo que quieras: para qué espacio es, fecha, ideas…"></textarea></label>
       </div>
     </div>
@@ -228,12 +243,14 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const req = ["nombre", "whatsapp"], miss = req.filter((n) => !form[n].value.trim());
+    const envioDom = form.entrega.value !== "Retiro por el taller";
+    const req = ["nombre", "whatsapp"].concat(envioDom ? ["cp", "localidad", "provincia"] : []), miss = req.filter((n) => !form[n].value.trim());
+    ["cp", "localidad", "provincia"].forEach((n) => { if (!envioDom) form[n].style.borderColor = ""; });
     req.forEach((n) => (form[n].style.borderColor = miss.includes(n) ? "#a12d1c" : ""));
     const sinMed = [...$("qItems").querySelectorAll('select[data-k="medida"]')].filter((x) => !x.value);
     sinMed.forEach((x) => (x.style.borderColor = "#a12d1c"));
     if (sinMed.length) { $("qErr").textContent = "Elegí la medida de cada cuadro (o quitá la línea que no uses)."; $("qErr").hidden = false; sinMed[0].scrollIntoView({ behavior: "smooth", block: "center" }); return; }
-    if (miss.length) { $("qErr").textContent = "Completá tu nombre y WhatsApp para poder responderte."; $("qErr").hidden = false; return; }
+    if (miss.length) { $("qErr").textContent = miss.some((n) => ["cp", "localidad", "provincia"].includes(n)) && !miss.includes("nombre") && !miss.includes("whatsapp") ? "Completá código postal, localidad y provincia para calcular el envío (o elegí retiro por el taller)." : "Completá los datos marcados para poder responderte."; $("qErr").hidden = false; return; }
     $("qMedidas").value = medidasTxt();
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
     const fd = new FormData(form);
@@ -266,11 +283,12 @@
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
       "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt + (links.filter(Boolean).length < files.length ? `${linksTxt ? "\n" : ""}${files.length - links.filter(Boolean).length} foto(s) no se pudieron subir en original: hay una copia chica en Netlify → Forms → consulta` : "")) : "",
-      "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value, "Comentarios": form.comentarios.value,
+      "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value,
+      "Entrega": form.entrega.value + (form.entrega.value === "Retiro por el taller" ? "" : ` · CP ${form.cp.value} · ${form.localidad.value}, ${form.provincia.value}`), "Comentarios": form.comentarios.value,
     });
     const obra = esObra;
     const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();
-    const msg = `Hola! Soy ${form.nombre.value}. Les pedí un presupuesto por la web para enmarcar ${que}:\n${medidasTxt()}`;
+    const msg = `Hola! Soy ${form.nombre.value}. Les pedí un presupuesto por la web para enmarcar ${que}:\n${medidasTxt()}\n${form.entrega.value === "Retiro por el taller" ? "Retiro por el taller." : `Envío a ${form.localidad.value} (CP ${form.cp.value}).`}`;
     $("qWa").href = "https://wa.me/5491153132340?text=" + encodeURIComponent(msg);
     form.hidden = true; $("qOk").hidden = false; $("qOk").scrollIntoView({ behavior: "smooth", block: "center" });
   });
@@ -283,6 +301,12 @@
   if (imgs.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   setInterval(() => { if (document.hidden) return; imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 3000);
 })();
+</script>
+<script>
+// entrega: los datos de envío solo hacen falta si es a domicilio
+(() => { const f = document.getElementById("qForm"), box = document.getElementById("qEnvio");
+  const upd = () => { box.hidden = f.entrega.value === "Retiro por el taller"; };
+  f.querySelectorAll('input[name="entrega"]').forEach((r) => r.addEventListener("change", upd)); upd(); })();
 </script>
 </body>
 </html>

@@ -101,6 +101,19 @@
     const lines = String(CON.medidas || "").split("\n").filter(Boolean);
     if (lines.length) { items.length = 0; lines.forEach((l) => { const m = l.match(/^(\d+)\s*×\s*(.*)$/); items.push({ desc: ((CON.objeto && CON.que !== "Obra de Dsgn. Studio" ? CON.objeto + " · " : CON.obra ? CON.obra + " · " : "") + (m ? m[2] : l)).slice(0, 190), cant: m ? +m[1] : 1, precio: "" }); }); draw(); }
     $("cInfo").innerHTML = `<b>Pedido ${esc(CON.id)}</b> · ${esc(CON.nombre)} · WhatsApp ${esc(CON.whatsapp || "-")}${CON.comentarios ? `<br><small>“${esc(CON.comentarios)}”</small>` : ""}${CON.fotos && CON.fotos.length ? `<br><small>${CON.fotos.map((f, i) => `<a href="${esc(f.url)}?descargar" target="_blank">Foto ${i + 1}</a>`).join(" · ")}</small>` : ""}`;
+    if (CON.entrega === "Retiro por el taller") { $("cInfo").innerHTML += `<br><b>Retira por el taller</b> (sin envío)`; $("envio").value = ""; total(); }
+    else if (CON.cp) {
+      $("cInfo").innerHTML += `<br><b>Envío a:</b> ${esc([CON.localidad, CON.provincia].filter(Boolean).join(", "))} · CP ${esc(CON.cp)} <button type="button" class="btn btn-outline" id="cotz" style="padding:.35rem .8rem;font-size:.8rem;margin-left:.4rem">Calcular envío</button> <small id="cotzR"></small>`;
+      $("cotz").onclick = async () => {
+        $("cotzR").textContent = "Cotizando…";
+        try {
+          const d = await adm("probar", { cp: CON.cp, ciudad: CON.localidad || "", provincia: CON.provincia || "" });
+          if (!d.opcion) throw new Error("Zipnova no devolvió opciones para ese destino");
+          $("envio").value = String(Math.round(d.opcion.precio)); total();
+          $("cotzR").textContent = `${money(d.opcion.precio)} con ${d.opcion.carrier} (para un cuadro de 50x70; si es más grande o son varios, ajustalo)`;
+        } catch (x) { $("cotzR").textContent = "No se pudo cotizar: " + x.message; }
+      };
+    }
     $("cInfo").hidden = false;
   }).catch(() => {});
 
