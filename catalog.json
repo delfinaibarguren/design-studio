@@ -5107,17 +5107,17 @@
       "fotografa": "soy_pini"
     },
     {
-      "id": "chingolo",
-      "name": "Chingolo",
+      "id": "gorrion-a",
+      "name": "Gorrión-A",
       "category": "trazo",
-      "photo": "/assets/obras/chingolo-original.jpg",
+      "photo": "/assets/obras/gorrion-a-original.jpg",
       "defaults": {
         "tipo": "chato",
         "color": "natural",
         "terminacion": "paspartu-blanco"
       },
       "ambientes": [
-        "/assets/obras/chingolo-ambiente-1.jpg"
+        "/assets/obras/gorrion-a-ambiente-1.jpg"
       ],
       "escenas": [
         {
@@ -5141,9 +5141,9 @@
           ],
           "apoyado": true,
           "fiel": true,
-          "luz": "/assets/obras/chingolo-ambiente-1-luz.png",
+          "luz": "/assets/obras/gorrion-a-ambiente-1-luz.png",
           "pared": {
-            "src": "/assets/obras/chingolo-ambiente-1-pared.jpg",
+            "src": "/assets/obras/gorrion-a-ambiente-1-pared.jpg",
             "x": 206,
             "y": 76,
             "w": 655,
@@ -5151,7 +5151,8 @@
           }
         }
       ],
-      "fotografa": "soy_pini"
+      "fotografa": "soy_pini",
+      "texto": "Es una pajarita que se adapta a todo! Puede estar picoteando migas abajo de la mesa de un bar, o en el lomo de una vaca en una pastura.\nVive por todo el planeta. Versátil se adapta a lo que venga!\nEs saltarina, regordeta de plumas y se hace el confianzuda. Muy poco pretensiosa es una aliada de la “super urbanidad”, por que come larvas y parasitos con voracidad! Pájara sencilla. De tan común se vuelve transparente, ergo hace lo que se le canta, y anda pispireta a los saltitos por todas partes!\nHoy soy Quiero ser gorrión-a!\nMañana…será mañana…"
     },
     {
       "id": "nandu",

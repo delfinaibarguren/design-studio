@@ -678,3 +678,10 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .fact-chk { display: flex; align-items: center; gap: .5rem; font-size: .92rem; margin: .4rem 0 .8rem; cursor: pointer; }
 .fact-chk input { width: auto !important; margin: 0; flex: none; padding: 0; height: auto; }
 #factBox { margin-bottom: .6rem; }
+
+/* texto de la obra (tarjeta) */
+.obra-texto { margin: 22px 0 0; padding: 26px 28px; background: #fff; border: 1px solid var(--line, #dcd6ca); border-left: 3px solid var(--ink, #1c1b19); border-radius: 12px; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 1.04rem; line-height: 1.6; color: #2f2d2a; }
+.obra-texto p { margin: 0 0 .7rem; }
+.obra-texto cite { display: block; margin-top: .4rem; font-family: var(--sans); font-style: normal; font-size: .82rem; color: var(--soft, #66615a); }
+.gallery .obra-texto { grid-column: 1 / -1; margin-top: 1rem; }
+@media (max-width: 560px) { .gallery .obra-texto { order: 3; } }
