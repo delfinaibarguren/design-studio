@@ -86,7 +86,8 @@
       <div class="fields">
         <label class="f">Nombre<input name="nombre" required autocomplete="name"></label>
         <label class="f">WhatsApp<input name="whatsapp" type="tel" required autocomplete="tel" placeholder="Ej: 11 5555 5555"></label>
-        <label class="f full">Email (opcional)<input name="email" type="email" autocomplete="email"></label>
+        <label class="f full">Email<input name="email" type="email" required autocomplete="email" placeholder="Te mandamos la confirmación del pedido"></label>
+        <label class="fact-chk full"><input type="checkbox" name="novedades" value="Sí" checked> Quiero recibir novedades y promociones de Design Studio</label>
       </div>
       <p class="q-lbl" style="margin:1rem 0 .5rem;font-weight:500">¿Cómo lo querés recibir?</p>
       <label class="choice"><input type="radio" name="entrega" value="Envío a domicilio" checked><span><b>Envío a domicilio</b><span>Te pasamos el costo del envío junto con el presupuesto.</span></span></label>
@@ -244,12 +245,13 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const envioDom = form.entrega.value !== "Retiro por el taller";
-    const req = ["nombre", "whatsapp"].concat(envioDom ? ["cp", "localidad", "provincia"] : []), miss = req.filter((n) => !form[n].value.trim());
+    const req = ["nombre", "whatsapp", "email"].concat(envioDom ? ["cp", "localidad", "provincia"] : []), miss = req.filter((n) => !form[n].value.trim());
     ["cp", "localidad", "provincia"].forEach((n) => { if (!envioDom) form[n].style.borderColor = ""; });
     req.forEach((n) => (form[n].style.borderColor = miss.includes(n) ? "#a12d1c" : ""));
     const sinMed = [...$("qItems").querySelectorAll('select[data-k="medida"]')].filter((x) => !x.value);
     sinMed.forEach((x) => (x.style.borderColor = "#a12d1c"));
     if (sinMed.length) { $("qErr").textContent = "Elegí la medida de cada cuadro (o quitá la línea que no uses)."; $("qErr").hidden = false; sinMed[0].scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+    if (!miss.length && !form.email.checkValidity()) { form.email.style.borderColor = "#a12d1c"; $("qErr").textContent = "Revisá el email: parece que tiene un error."; $("qErr").hidden = false; return; }
     if (miss.length) { $("qErr").textContent = miss.some((n) => ["cp", "localidad", "provincia"].includes(n)) && !miss.includes("nombre") && !miss.includes("whatsapp") ? "Completá código postal, localidad y provincia para calcular el envío (o elegí retiro por el taller)." : "Completá los datos marcados para poder responderte."; $("qErr").hidden = false; return; }
     $("qMedidas").value = medidasTxt();
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
@@ -283,8 +285,10 @@
     DS.notifyMail(`Nuevo pedido de presupuesto a medida — ${form.nombre.value}`, {
       "Qué quiere enmarcar": esObra ? "Obra de Dsgn. Studio: " + (form.obra.value || "(sin elegir)") : "Algo mío: " + (form.objeto.value || "-"),
       "Medidas": medidasTxt(), "Fotos adjuntas": files.length && !esObra ? (linksTxt + (links.filter(Boolean).length < files.length ? `${linksTxt ? "\n" : ""}${files.length - links.filter(Boolean).length} foto(s) no se pudieron subir en original: hay una copia chica en Netlify → Forms → consulta` : "")) : "",
-      "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "Email": form.email.value,
+      "Nombre": form.nombre.value, "WhatsApp": form.whatsapp.value, "email": form.email.value, "Acepta novedades": form.novedades.checked ? "Sí" : "No",
       "Entrega": form.entrega.value + (form.entrega.value === "Retiro por el taller" ? "" : ` · CP ${form.cp.value} · ${form.localidad.value}, ${form.provincia.value}`), "Comentarios": form.comentarios.value,
+      _replyto: form.email.value,
+      _autoresponse: `¡Hola ${form.nombre.value.trim().split(" ")[0]}! Recibimos tu pedido de presupuesto para enmarcar ${form.que.value === "Obra de Dsgn. Studio" ? "la obra " + (form.obra.value || "elegida") : (form.objeto.value || "tu pieza").toLowerCase()}.\n\nLo estamos revisando y te enviamos el presupuesto lo antes posible por WhatsApp.\n\nGracias por elegirnos.\nDesign Studio · designstudioenmarcados.com.ar`,
     });
     const obra = esObra;
     const que = obra ? `la obra ${form.obra.value || "(sin elegir)"}` : (form.objeto.value || "algo mío").toLowerCase();

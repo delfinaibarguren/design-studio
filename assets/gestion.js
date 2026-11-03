@@ -43,7 +43,7 @@
       ${c.medidas ? `<pre>${esc(c.medidas)}</pre>` : ""}
       ${c.comentarios ? `<pre>“${esc(c.comentarios)}”</pre>` : ""}
       ${fotos ? `<div class="fotos">${fotos}</div>` : ""}
-      <div class="row2"><div><b>WhatsApp:</b> ${esc(c.whatsapp || "-")}</div>${c.email ? `<div><b>Email:</b> ${esc(c.email)}</div>` : ""}${c.entrega ? `<div><b>Entrega:</b> ${esc(c.entrega === "Retiro por el taller" ? "Retira por el taller" : `Envío · CP ${c.cp || "-"} · ${[c.localidad, c.provincia].filter(Boolean).join(", ")}`)}</div>` : ""}</div>
+      <div class="row2"><div><b>WhatsApp:</b> ${esc(c.whatsapp || "-")}</div>${c.email ? `<div><b>Email:</b> <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>${c.novedades ? " · acepta novedades" : ""}</div>` : ""}${c.entrega ? `<div><b>Entrega:</b> ${esc(c.entrega === "Retiro por el taller" ? "Retira por el taller" : `Envío · CP ${c.cp || "-"} · ${[c.localidad, c.provincia].filter(Boolean).join(", ")}`)}</div>` : ""}</div>
       <div class="est">Estado: <select data-est="${esc(c.id)}">${Object.entries(EST).map(([k, v]) => `<option value="${k}"${c.estado === k ? " selected" : ""}>${v}</option>`).join("")}</select></div>
       <div class="nota"><textarea data-nota="${esc(c.id)}" placeholder="Notas internas (marco elegido, fecha de entrega, lo que hablaron…)">${esc(c.nota || "")}</textarea></div>
       <div class="acts">${acts}</div>
@@ -75,6 +75,14 @@
     const b = $("pzImp"); b.disabled = true; b.textContent = "Buscando…";
     try { const d = await api("importar"); CON = d.consultas || CON; draw(); alert(d.importados ? `Listo: se agregaron ${d.importados} pedido(s).` : "No había pedidos nuevos para traer."); }
     catch (x) { alert(x.message); } finally { b.disabled = false; b.textContent = "Traer pedidos anteriores"; }
+  };
+  $("pzCsv").onclick = () => {
+    const vistos = new Set(), filas = [["Nombre", "Email", "WhatsApp", "Acepta novedades", "Fecha", "Estado"]];
+    CON.forEach((c) => { const m = (c.email || "").trim().toLowerCase(); if (!m || vistos.has(m)) return; vistos.add(m);
+      filas.push([c.nombre, c.email, c.whatsapp, c.novedades ? "Sí" : "No", new Date(c.fecha).toLocaleDateString("es-AR"), EST[c.estado] || c.estado]); });
+    const csv = "\ufeff" + filas.map((r) => r.map((v) => `"${String(v ?? "").replace(/"/g, '""')}"`).join(";")).join("\r\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = "mails-clientes-design-studio.csv"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
   $("pzAdd").onclick = () => { $("pzNew").hidden = !$("pzNew").hidden; };
   $("nGo").onclick = async () => {

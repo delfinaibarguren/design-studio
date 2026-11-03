@@ -6,7 +6,7 @@ export type Consulta = {
   id: string; fecha: number; estado: typeof ESTADOS[number]
   nombre: string; whatsapp: string; email: string
   que: string; obra: string; objeto: string; medidas: string; comentarios: string
-  entrega?: string; cp?: string; localidad?: string; provincia?: string
+  novedades?: boolean; entrega?: string; cp?: string; localidad?: string; provincia?: string
   fotos: { nombre: string; url: string }[]; fotosForm: string[]
   sub?: string   // id del envío en Netlify Forms (para no duplicar)
   presupuesto?: { id: string; url: string; total: number; fecha: number }
@@ -55,7 +55,7 @@ export function desdeFormulario(d: Record<string, any>, fecha = Date.now(), sub?
   return {
     id: "PZ-" + (sub ? sub.slice(-8) : fecha.toString(36)).toUpperCase(), sub, fecha, estado: "nuevo",
     nombre: txt(d.nombre, 80), whatsapp: txt(d.whatsapp, 40), email: txt(d.email, 120),
-    entrega: txt(d.entrega, 40), cp: txt(d.cp, 10), localidad: txt(d.localidad, 80), provincia: txt(d.provincia, 40),
+    novedades: /s[ií]/i.test(txt(d.novedades, 5)), entrega: txt(d.entrega, 40), cp: txt(d.cp, 10), localidad: txt(d.localidad, 80), provincia: txt(d.provincia, 40),
     que: txt(d.que, 60), obra: txt(d.obra, 120), objeto: txt(d.objeto, 120), medidas: txt(d.medidas), comentarios: txt(d.comentarios),
     fotos, fotosForm, historial: [{ fecha, estado: "nuevo" }],
   }
