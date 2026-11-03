@@ -27,7 +27,9 @@
 </head>
 <body>
 <main class="adm">
+  <p><a href="/pedidos.html">← Volver al panel</a></p>
   <h1>Link de pago a medida</h1>
+  <div class="box" id="cInfo" hidden></div>
   <p class="sub">Armá el presupuesto aceptado y mandale el link al cliente. Ahí completa su dirección y paga con tarjeta o transferencia.</p>
 
   <div class="box">
@@ -87,6 +89,21 @@
   $("envio").oninput = total;
   draw();
 
+  // si viene de un pedido del panel (?c=ID), completar con sus datos
+  const CID = new URLSearchParams(location.search).get("c"); let CON = null;
+  async function adm(accion, extra = {}) {
+    const r = await fetch("/api/admin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ key: $("key").value.trim(), accion, ...extra }) });
+    const d = await r.json().catch(() => ({})); if (!r.ok) throw new Error(d.error || "Error " + r.status); return d;
+  }
+  if (CID && $("key").value) adm("consultas").then((d) => {
+    CON = (d.consultas || []).find((c) => c.id === CID); if (!CON) return;
+    $("cliente").value = CON.nombre || "";
+    const lines = String(CON.medidas || "").split("\n").filter(Boolean);
+    if (lines.length) { items.length = 0; lines.forEach((l) => { const m = l.match(/^(\d+)\s*×\s*(.*)$/); items.push({ desc: ((CON.objeto && CON.que !== "Obra de Dsgn. Studio" ? CON.objeto + " · " : CON.obra ? CON.obra + " · " : "") + (m ? m[2] : l)).slice(0, 190), cant: m ? +m[1] : 1, precio: "" }); }); draw(); }
+    $("cInfo").innerHTML = `<b>Pedido ${esc(CON.id)}</b> · ${esc(CON.nombre)} · WhatsApp ${esc(CON.whatsapp || "-")}${CON.comentarios ? `<br><small>“${esc(CON.comentarios)}”</small>` : ""}${CON.fotos && CON.fotos.length ? `<br><small>${CON.fotos.map((f, i) => `<a href="${esc(f.url)}?descargar" target="_blank">Foto ${i + 1}</a>`).join(" · ")}</small>` : ""}`;
+    $("cInfo").hidden = false;
+  }).catch(() => {});
+
   $("gen").onclick = async () => {
     $("err").hidden = true; $("res").hidden = true;
     const body = { key: $("key").value.trim(), cliente: $("cliente").value, envio: num($("envio").value), dias: num($("dias").value) || 15,
@@ -99,8 +116,19 @@
       try { localStorage.setItem("ds-admin-key", body.key); } catch {}
       $("link").value = d.url; $("rid").textContent = "· " + d.id; $("ver").href = d.url;
       const nombre = body.cliente.trim().split(" ")[0];
-      const msg = `Hola${nombre ? " " + nombre : ""}! Te paso el link para confirmar tu pedido a medida. Ahí completás tus datos de envío y elegís pagar con tarjeta (hasta 3 cuotas) o transferencia${body.descTransfer ? " (10% OFF)" : ""}: ${d.url}`;
-      $("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+      const tot0 = body.items.reduce((a, i) => a + i.precio, 0) + body.envio;
+      const detalle = body.items.map((i) => `• ${i.cant > 1 ? i.cant + " × " : ""}${i.desc}: ${money(i.precio)}`).join("\n");
+      const msg = `Hola${nombre ? " " + nombre : ""}! Te paso el presupuesto de tu pedido a medida:\n${detalle}${body.envio ? `\n• Envío: ${money(body.envio)}` : ""}\nTotal: ${money(tot0)}${body.descTransfer ? ` (${money(tot0 - Math.round(body.items.reduce((a, i) => a + i.precio, 0) * 0.1))} pagando por transferencia)` : ""}\n\nPara confirmarlo, entrá a este link: completás tus datos y pagás con tarjeta (hasta 3 cuotas) o transferencia.\n${d.url}`;
+      let tel = "";
+      if (CON) {
+        tel = String(CON.whatsapp || "").replace(/\D/g, "").replace(/^0/, "");
+        if (tel.startsWith("549")) tel = tel.slice(3); else if (tel.startsWith("54")) tel = tel.slice(2);
+        if (tel.length === 12) { const k = [2, 3, 4].find((i) => tel.slice(i, i + 2) === "15"); if (k) tel = tel.slice(0, k) + tel.slice(k + 2); }
+        tel = tel.length >= 8 ? "549" + tel : "";
+        const tot = items.reduce((a, i) => a + num(i.precio), 0) + num($("envio").value);
+        adm("consulta", { id: CON.id, estado: "presupuestado", presupuesto: { id: d.id, url: d.url, total: tot } }).catch(() => {});
+      }
+      $("wa").href = `https://wa.me/${tel}?text=` + encodeURIComponent(msg);
       $("res").hidden = false; $("res").scrollIntoView({ behavior: "smooth" });
     } catch (x) { $("err").textContent = x.message; $("err").hidden = false; }
     finally { b.disabled = false; b.textContent = "Generar link de pago"; }

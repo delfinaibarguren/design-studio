@@ -1,6 +1,7 @@
 import type { Config } from "@netlify/functions"
 import { listar, leer, guardar, borrar, pagadoYEnviar, enviar } from "../lib/pedidos.mts"
 import { firmaCorta } from "../lib/firma.mts"
+import * as C from "../lib/consultas.mts"
 import { configurado, cotizar, verEnvio, opciones } from "../lib/zipnova.mts"
 
 // Página privada de pedidos y envíos (requiere ADMIN_KEY).
@@ -14,6 +15,30 @@ export default async (req: Request) => {
 
   try {
     switch (b.accion) {
+      case "consultas":
+        return Response.json({ consultas: await C.listar() })
+      case "consulta": {   // cambiar estado / nota / presupuesto de un pedido de presupuesto
+        const c = await C.leer(String(b.id)); if (!c) throw new Error("No existe la consulta")
+        if (b.estado && (C.ESTADOS as readonly string[]).includes(b.estado) && b.estado !== c.estado) { c.estado = b.estado; c.historial = [...(c.historial || []), { fecha: Date.now(), estado: b.estado }] }
+        if (typeof b.nota === "string") c.nota = b.nota.slice(0, 1000)
+        if (b.presupuesto && b.presupuesto.url) c.presupuesto = { id: String(b.presupuesto.id || "").slice(0, 40), url: String(b.presupuesto.url).slice(0, 4000), total: Number(b.presupuesto.total) || 0, fecha: Date.now() }
+        await C.guardar(c)
+        return Response.json({ consulta: c })
+      }
+      case "consulta_borrar": {
+        const c = await C.leer(String(b.id)); if (!c) throw new Error("No existe la consulta")
+        if (c.estado !== "descartado") throw new Error("Primero marcala como descartada")
+        await C.borrar(c.id); return Response.json({ eliminado: c.id })
+      }
+      case "consulta_nueva": {   // cargar a mano un pedido que llegó por WhatsApp, Instagram, etc.
+        const c = C.desdeFormulario({ nombre: b.nombre, whatsapp: b.whatsapp, email: b.email, medidas: b.medidas, comentarios: b.comentarios, que: "Algo mío", objeto: b.objeto })
+        await C.guardar(c); return Response.json({ consulta: c })
+      }
+      case "etapa": {   // etapa de producción de una compra
+        const p: any = await leer(String(b.orden)); if (!p) throw new Error("No existe el pedido")
+        p.etapa = String(b.etapa || "").slice(0, 20); await guardar(p)
+        return Response.json({ pedido: conLinks(p) })
+      }
       case "listar":
         return Response.json({ zipnova: configurado(), pedidos: (await listar()).map(conLinks) })
       case "pagado":   // transferencia recibida → crear envío

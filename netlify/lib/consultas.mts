@@ -1,0 +1,38 @@
+// Pedidos de presupuesto ("Enmarcado a medida"), guardados en Netlify Blobs para el panel de gestión.
+import { getStore } from "@netlify/blobs"
+
+export const ESTADOS = ["nuevo", "presupuestado", "aceptado", "imprenta", "armado", "listo", "entregado", "descartado"] as const
+export type Consulta = {
+  id: string; fecha: number; estado: typeof ESTADOS[number]
+  nombre: string; whatsapp: string; email: string
+  que: string; obra: string; objeto: string; medidas: string; comentarios: string
+  fotos: { nombre: string; url: string }[]; fotosForm: string[]
+  presupuesto?: { id: string; url: string; total: number; fecha: number }
+  nota?: string; historial: { fecha: number; estado: string }[]
+}
+
+const store = () => getStore({ name: "consultas", consistency: "strong" })
+const clave = (id: string) => id.replace(/[^A-Za-z0-9-]/g, "").slice(0, 40)
+
+export const leer = async (id: string) => (await store().get(clave(id), { type: "json" })) as Consulta | null
+export const guardar = (c: Consulta) => store().setJSON(clave(c.id), c)
+export const borrar = (id: string) => store().delete(clave(id))
+export async function listar(max = 150): Promise<Consulta[]> {
+  const { blobs } = await store().list()
+  const all = await Promise.all(blobs.map((b) => store().get(b.key, { type: "json" }) as Promise<Consulta | null>))
+  return all.filter(Boolean).sort((a, b) => b!.fecha - a!.fecha).slice(0, max) as Consulta[]
+}
+
+const txt = (v: unknown, n = 2000) => String(v ?? "").trim().slice(0, n)
+// arma una consulta a partir de los datos del formulario "consulta"
+export function desdeFormulario(d: Record<string, any>, fecha = Date.now()): Consulta {
+  const links = txt(d.fotos_links, 8000)
+  const fotos = [...links.matchAll(/Foto \d+ \(([^)]*)\)[^\n]*?descargar: (\S+?)\?descargar/g)].map((m) => ({ nombre: m[1].replace(/, [\d.,]+ ?[KMG]?B$/i, ""), url: m[2] }))
+  const fotosForm = Object.keys(d).filter((k) => /^archivo\d+$/.test(k)).map((k) => (d[k] && (d[k].url || d[k])) || "").filter((u) => typeof u === "string" && u)
+  return {
+    id: "PZ-" + fecha.toString(36).toUpperCase(), fecha, estado: "nuevo",
+    nombre: txt(d.nombre, 80), whatsapp: txt(d.whatsapp, 40), email: txt(d.email, 120),
+    que: txt(d.que, 60), obra: txt(d.obra, 120), objeto: txt(d.objeto, 120), medidas: txt(d.medidas), comentarios: txt(d.comentarios),
+    fotos, fotosForm, historial: [{ fecha, estado: "nuevo" }],
+  }
+}
