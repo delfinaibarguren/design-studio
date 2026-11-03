@@ -38,7 +38,11 @@
     ],
     "minImagenCm": 10,
     "paspartuMax": 20,
-    "cuit": "27-39207879-2"
+    "cuit": "27-39207879-2",
+    "dataFiscal": {
+      "img": "/assets/data-fiscal.png",
+      "url": "http://qr.afip.gob.ar/?qr=TtWYvnsFYZcNfdRhxaIm_w,,"
+    }
   },
   "sizes": [
     {
