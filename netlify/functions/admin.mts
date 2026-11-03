@@ -36,6 +36,20 @@ export default async (req: Request) => {
         const c = C.desdeFormulario({ nombre: b.nombre, whatsapp: b.whatsapp, email: b.email, medidas: b.medidas, comentarios: b.comentarios, que: "Algo mío", objeto: b.objeto })
         await C.guardar(c); return Response.json({ consulta: c })
       }
+      case "envio_medida": {   // pedido a medida pagado: cotizar con las medidas del paquete y crear el envío
+        const p: any = await leer(String(b.orden)); if (!p) throw new Error("No existe el pedido")
+        if (p.entrega !== "domicilio" || !p.dest?.cp) throw new Error("El pedido no tiene dirección de envío")
+        if (p.envioCreado) return Response.json({ pedido: conLinks(p) })
+        const n = Math.max(1, Math.min(10, Math.floor(Number(b.cantidad) || 1)))
+        const k = (v: any, min: number, max: number) => Math.max(min, Math.min(max, Math.round(Number(v) || 0)))
+        const pk = { weight: k(b.peso, 100, 50000), height: k(b.alto, 1, 200), width: k(b.ancho, 1, 200), length: k(b.largo, 1, 200) }
+        const items = Array.from({ length: n }, () => ({ ...pk, description: "Cuadro a medida", classification_id: 1 }))
+        const op = await cotizar({ cp: p.dest.cp, ciudad: p.dest.ciudad, provincia: p.dest.provincia }, items, p.productos)
+        if (!op) throw new Error("Zipnova no devolvió opciones de envío para ese destino")
+        p.envio = { opcion: op, items, declarado: p.productos, bonif: Math.max(0, op.precio - (p.envioPrecio || 0)) }
+        p.envioError = undefined; await guardar(p)
+        return Response.json({ pedido: conLinks(await enviar(p)) })
+      }
       case "etapa": {   // etapa de producción de una compra
         const p: any = await leer(String(b.orden)); if (!p) throw new Error("No existe el pedido")
         p.etapa = String(b.etapa || "").slice(0, 20); await guardar(p)
