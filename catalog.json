@@ -185,7 +185,8 @@
         "30x40",
         "50x70"
       ],
-      "sinAMedida": true
+      "sinAMedida": true,
+      "cover": "/assets/obras/cardenal-a-ambiente-1.jpg"
     }
   ],
   "products": [
@@ -5005,6 +5006,664 @@
           }
         }
       ]
+    },
+    {
+      "id": "paloma-torcaza",
+      "name": "Paloma torcaza",
+      "category": "trazo",
+      "photo": "/assets/obras/paloma-torcaza-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/paloma-torcaza-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              244,
+              124
+            ],
+            [
+              823,
+              124
+            ],
+            [
+              823,
+              890
+            ],
+            [
+              244,
+              890
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/paloma-torcaza-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/paloma-torcaza-ambiente-1-pared.jpg",
+            "x": 208,
+            "y": 75,
+            "w": 651,
+            "h": 864
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "lechuza",
+      "name": "Lechuza",
+      "category": "trazo",
+      "photo": "/assets/obras/lechuza-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/lechuza-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              247,
+              143
+            ],
+            [
+              835,
+              143
+            ],
+            [
+              835,
+              886
+            ],
+            [
+              247,
+              886
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/lechuza-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/lechuza-ambiente-1-pared.jpg",
+            "x": 211,
+            "y": 95,
+            "w": 660,
+            "h": 839
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "chingolo",
+      "name": "Chingolo",
+      "category": "trazo",
+      "photo": "/assets/obras/chingolo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/chingolo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              242,
+              125
+            ],
+            [
+              825,
+              125
+            ],
+            [
+              825,
+              889
+            ],
+            [
+              242,
+              889
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/chingolo-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/chingolo-ambiente-1-pared.jpg",
+            "x": 206,
+            "y": 76,
+            "w": 655,
+            "h": 862
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "nandu",
+      "name": "Ñandú",
+      "category": "trazo",
+      "photo": "/assets/obras/nandu-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/nandu-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              231,
+              126
+            ],
+            [
+              834,
+              126
+            ],
+            [
+              834,
+              886
+            ],
+            [
+              231,
+              886
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/nandu-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/nandu-ambiente-1-pared.jpg",
+            "x": 194,
+            "y": 77,
+            "w": 677,
+            "h": 858
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "papagayo",
+      "name": "Papagayo",
+      "category": "trazo",
+      "photo": "/assets/obras/papagayo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/papagayo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              252,
+              127
+            ],
+            [
+              824,
+              127
+            ],
+            [
+              824,
+              866
+            ],
+            [
+              252,
+              866
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/papagayo-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/papagayo-ambiente-1-pared.jpg",
+            "x": 217,
+            "y": 79,
+            "w": 642,
+            "h": 835
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "quetzalcoatl-a",
+      "name": "Quetzalcóatl-A",
+      "category": "trazo",
+      "photo": "/assets/obras/quetzalcoatl-a-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/quetzalcoatl-a-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              255,
+              127
+            ],
+            [
+              826,
+              127
+            ],
+            [
+              826,
+              869
+            ],
+            [
+              255,
+              869
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/quetzalcoatl-a-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/quetzalcoatl-a-ambiente-1-pared.jpg",
+            "x": 220,
+            "y": 79,
+            "w": 641,
+            "h": 838
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "lora",
+      "name": "Lora",
+      "category": "trazo",
+      "photo": "/assets/obras/lora-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/lora-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              257,
+              144
+            ],
+            [
+              818,
+              144
+            ],
+            [
+              818,
+              849
+            ],
+            [
+              257,
+              849
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/lora-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/lora-ambiente-1-pared.jpg",
+            "x": 222,
+            "y": 97,
+            "w": 631,
+            "h": 799
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "cuervo",
+      "name": "Cuervo",
+      "category": "trazo",
+      "photo": "/assets/obras/cuervo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/cuervo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              252,
+              123
+            ],
+            [
+              835,
+              123
+            ],
+            [
+              835,
+              878
+            ],
+            [
+              252,
+              878
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/cuervo-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/cuervo-ambiente-1-pared.jpg",
+            "x": 216,
+            "y": 74,
+            "w": 655,
+            "h": 853
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "tucan-a",
+      "name": "Tucán-A",
+      "category": "trazo",
+      "photo": "/assets/obras/tucan-a-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/tucan-a-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              234,
+              145
+            ],
+            [
+              845,
+              145
+            ],
+            [
+              845,
+              887
+            ],
+            [
+              234,
+              887
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/tucan-a-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/tucan-a-ambiente-1-pared.jpg",
+            "x": 197,
+            "y": 97,
+            "w": 685,
+            "h": 838
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "calandria-trazo",
+      "name": "Calandria",
+      "category": "trazo",
+      "photo": "/assets/obras/calandria-trazo-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/calandria-trazo-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              244,
+              134
+            ],
+            [
+              832,
+              134
+            ],
+            [
+              832,
+              892
+            ],
+            [
+              244,
+              892
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/calandria-trazo-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/calandria-trazo-ambiente-1-pared.jpg",
+            "x": 208,
+            "y": 85,
+            "w": 660,
+            "h": 856
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "cardenal-a",
+      "name": "Cardenal-A",
+      "category": "trazo",
+      "photo": "/assets/obras/cardenal-a-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/cardenal-a-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              220,
+              144
+            ],
+            [
+              853,
+              144
+            ],
+            [
+              853,
+              920
+            ],
+            [
+              220,
+              920
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/cardenal-a-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/cardenal-a-ambiente-1-pared.jpg",
+            "x": 182,
+            "y": 94,
+            "w": 709,
+            "h": 876
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "hornera",
+      "name": "Horner-A",
+      "category": "trazo",
+      "photo": "/assets/obras/hornera-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/hornera-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              230,
+              147
+            ],
+            [
+              848,
+              147
+            ],
+            [
+              848,
+              893
+            ],
+            [
+              230,
+              893
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/hornera-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/hornera-ambiente-1-pared.jpg",
+            "x": 193,
+            "y": 99,
+            "w": 692,
+            "h": 842
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "zorzal",
+      "name": "Zorzal",
+      "category": "trazo",
+      "photo": "/assets/obras/zorzal-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/zorzal-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              243,
+              129
+            ],
+            [
+              832,
+              129
+            ],
+            [
+              832,
+              892
+            ],
+            [
+              243,
+              892
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/zorzal-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/zorzal-ambiente-1-pared.jpg",
+            "x": 207,
+            "y": 80,
+            "w": 661,
+            "h": 861
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
+    },
+    {
+      "id": "garza-mora",
+      "name": "Garza mora",
+      "category": "trazo",
+      "photo": "/assets/obras/garza-mora-original.jpg",
+      "defaults": {
+        "tipo": "chato",
+        "color": "natural",
+        "terminacion": "paspartu-blanco"
+      },
+      "ambientes": [
+        "/assets/obras/garza-mora-ambiente-1.jpg"
+      ],
+      "escenas": [
+        {
+          "quad": [
+            [
+              241,
+              131
+            ],
+            [
+              829,
+              131
+            ],
+            [
+              829,
+              891
+            ],
+            [
+              241,
+              891
+            ]
+          ],
+          "apoyado": true,
+          "fiel": true,
+          "luz": "/assets/obras/garza-mora-ambiente-1-luz.png",
+          "pared": {
+            "src": "/assets/obras/garza-mora-ambiente-1-pared.jpg",
+            "x": 205,
+            "y": 82,
+            "w": 660,
+            "h": 858
+          }
+        }
+      ],
+      "fotografa": "soy_pini"
     }
   ],
   "frameTypes": [

@@ -71,7 +71,7 @@
     <div class="details">
       <details><summary>Materiales y terminación</summary>
         <ul>
-          <li>Fotografía impresa en alta calidad.</li>
+          <li id="pMat1">Fotografía impresa en alta calidad.</li>
           <li>Marco de madera de Kiri natural, con vidrio antirreflejo.</li>
           <li>Se entrega con sistema de colgado instalado.</li>
           <li>La medida indicada es la del marco (sin contar la moldura). Con paspartú, la imagen se achica: por ejemplo, un 70 x 100 con paspartú de 5 cm tiene la imagen de 60 x 90.</li>
@@ -180,7 +180,7 @@
   document.title = `${p.name} — Dsgn. Studio`;
   $("crumbs").innerHTML = `<a href="/">Inicio</a> / ${cat ? `<a href="/coleccion.html?c=${cat.id}">Colección ${DS.esc(cat.label)}</a> / ` : ""}<span>${DS.esc(p.name)}</span>`;
   $("pName").textContent = p.name; if (p.lugar) { $("pLugar").textContent = p.lugar; $("pLugar").hidden = false; } if (p.fotografa) { const web = (st.fotografas || {})[p.fotografa]; $("pFoto").innerHTML = `${DS.esc(DS.category(p.category)?.credito || "Fotografía")}: <b>${DS.esc(p.fotografa)}</b>${web ? ` · <a href="${DS.esc(web)}" target="_blank" rel="noopener">Ver su trabajo →</a>` : ""}`; $("pFoto").hidden = false; } $("miniName").textContent = p.name;
-  $("pDesc").textContent = p.description || st.productDescription;
+  { const ilu = DS.category(p.category)?.credito === "Ilustración"; const d = p.description || st.productDescription; $("pDesc").textContent = ilu ? d.replace(/^Fotografía/, "Ilustración") : d; if (ilu) $("pMat1").textContent = "Ilustración impresa en alta calidad."; }
   $("mpText").textContent = `Hasta ${st.maxInstallments} cuotas con tarjeta de crédito. También débito y dinero en cuenta.`;
   $("transferText").textContent = `${Math.round(st.transferDiscount * 100)}% de descuento`;
   $("shipText").textContent = st.shippingText;
