@@ -7,7 +7,7 @@ export default async (req: Request) => {
     const { payload } = await req.json()
     if (payload?.form_name !== "consulta") return new Response("ok")
     const fecha = Date.parse(payload.created_at) || Date.now()
-    const c = desdeFormulario(payload.data || {}, fecha)
+    const c = desdeFormulario(payload.data || {}, fecha, payload.id)
     if (!c.nombre && !c.whatsapp) return new Response("ok")
     await guardar(c)
   } catch (e) { console.error("submission-created", e) }

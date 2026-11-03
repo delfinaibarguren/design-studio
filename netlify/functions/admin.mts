@@ -30,6 +30,8 @@ export default async (req: Request) => {
         if (c.estado !== "descartado") throw new Error("Primero marcala como descartada")
         await C.borrar(c.id); return Response.json({ eliminado: c.id })
       }
+      case "importar":
+        return Response.json({ importados: await C.importar((Netlify as any).context?.site?.id || Netlify.env.get("SITE_ID") || "d66f069f-7ff9-4e70-a594-fd98bfd0a3b9"), consultas: await C.listar() })
       case "consulta_nueva": {   // cargar a mano un pedido que llegó por WhatsApp, Instagram, etc.
         const c = C.desdeFormulario({ nombre: b.nombre, whatsapp: b.whatsapp, email: b.email, medidas: b.medidas, comentarios: b.comentarios, que: "Algo mío", objeto: b.objeto })
         await C.guardar(c); return Response.json({ consulta: c })

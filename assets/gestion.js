@@ -76,6 +76,11 @@
     const b = e.target.closest("[data-borrar]"); if (!b || !confirm("¿Eliminar definitivamente este pedido?")) return;
     try { await api("consulta_borrar", { id: b.dataset.borrar }); CON = CON.filter((c) => c.id !== b.dataset.borrar); draw(); } catch (x) { alert(x.message); }
   };
+  $("pzImp").onclick = async () => {
+    const b = $("pzImp"); b.disabled = true; b.textContent = "Buscando…";
+    try { const d = await api("importar"); CON = d.consultas || CON; draw(); alert(d.importados ? `Listo: se agregaron ${d.importados} pedido(s).` : "No había pedidos nuevos para traer."); }
+    catch (x) { alert(x.message); } finally { b.disabled = false; b.textContent = "Traer pedidos anteriores"; }
+  };
   $("pzAdd").onclick = () => { $("pzNew").hidden = !$("pzNew").hidden; };
   $("nGo").onclick = async () => {
     if (!$("nNom").value.trim()) return alert("Poné al menos el nombre");
