@@ -42,7 +42,8 @@
     "dataFiscal": {
       "img": "/assets/data-fiscal.png",
       "url": "http://qr.afip.gob.ar/?qr=TtWYvnsFYZcNfdRhxaIm_w,,"
-    }
+    },
+    "mailServidor": true
   },
   "sizes": [
     {

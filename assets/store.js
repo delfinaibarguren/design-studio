@@ -269,6 +269,7 @@ window.DS = (() => {
   // aviso por mail a Dsgn. Studio (FormSubmit, desde el navegador del cliente)
   const MAIL_TO = "designstudioenmarcados@gmail.com";
   async function notifyMail(subject, fields) {
+    if (catalog && catalog.store && catalog.store.mailServidor) return {};   // los mails ahora salen desde el servidor (Gmail)
     try {
       const body = { _subject: subject, _template: "table", _captcha: "false" };
       for (const [k, v] of Object.entries(fields)) if (v !== "" && v != null) body[k] = String(v);
