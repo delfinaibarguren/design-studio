@@ -539,8 +539,7 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .hero-sub-3 strong { margin-top: .25rem; }
 @media (max-width: 380px) { .hero-sub-3 span, .hero-sub-3 strong { white-space: normal; } }
 @media (min-width: 901px) {
-  .hero-sub-3 span { display: inline; white-space: normal; }
-  .hero-sub-3 span + span::before { content: " "; }
+  .hero-sub-3 span { display: block; white-space: nowrap; }
   .hero-sub-3 strong { text-transform: uppercase; letter-spacing: .02em; }
 }
 
@@ -650,3 +649,28 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .med-car img { opacity: 0; transition: opacity 1.2s ease; }
 .med-car img.on { opacity: 1; }
 .ent-tip { margin: -.2rem 0 .8rem; font-size: .88rem; color: var(--ink-soft); }
+
+/* Home: dos formas (colecciones / a medida) */
+.dos-formas { padding-bottom: 0; }
+.df-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 32px); }
+.df-card { display: grid; grid-template-columns: 42% 1fr; background: #fff; border: 1px solid var(--line, #dcd6ca); border-radius: 14px; overflow: hidden; color: inherit; text-decoration: none; transition: box-shadow .2s, transform .2s; }
+.df-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,.08); transform: translateY(-2px); }
+.df-img { min-height: 100%; }
+.df-img img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 4 / 5; }
+.df-body { padding: clamp(18px, 2.4vw, 32px); display: flex; flex-direction: column; gap: .55rem; }
+.df-eye { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft, #66615a); }
+.df-body h3 { font-family: "Playfair Display", Georgia, serif; font-weight: 400; font-size: clamp(1.5rem, 2.2vw, 2rem); margin: 0; }
+.df-body p { margin: 0; font-size: .95rem; color: #2f2d2a; }
+.df-cta { margin-top: auto; padding-top: .6rem; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 900px) { .df-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .df-card { grid-template-columns: 1fr; } .df-img img { aspect-ratio: 16 / 10; } }
+.hero-v2 .hero-sub-3 span { white-space: nowrap; }
+@media (max-width: 900px) {
+  .hero-v2 .hero-sub-3 span { white-space: normal; }
+  .hero-v2 > div:first-child { display: contents; }
+  .hero-v2 h1 { order: 1; margin-bottom: 1.2rem; }
+  .hero-v2 .hero-sub { order: 2; margin-bottom: 0; }
+  .hero-v2 .hero-img { order: 3; }
+  .hero-v2 .cta-row { order: 4; }
+  .hero-v2 .cta-row .hero-btn { font-size: .88rem; padding: .85rem 1.4rem; }
+}
