@@ -220,7 +220,8 @@
   const precioDe = (it) => {
     const t = AM.precios[it.medida]; if (!t) return null;
     return (it.tipo === "Box" ? t.box : t.chato) + (it.color !== "Kiri natural" ? t.pintado : 0) - (it.paspartu === "Sin paspartú" ? t.sinPaspartu : 0)
-      - (form.que.value === "Algo mío" && it.imp === "La traigo impresa" ? t.sinImpresion : 0);
+      - (form.que.value === "Algo mío" && it.imp === "La traigo impresa" ? t.sinImpresion : 0)
+      + (it.paspartu === "Sin paspartú" && !(form.que.value === "Algo mío" && it.imp === "La traigo impresa") ? t.extraImpSinPaspartu || 0 : 0);
   };
   const calculable = () => (form.que.value === "Obra de Dsgn. Studio" ? !!sel.value && sel.value !== "Otra / no sé el nombre" : AM.objetos.includes(form.objeto.value))
     && items.length && items.every((it) => AM.precios[it.medida]);

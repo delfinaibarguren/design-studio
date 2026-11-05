@@ -12,7 +12,7 @@ export function precioItem(it: ItemMedida): { unit: number; desc: string; paquet
   const pasp = it.paspartu !== "Sin paspartú", ancho = pasp ? Number(it.ancho || 5) : 0
   if (pasp && ![3, 5, 8, 12].includes(ancho)) return null
   const trae = it.imp === "La traigo impresa"
-  const unit = (box ? t.box : t.chato) + (it.color !== "Kiri natural" ? t.pintado : 0) - (pasp ? 0 : t.sinPaspartu) - (trae ? t.sinImpresion : 0)
+  const unit = (box ? t.box : t.chato) + (it.color !== "Kiri natural" ? t.pintado : 0) - (pasp ? 0 : t.sinPaspartu) - (trae ? t.sinImpresion : 0) + (!pasp && !trae ? t.extraImpSinPaspartu || 0 : 0)
   const desc = `Enmarcado a medida ${it.medida.replace("x", " × ")} cm, marco ${it.tipo.toLowerCase()} ${it.color.toLowerCase()}, ${pasp ? `${it.paspartu.toLowerCase()} de ${ancho} cm` : "sin paspartú"}, ${trae ? "foto impresa por el cliente" : "impresión incluida"}${it.nota ? ` (${String(it.nota).slice(0, 60)})` : ""}`
   return { unit, desc, paquete: t.paquete }
 }
