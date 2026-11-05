@@ -108,7 +108,7 @@
           "chato": 180000,
           "pintado": 10000,
           "sinPaspartu": 8000,
-          "sinImpresion": 30000,
+          "sinImpresion": 20000,
           "paquete": {
             "peso": 5500,
             "alto": 6,
@@ -121,7 +121,7 @@
           "chato": 263000,
           "pintado": 12000,
           "sinPaspartu": 15000,
-          "sinImpresion": 40000,
+          "sinImpresion": 25000,
           "paquete": {
             "peso": 10000,
             "alto": 7,
