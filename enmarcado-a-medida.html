@@ -50,7 +50,7 @@
     <input type="hidden" name="form-name" value="consulta">
     <p hidden><label>No completar: <input name="bot-field"></label></p>
     <h2 class="q-title">Armá tu pedido</h2>
-    <p class="q-sub">Contanos qué querés enmarcar y te pasamos el presupuesto.</p>
+    <p class="q-sub">Armá tu cuadro, mirá cómo queda y ves el precio en el momento. Para piezas especiales te pasamos un presupuesto.</p>
 
     <div class="box">
       <h2><span class="step">1</span> ¿Qué querés enmarcar?</h2>
@@ -63,10 +63,11 @@
         <label class="f">Qué es
           <select name="objeto"><option value="">Elegí…</option><option>Foto</option><option>Lámina / ilustración</option><option>Camiseta</option><option>Diploma / título</option><option>Obra original (pintura, dibujo)</option><option>Poema / carta</option><option>Otro</option></select>
         </label>
-        <div class="f full">Fotos o archivos de referencia (opcional, hasta 10)
+        <div class="f full">Fotos o archivos (hasta 10)
           <label class="q-drop"><input type="file" id="qFiles" accept="image/*,application/pdf" multiple><span>+ Adjuntar archivos</span></label>
           <ul class="q-files" id="qFileList"></ul>
           <small class="q-hint">Subí las fotos en su mejor calidad: las recibimos tal cual las mandás.</small>
+          <p class="q-imp"><b>IMPORTANTE:</b> las fotos tienen que estar en <b>alta resolución (HD)</b> para que la impresión salga bien. Cuanto más grande el marco, mejor tiene que ser la foto: evitá capturas de pantalla o fotos reenviadas por WhatsApp, que pierden calidad. Si la foto no tiene buena resolución, va a salir pixelada en la impresión.</p>
         </div>
       </div>
       <div hidden><input type="file" name="archivo1"><input type="file" name="archivo2"><input type="file" name="archivo3"><input type="file" name="archivo4"><input type="file" name="archivo5"><input type="file" name="archivo6"><input type="file" name="archivo7"><input type="file" name="archivo8"><input type="file" name="archivo9"><input type="file" name="archivo10"></div>
@@ -76,6 +77,7 @@
       <h2><span class="step">2</span> Medidas y terminación</h2>
       <p class="q-hint">Armá cada cuadro: medida, tipo de marco, color, paspartú y cantidad. Si querés distintas combinaciones, agregá otra línea.</p>
       <div class="q-items" id="qItems"></div>
+      <p class="q-nocalc" id="qNoCalc" hidden>Para este tipo de pieza armamos un presupuesto a medida: completá los datos y te lo mandamos por WhatsApp.</p>
       <button type="button" class="q-add" id="qAdd">+ Agregar otra medida</button>
       <input type="hidden" name="medidas" id="qMedidas">
       <input type="hidden" name="fotos_links">
@@ -108,6 +110,7 @@
       </div>
     </div>
 
+    <div class="q-total" id="qTotal" hidden></div>
     <button class="btn btn-dark btn-block" id="qSend" type="submit">Pedir presupuesto</button>
     <p class="q-plazo-btn">Los enmarcados a medida tienen una demora aproximada de hasta 20 días.</p>
     <p class="q-err" id="qErr" hidden></p>
@@ -142,7 +145,7 @@
     const obra = form.que.value === "Obra de Dsgn. Studio";
     $("qObra").hidden = !obra; $("qPropio").hidden = obra;
   };
-  form.addEventListener("change", (e) => { toggle(); if (e.target.name === "que" || e.target === sel) setTimeout(() => drawItems(), 0); });
+  form.addEventListener("change", (e) => { toggle(); if (e.target.name === "que" || e.target === sel) setTimeout(() => drawItems(), 0); if (e.target.name === "objeto") precios(); });
   // si viene desde una obra: la deja elegida con sus opciones
   const p = DS.product(q.get("obra"));
   if (p) {
@@ -158,11 +161,12 @@
     color: ["Kiri natural", "Negro", "Blanco"],
     paspartu: ["Paspartú blanco", "Paspartú negro", "Sin paspartú"],
     ancho: ["3", "5", "8", "12"],
+    imp: ["La imprimimos nosotros", "La traigo impresa"],
   };
-  const LBL = { medida: "Medida", tipo: "Tipo de marco", color: "Color", paspartu: "Paspartú", ancho: "Ancho del paspartú" };
+  const LBL = { medida: "Medida", tipo: "Tipo de marco", color: "Color", paspartu: "Paspartú", ancho: "Ancho del paspartú", imp: "Impresión de la foto" };
   const items = [];
   const lab = (list, id) => (list || []).find((x) => x.id === id)?.label;
-  const first = { medida: "", tipo: "Box", color: "Kiri natural", paspartu: "Paspartú blanco", ancho: "5", foto: 0, cant: 1, nota: "" };
+  const first = { medida: "", tipo: "Box", color: "Kiri natural", paspartu: "Paspartú blanco", ancho: "5", imp: "La imprimimos nosotros", foto: 0, cant: 1, nota: "" };
   if (p) {
     const t = lab(c.frameTypes, q.get("tipo")), co = lab(c.frameColors, q.get("color")), pa = lab(c.terminaciones, q.get("terminacion"));
     if (OPTS.tipo.includes(t)) first.tipo = t; if (OPTS.color.includes(co)) first.color = co; if (OPTS.paspartu.includes(pa)) first.paspartu = pa;
@@ -174,10 +178,11 @@
     const imgs = fotosPrev();
     $("qItems").innerHTML = items.map((it, i) => `<div class="q-item">
       <div class="q-item-h"><b>Cuadro ${i + 1}</b>${items.length > 1 ? `<button type="button" data-rm-item="${i}">Quitar</button>` : ""}</div>
-      <div class="q-item-w"><div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}${it.paspartu !== "Sin paspartú" ? selHtml(i, "ancho") : ""}
+      <div class="q-item-w"><div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}${it.paspartu !== "Sin paspartú" ? selHtml(i, "ancho") : ""}${form.que.value === "Algo mío" ? selHtml(i, "imp") : ""}
         ${imgs.length > 1 ? `<label class="f k-foto">Foto para la vista previa<select data-i="${i}" data-k="foto">${imgs.map((f, j) => `<option value="${j}"${+it.foto === j ? " selected" : ""}>Foto ${j + 1}</option>`).join("")}</select></label>` : ""}
         <label class="f">Cantidad<span class="q-step"><button type="button" data-i="${i}" data-d="-1" aria-label="Restar">−</button><b>${it.cant}</b><button type="button" data-i="${i}" data-d="1" aria-label="Sumar">+</button></span></label>
         ${it.medida === "Más grande" ? `<p class="q-big">Para medidas más grandes te asesoramos por WhatsApp. <a href="https://wa.me/5491153132340?text=${encodeURIComponent("Hola! Quiero consultar por un enmarcado en una medida más grande.")}" target="_blank" rel="noopener">Escribinos acá →</a> También podés contarnos la medida en la aclaración y te respondemos con el presupuesto.</p>` : ""}
+        <p class="q-precio" data-precio="${i}"></p>
         <label class="f k-nota">Aclaración (opcional)<input data-i="${i}" data-k="nota" value="${DS.esc(it.nota)}" placeholder="Ej: van las fotos 1 y 3 / la camiseta azul"></label>
       </div>
       <div class="q-prev" data-prev="${i}"><canvas></canvas><small class="q-prev-t"></small></div></div></div>`).join("");
@@ -210,12 +215,30 @@
       await DSFrame.draw(box.querySelector("canvas"), cv.toDataURL("image/jpeg", .9), { tipo: it.tipo.toLowerCase(), color: FMAP.color[it.color] || "natural", terminacion: FMAP.pas[it.paspartu] || "sin", mat: mat || undefined, largo: Math.max(W, Hh) });
     } catch { box.classList.add("vacia"); t.textContent = "No pudimos mostrar esta foto, pero la recibimos igual"; }
   }
-  let prevT; const prevAll = () => { clearTimeout(prevT); prevT = setTimeout(() => items.forEach((_, i) => prevItem(i)), 60); };
+  // ---- precio automático (fotos, láminas y obras de la web; el resto va a presupuesto)
+  const AM = c.store.aMedida || { precios: {}, objetos: [] };
+  const precioDe = (it) => {
+    const t = AM.precios[it.medida]; if (!t) return null;
+    return (it.tipo === "Box" ? t.box : t.chato) + (it.color !== "Kiri natural" ? t.pintado : 0) - (it.paspartu === "Sin paspartú" ? t.sinPaspartu : 0)
+      - (form.que.value === "Algo mío" && it.imp === "La traigo impresa" ? t.sinImpresion : 0);
+  };
+  const calculable = () => (form.que.value === "Obra de Dsgn. Studio" ? !!sel.value && sel.value !== "Otra / no sé el nombre" : AM.objetos.includes(form.objeto.value))
+    && items.length && items.every((it) => AM.precios[it.medida]);
+  function precios() {
+    items.forEach((it, i) => { const el = document.querySelector(`[data-precio="${i}"]`); if (!el) return; const p = precioDe(it);
+      el.innerHTML = p && calculable() ? `<b>${DS.money(p * it.cant)}</b>${it.cant > 1 ? ` <small>(${DS.money(p)} c/u)</small>` : ""}` : ""; });
+    const ok = calculable(), tot = ok ? items.reduce((a, it) => a + precioDe(it) * it.cant, 0) : 0;
+    $("qTotal").hidden = !ok;
+    if (ok) $("qTotal").innerHTML = `<div><span>Total</span><b>${DS.money(tot)}</b></div><small>Hasta 3 cuotas con tarjeta · ${DS.money(tot * (1 - (c.store.transferDiscount || 0)))} pagando por transferencia · El envío se calcula al finalizar.</small>`;
+    $("qSend").textContent = ok ? "Continuar al pago" : "Pedir presupuesto";
+    const hint = $("qNoCalc"); if (hint) hint.hidden = ok || !(form.que.value === "Algo mío" && form.objeto.value);
+  }
+  let prevT; const prevAll = () => { precios(); clearTimeout(prevT); prevT = setTimeout(() => items.forEach((_, i) => prevItem(i)), 60); };
   $("qItems").addEventListener("input", (e) => { const s = e.target.closest("[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
-  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida" || s.dataset.k === "paspartu") drawItems(); else prevItem(+s.dataset.i); } });
+  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida" || s.dataset.k === "paspartu") drawItems(); else { prevItem(+s.dataset.i); precios(); } } });
   $("qItems").addEventListener("click", (e) => {
     const d = e.target.closest("button[data-d]");
-    if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; }
+    if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; precios(); }
     const rm = e.target.closest("[data-rm-item]"); if (rm) { items.splice(+rm.dataset.rmItem, 1); drawItems(); }
   });
   $("qAdd").onclick = () => { const last = items[items.length - 1]; items.push({ ...last, medida: "", cant: 1, nota: "" }); drawItems(); };
@@ -290,6 +313,31 @@
     if (!miss.length && !form.email.checkValidity()) { form.email.style.borderColor = "#a12d1c"; $("qErr").textContent = "Revisá el email: parece que tiene un error."; $("qErr").hidden = false; return; }
     if (miss.length) { $("qErr").textContent = miss.some((n) => ["cp", "localidad", "provincia"].includes(n)) && !miss.includes("nombre") && !miss.includes("whatsapp") ? "Completá código postal, localidad y provincia para calcular el envío (o elegí retiro por el taller)." : "Completá los datos marcados para poder responderte."; $("qErr").hidden = false; return; }
     $("qMedidas").value = medidasTxt();
+    if (calculable()) {   // precio automático → se paga directo
+      const esFoto = form.que.value === "Algo mío";
+      if (esFoto && !fotosPrev().length) { $("qErr").textContent = "Subí la foto que querés enmarcar (en alta resolución)."; $("qErr").hidden = false; $("qFiles").closest(".f").scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+      $("qErr").hidden = true; const bt = $("qSend"); bt.disabled = true; bt.textContent = "Subiendo fotos…";
+      subidoBytes = 0; totalBytes = esFoto ? files.reduce((a, f) => a + f.size, 0) : 0;
+      const archivos = [];
+      if (esFoto) for (const f of files) { const u = await subir(f).catch(() => ""); if (u) archivos.push(u); }
+      if (esFoto && !archivos.length) { bt.disabled = false; bt.textContent = "Continuar al pago"; $("qErr").textContent = "No pudimos subir la foto. Probá de nuevo o escribinos por WhatsApp."; $("qErr").hidden = false; return; }
+      bt.textContent = "Preparando el pago…";
+      const previews = [];
+      for (let i = 0; i < items.length; i++) {
+        const box = document.querySelector(`[data-prev="${i}"]`); if (!box || box.classList.contains("vacia")) continue;
+        const blob = await new Promise((ok) => box.querySelector("canvas").toBlob(ok, "image/jpeg", 0.88)); if (!blob) continue;
+        const u = await subir(new File([blob], `vista-previa-cuadro-${i + 1}.jpg`, { type: "image/jpeg" })).catch(() => ""); if (u) previews.push(u);
+      }
+      const retiro = form.entrega.value === "Retiro por el taller";
+      try {
+        const r = await fetch("/api/medida", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+          que: form.que.value, obra: sel.value, objeto: form.objeto.value, nombre: form.nombre.value, items, archivos, previews,
+          entrega: form.entrega.value, cp: form.cp.value, ciudad: form.localidad.value, provincia: form.provincia.value }) });
+        const d = await r.json().catch(() => ({})); if (!r.ok || !d.url) throw new Error(d.error || "No pudimos preparar el pago");
+        try { sessionStorage.setItem("ds-prefill", JSON.stringify({ nombre: form.nombre.value, email: form.email.value, whatsapp: form.whatsapp.value, cp: form.cp.value, ciudad: form.localidad.value, provincia: form.provincia.value, retiro })); } catch {}
+        location.href = d.url; return;
+      } catch (x) { bt.disabled = false; bt.textContent = "Continuar al pago"; $("qErr").textContent = x.message + ". Probá de nuevo o escribinos por WhatsApp."; $("qErr").hidden = false; return; }
+    }
     $("qErr").hidden = true; const b = $("qSend"); b.disabled = true; b.textContent = "Enviando…";
     const fd = new FormData(form);
     if (form.que.value === "Algo mío") fd.set("obra", ""); else fd.set("objeto", "");

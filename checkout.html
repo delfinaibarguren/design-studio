@@ -129,7 +129,7 @@
   const discOn = () => (PRE ? PRE.descTransfer : true);
   const subTotal = () => (PRE ? preSub() : DS.cartTotal(DS.getCart()));
   const detalle = () => PRE
-    ? PRE.items.map((i) => `${i.cant} × ${i.desc} — ${DS.money(i.precio)}`).concat(PRE.envio ? [`Envío — ${DS.money(PRE.envio)}`] : []).join("\n") + (PRE.nota ? `\nNota: ${PRE.nota}` : "")
+    ? PRE.items.map((i) => `${i.cant} × ${i.desc} — ${DS.money(i.precio)}`).concat(PRE.envio ? [`Envío — ${DS.money(PRE.envio)}`] : []).join("\n") + (PRE.nota ? `\nNota: ${PRE.nota}` : "") + (PRE.archivos && PRE.archivos.length ? "\n\n" + PRE.archivos.join("\n") : "")
     : DS.getCart().map((l) => `${l.qty} × ${DS.product(l.productId).name} (${DS.variantText(l)}) — ${DS.money(DS.unitPrice(l) * l.qty)}`).join("\n");
 
   // ---- envío: se cotiza con Zipnova cuando están CP, ciudad y provincia
@@ -295,6 +295,15 @@
 // factura a nombre de empresa (opcional)
 (() => { const c = document.getElementById("factChk"), b = document.getElementById("factBox");
   c.addEventListener("change", () => { b.hidden = !c.checked; b.querySelectorAll("input").forEach((i) => { i.required = c.checked; if (!c.checked) i.value = ""; }); }); })();
+</script>
+<script>
+// datos que el cliente ya cargó en Enmarcado a medida
+(() => { let d = null; try { d = JSON.parse(sessionStorage.getItem("ds-prefill") || "null"); } catch {}
+  if (!d) return; const f = document.getElementById("orderForm"); if (!f) return;
+  const set = (n, v) => { if (v && f.elements[n] && !f.elements[n].value) f.elements[n].value = v; };
+  set("nombre", d.nombre); set("email", d.email); set("telefono", d.whatsapp); set("cp", d.cp); set("ciudad", d.ciudad); set("provincia", d.provincia);
+  if (d.retiro) { const r = f.querySelector('input[name="entrega"][value="Retiro por el taller"]'); if (r) { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); } }
+})();
 </script>
 </body>
 </html>

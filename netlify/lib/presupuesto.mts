@@ -2,7 +2,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto"
 
 export type Item = { desc: string; cant: number; precio: number }   // precio = total de la línea
-export type Presupuesto = { id: string; cliente: string; items: Item[]; envio: number; descTransfer: boolean; nota?: string; fecha: number; vence: number }
+export type Presupuesto = { id: string; cliente: string; items: Item[]; envio: number; descTransfer: boolean; nota?: string; archivos?: string[]; fecha: number; vence: number }
 
 const b64 = (b: Buffer | string) => Buffer.from(b).toString("base64url")
 const secret = () => {

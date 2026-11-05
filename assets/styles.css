@@ -696,3 +696,10 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 @media (max-width: 700px) { .q-item-w { grid-template-columns: 1fr; } .q-prev { max-width: 300px; margin: 0 auto; } }
 .q-item-w .q-item-g { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .q-item-w .q-item-g .k-nota, .q-item-w .q-item-g .k-foto { grid-column: 1 / -1; }
+
+.q-imp { margin: .7rem 0 0; padding: .75rem .9rem; border-radius: 10px; background: #fff4dc; border: 1px solid #f0d79a; font-size: .86rem; line-height: 1.5; color: #4a3a12; }
+.q-precio { grid-column: 1 / -1; margin: .1rem 0 0; font-size: 1.15rem; } .q-precio:empty { display: none; } .q-precio small { font-size: .8rem; color: var(--ink-soft); }
+.q-total { margin: 0 0 .8rem; padding: 1rem 1.1rem; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+.q-total div { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.1rem; } .q-total b { font-size: 1.5rem; font-weight: 500; }
+.q-total small { display: block; margin-top: .3rem; color: var(--ink-soft); font-size: .8rem; }
+.q-nocalc { margin: .7rem 0 0; font-size: .88rem; color: var(--ink-soft); }

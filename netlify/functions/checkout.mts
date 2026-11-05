@@ -24,7 +24,7 @@ export default async (req: Request) => {
     items = p.items.map((i, k) => ({ id: `${p.id}-${k + 1}`, title: `${i.cant} × ${i.desc}`.slice(0, 250), quantity: 1, unit_price: i.precio, currency_id: "ARS" }))
     productos = p.items.reduce((s, i) => s + i.precio, 0)
     envioPrecio = p.envio || 0
-    detalle = p.items.map((i) => `${i.cant} × ${i.desc}`).join("\n")
+    detalle = p.items.map((i) => `${i.cant} × ${i.desc}`).join("\n") + (p.archivos && p.archivos.length ? "\n\n" + p.archivos.join("\n") : "")
   } else {
     const lines = priceLines(body.items)
     if (!lines.length) return Response.json({ error: "El carrito está vacío" }, { status: 400 })

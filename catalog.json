@@ -43,7 +43,94 @@
       "img": "/assets/data-fiscal.png",
       "url": "http://qr.afip.gob.ar/?qr=TtWYvnsFYZcNfdRhxaIm_w,,"
     },
-    "mailServidor": true
+    "mailServidor": true,
+    "aMedida": {
+      "objetos": [
+        "Foto",
+        "Lámina / ilustración"
+      ],
+      "plazo": "Los enmarcados a medida tienen una demora de hasta 20 días.",
+      "precios": {
+        "20x25": {
+          "box": 58000,
+          "chato": 55000,
+          "pintado": 6000,
+          "sinPaspartu": 2000,
+          "sinImpresion": 6000,
+          "paquete": {
+            "peso": 1200,
+            "alto": 6,
+            "ancho": 26,
+            "largo": 31
+          }
+        },
+        "20x30": {
+          "box": 62000,
+          "chato": 59000,
+          "pintado": 6000,
+          "sinPaspartu": 2000,
+          "sinImpresion": 6000,
+          "paquete": {
+            "peso": 1300,
+            "alto": 6,
+            "ancho": 26,
+            "largo": 36
+          }
+        },
+        "30x40": {
+          "box": 114000,
+          "chato": 105000,
+          "pintado": 8000,
+          "sinPaspartu": 3000,
+          "sinImpresion": 8000,
+          "paquete": {
+            "peso": 2500,
+            "alto": 6,
+            "ancho": 36,
+            "largo": 46
+          }
+        },
+        "40x50": {
+          "box": 145000,
+          "chato": 134000,
+          "pintado": 9000,
+          "sinPaspartu": 5000,
+          "sinImpresion": 20000,
+          "paquete": {
+            "peso": 3800,
+            "alto": 6,
+            "ancho": 46,
+            "largo": 56
+          }
+        },
+        "50x70": {
+          "box": 192000,
+          "chato": 180000,
+          "pintado": 10000,
+          "sinPaspartu": 8000,
+          "sinImpresion": 30000,
+          "paquete": {
+            "peso": 5500,
+            "alto": 6,
+            "ancho": 56,
+            "largo": 76
+          }
+        },
+        "100x70": {
+          "box": 287000,
+          "chato": 263000,
+          "pintado": 12000,
+          "sinPaspartu": 15000,
+          "sinImpresion": 40000,
+          "paquete": {
+            "peso": 10000,
+            "alto": 7,
+            "ancho": 76,
+            "largo": 106
+          }
+        }
+      }
+    }
   },
   "sizes": [
     {
