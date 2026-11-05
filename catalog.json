@@ -52,8 +52,8 @@
       "plazo": "Los enmarcados a medida tienen una demora de hasta 20 días.",
       "precios": {
         "20x25": {
-          "box": 58000,
-          "chato": 55000,
+          "box": 49000,
+          "chato": 47000,
           "pintado": 6000,
           "sinPaspartu": 2000,
           "sinImpresion": 6000,
@@ -65,8 +65,8 @@
           }
         },
         "20x30": {
-          "box": 62000,
-          "chato": 59000,
+          "box": 53000,
+          "chato": 51000,
           "pintado": 6000,
           "sinPaspartu": 2000,
           "sinImpresion": 6000,
@@ -78,8 +78,8 @@
           }
         },
         "30x40": {
-          "box": 114000,
-          "chato": 105000,
+          "box": 99000,
+          "chato": 92000,
           "pintado": 8000,
           "sinPaspartu": 3000,
           "sinImpresion": 8000,
@@ -91,8 +91,8 @@
           }
         },
         "40x50": {
-          "box": 145000,
-          "chato": 134000,
+          "box": 125000,
+          "chato": 116000,
           "pintado": 9000,
           "sinPaspartu": 5000,
           "sinImpresion": 8000,
@@ -105,8 +105,8 @@
           "extraImpSinPaspartu": 11000
         },
         "50x70": {
-          "box": 192000,
-          "chato": 180000,
+          "box": 169000,
+          "chato": 157000,
           "pintado": 10000,
           "sinPaspartu": 8000,
           "sinImpresion": 20000,
@@ -118,8 +118,8 @@
           }
         },
         "100x70": {
-          "box": 287000,
-          "chato": 263000,
+          "box": 249000,
+          "chato": 229000,
           "pintado": 12000,
           "sinPaspartu": 15000,
           "sinImpresion": 25000,
@@ -142,10 +142,10 @@
       "lamina": 50000,
       "marco": 85000,
       "precios": {
-        "box-natural": 114000,
-        "box-pintado": 122000,
-        "chato-natural": 105000,
-        "chato-pintado": 113000
+        "box-natural": 99000,
+        "box-pintado": 107000,
+        "chato-natural": 92000,
+        "chato-pintado": 100000
       },
       "arpillera": 20000,
       "descuentoSinPaspartu": 3000,
@@ -164,10 +164,10 @@
       "lamina": 83000,
       "marco": 144000,
       "precios": {
-        "box-natural": 192000,
-        "box-pintado": 202000,
-        "chato-natural": 180000,
-        "chato-pintado": 190000
+        "box-natural": 169000,
+        "box-pintado": 179000,
+        "chato-natural": 157000,
+        "chato-pintado": 167000
       },
       "arpillera": 25000,
       "descuentoSinPaspartu": 8000,
@@ -186,10 +186,10 @@
       "lamina": 125000,
       "marco": 208000,
       "precios": {
-        "box-natural": 287000,
-        "box-pintado": 299000,
-        "chato-natural": 263000,
-        "chato-pintado": 275000
+        "box-natural": 249000,
+        "box-pintado": 261000,
+        "chato-natural": 229000,
+        "chato-pintado": 241000
       },
       "arpillera": 30000,
       "descuentoSinPaspartu": 15000,
