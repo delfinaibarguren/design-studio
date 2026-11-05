@@ -327,13 +327,17 @@ window.DS = (() => {
   // 8% para la fotógrafa sobre lo que paga el cliente (cálculo interno, no se suma al precio)
   // Comisión de cada fotógrafa: 10% de la ganancia de sus obras (lo que paga el cliente menos el costo).
   // Costo estimado = costoEstimado × precio sin el recargo de pintado. Cálculo interno, no se suma al precio.
-  function comisiones(lines, factor = 1) {
+  // Comisión = % de la GANANCIA: lo que pagó el cliente (con descuento por transferencia o menos la comisión de Mercado Pago)
+  // menos el costo real del cuadro (store.costos; el recargo de pintado se toma como costo).
+  function comisiones(lines, factor = 1, mp = false) {
     const st = catalog.store, rate = st.comisionFotografa || 0, k = st.costoEstimado || 0, out = {};
     for (const l of lines) {
       const p = product(l.productId); if (!p || !p.fotografa) continue;
       const s = size(l.size); if (!s) continue;
-      const paid = unitPrice(l) * l.qty * factor;
-      const cost = k * framedPrice(s, l.tipo, "natural", l.terminacion) * l.qty;
+      const paid = unitPrice(l) * l.qty * factor * (mp ? 1 - (st.comisionMP || 0) : 1);
+      const C = (st.costos || {})[s.id], nat = framedPrice(s, l.tipo, "natural", l.terminacion);
+      const cost = C ? (C[l.tipo] ?? C.box) * l.qty - (String(l.terminacion).startsWith("paspartu") ? 0 : (C.paspartu || 0) * l.qty) + (unitPrice(l) - nat) * l.qty
+                     : k * nat * l.qty;
       const gan = Math.max(0, paid - cost);
       (out[p.fotografa] ||= { obras: [], total: 0 });
       out[p.fotografa].obras.push(`${l.qty} × ${p.name} (pagó ${money(paid)}, ganancia ${money(gan)})`);

@@ -131,7 +131,26 @@
           }
         }
       }
-    }
+    },
+    "costos": {
+      "_nota": "Costo real por cuadro (marco con vidrio, impresión, paspartú, embalaje, viajes y tiempo), natural y con paspartú. Sale de la planilla PRECIOS UNIFICADOS. Se usa para calcular la comisión de fotógrafas/ilustradoras sobre la ganancia.",
+      "30x40": {
+        "box": 40834,
+        "chato": 37250,
+        "paspartu": 3890
+      },
+      "50x70": {
+        "box": 89150,
+        "chato": 83550,
+        "paspartu": 8670
+      },
+      "70x100": {
+        "box": 132310,
+        "chato": 122230,
+        "paspartu": 15830
+      }
+    },
+    "comisionMP": 0.041
   },
   "sizes": [
     {

@@ -238,7 +238,7 @@
     $("fTotal").value = DS.money(total) + (conDesc ? ` (con ${pct}% OFF transferencia)` : "");
     if (PRE) $("fComision").value = "";
     else {
-      const com = DS.comisiones(cart, transfer ? 1 - st.transferDiscount : 1);
+      const com = DS.comisiones(cart, transfer ? 1 - st.transferDiscount : 1, !transfer);
       $("fComision").value = Object.entries(com).map(([who, x]) => `${who}: ${DS.money(x.total)} — ${x.obras.join(", ")}`).join("\n");
     }
 
