@@ -230,7 +230,13 @@
       el.innerHTML = p && calculable() ? `<b>${DS.money(p * it.cant)}</b>${it.cant > 1 ? ` <small>(${DS.money(p)} c/u)</small>` : ""}` : ""; });
     const ok = calculable(), tot = ok ? items.reduce((a, it) => a + precioDe(it) * it.cant, 0) : 0;
     $("qTotal").hidden = !ok;
-    if (ok) $("qTotal").innerHTML = `<div><span>Total</span><b>${DS.money(tot)}</b></div><small>Hasta 3 cuotas con tarjeta · ${DS.money(tot * (1 - (c.store.transferDiscount || 0)))} pagando por transferencia · El envío se calcula al finalizar.</small>`;
+    if (ok) {
+      const min = (c.store.envioGratis && c.store.envioGratis.minimo) || 250000, falta = Math.max(0, min - tot), pct = Math.min(100, Math.round((tot / min) * 100));
+      $("qTotal").innerHTML = `<div class="qt-row"><span>Total</span><b>${DS.money(tot)}</b></div>
+        <div class="qt-tr">💸 <b>${DS.money(tot * (1 - (c.store.transferDiscount || 0)))}</b> pagando por transferencia (10% OFF) · o hasta 3 cuotas con tarjeta</div>
+        <div class="qt-env">${falta ? `🚚 Te faltan <b>${DS.money(falta)}</b> para tener <b>envío gratis</b> en AMBA` : `🚚 <b>¡Tenés envío gratis en AMBA!</b> Al interior te bonificamos parte del envío`}</div>
+        <div class="qt-bar"><i style="width:${pct}%"></i></div>`;
+    }
     $("qSend").textContent = ok ? "Continuar al pago" : "Pedir presupuesto";
     const hint = $("qNoCalc"); if (hint) hint.hidden = ok || !(form.que.value === "Algo mío" && form.objeto.value);
   }

@@ -703,3 +703,16 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-total div { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.1rem; } .q-total b { font-size: 1.5rem; font-weight: 500; }
 .q-total small { display: block; margin-top: .3rem; color: var(--ink-soft); font-size: .8rem; }
 .q-nocalc { margin: .7rem 0 0; font-size: .88rem; color: var(--ink-soft); }
+
+/* total de Enmarcado a medida: fijo abajo mientras se arma el pedido */
+.q-total { position: sticky; bottom: 0; z-index: 5; box-shadow: 0 -6px 20px rgba(0,0,0,.06); }
+.q-total .qt-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 1.05rem; }
+.q-total .qt-row b { font-size: 1.45rem; font-weight: 500; }
+.q-total .qt-tr, .q-total .qt-env { font-size: .82rem; color: #2f2d2a; margin-top: .25rem; }
+.q-total .qt-tr b { color: #1e6b3a; }
+.q-total .qt-bar { height: 4px; border-radius: 9px; background: #eee9df; margin-top: .45rem; overflow: hidden; }
+.q-total .qt-bar i { display: block; height: 100%; background: #1e6b3a; border-radius: 9px; transition: width .3s; }
+@media (max-width: 560px) { .q-total { padding: .7rem .8rem; } .q-total .qt-row b { font-size: 1.25rem; } }
+.q-total .qt-tr, .q-total .qt-env { display: block; }
+.q-total .qt-tr b, .q-total .qt-env b { font-size: inherit; font-weight: 600; }
+.q-total .qt-bar { display: block; }
