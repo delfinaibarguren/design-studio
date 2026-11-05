@@ -79,6 +79,7 @@
       <button type="button" class="q-add" id="qAdd">+ Agregar otra medida</button>
       <input type="hidden" name="medidas" id="qMedidas">
       <input type="hidden" name="fotos_links">
+      <input type="hidden" name="previews">
     </div>
 
     <div class="box">
@@ -122,6 +123,7 @@
 
 <div id="ds-footer"></div>
 <script src="/assets/store.js"></script>
+<script src="/assets/configurador.js"></script>
 <script>
 (async () => {
   const c = await DS.init();
@@ -140,7 +142,7 @@
     const obra = form.que.value === "Obra de Dsgn. Studio";
     $("qObra").hidden = !obra; $("qPropio").hidden = obra;
   };
-  form.addEventListener("change", toggle);
+  form.addEventListener("change", (e) => { toggle(); if (e.target.name === "que" || e.target === sel) setTimeout(() => drawItems(), 0); });
   // si viene desde una obra: la deja elegida con sus opciones
   const p = DS.product(q.get("obra"));
   if (p) {
@@ -155,29 +157,62 @@
     tipo: ["Box", "Chato"],
     color: ["Kiri natural", "Negro", "Blanco"],
     paspartu: ["Paspartú blanco", "Paspartú negro", "Sin paspartú"],
+    ancho: ["3", "5", "8", "12"],
   };
-  const LBL = { medida: "Medida", tipo: "Tipo de marco", color: "Color", paspartu: "Paspartú" };
+  const LBL = { medida: "Medida", tipo: "Tipo de marco", color: "Color", paspartu: "Paspartú", ancho: "Ancho del paspartú" };
   const items = [];
   const lab = (list, id) => (list || []).find((x) => x.id === id)?.label;
-  const first = { medida: "", tipo: "Box", color: "Kiri natural", paspartu: "Paspartú blanco", cant: 1, nota: "" };
+  const first = { medida: "", tipo: "Box", color: "Kiri natural", paspartu: "Paspartú blanco", ancho: "5", foto: 0, cant: 1, nota: "" };
   if (p) {
     const t = lab(c.frameTypes, q.get("tipo")), co = lab(c.frameColors, q.get("color")), pa = lab(c.terminaciones, q.get("terminacion"));
     if (OPTS.tipo.includes(t)) first.tipo = t; if (OPTS.color.includes(co)) first.color = co; if (OPTS.paspartu.includes(pa)) first.paspartu = pa;
   }
   items.push({ ...first });
   const selHtml = (i, k) => `<label class="f k-${k}">${LBL[k]}<select data-i="${i}" data-k="${k}">${k === "medida" ? '<option value="">Elegí…</option>' : ""}${OPTS[k]
-    .map((o) => `<option value="${o}"${items[i][k] === o ? " selected" : ""}>${k === "medida" ? (o === "Más grande" ? "Más grande…" : o.replace("x", " × ") + " cm") : o}</option>`).join("")}</select></label>`;
+    .map((o) => `<option value="${o}"${items[i][k] === o ? " selected" : ""}>${k === "medida" ? (o === "Más grande" ? "Más grande…" : o.replace("x", " × ") + " cm") : k === "ancho" ? o + " cm" : o}</option>`).join("")}</select></label>`;
   const drawItems = () => {
+    const imgs = fotosPrev();
     $("qItems").innerHTML = items.map((it, i) => `<div class="q-item">
       <div class="q-item-h"><b>Cuadro ${i + 1}</b>${items.length > 1 ? `<button type="button" data-rm-item="${i}">Quitar</button>` : ""}</div>
-      <div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}
+      <div class="q-item-w"><div class="q-item-g">${selHtml(i, "medida")}${selHtml(i, "tipo")}${selHtml(i, "color")}${selHtml(i, "paspartu")}${it.paspartu !== "Sin paspartú" ? selHtml(i, "ancho") : ""}
+        ${imgs.length > 1 ? `<label class="f k-foto">Foto para la vista previa<select data-i="${i}" data-k="foto">${imgs.map((f, j) => `<option value="${j}"${+it.foto === j ? " selected" : ""}>Foto ${j + 1}</option>`).join("")}</select></label>` : ""}
         <label class="f">Cantidad<span class="q-step"><button type="button" data-i="${i}" data-d="-1" aria-label="Restar">−</button><b>${it.cant}</b><button type="button" data-i="${i}" data-d="1" aria-label="Sumar">+</button></span></label>
         ${it.medida === "Más grande" ? `<p class="q-big">Para medidas más grandes te asesoramos por WhatsApp. <a href="https://wa.me/5491153132340?text=${encodeURIComponent("Hola! Quiero consultar por un enmarcado en una medida más grande.")}" target="_blank" rel="noopener">Escribinos acá →</a> También podés contarnos la medida en la aclaración y te respondemos con el presupuesto.</p>` : ""}
         <label class="f k-nota">Aclaración (opcional)<input data-i="${i}" data-k="nota" value="${DS.esc(it.nota)}" placeholder="Ej: van las fotos 1 y 3 / la camiseta azul"></label>
-      </div></div>`).join("");
+      </div>
+      <div class="q-prev" data-prev="${i}"><canvas></canvas><small class="q-prev-t"></small></div></div></div>`).join("");
+    setTimeout(prevAll, 0);
   };
+  // ---- vista previa: la foto del cliente (o la obra) enmarcada como la eligió
+  const FMAP = { color: { "Kiri natural": "natural", Negro: "negro", Blanco: "blanco" }, pas: { "Paspartú blanco": "paspartu-blanco", "Paspartú negro": "paspartu-negro", "Sin paspartú": "sin" } };
+  const urlCache = new Map();
+  function fotosPrev() {
+    if (form.que.value === "Obra de Dsgn. Studio") { const pr = c.products.find((x) => x.name === sel.value); return pr ? [pr.photo] : []; }
+    let fs = []; try { fs = files; } catch { return []; }
+    return fs.filter((f) => /^image\/(jpeg|png|webp|gif)$/.test(f.type)).map((f) => { if (!urlCache.has(f)) urlCache.set(f, URL.createObjectURL(f)); return urlCache.get(f); });
+  }
+  const cargar = (src) => new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; });
+  async function prevItem(i) {
+    const box = document.querySelector(`[data-prev="${i}"]`), it = items[i]; if (!box || !it) return;
+    const imgs = fotosPrev(), src = imgs[Math.min(+it.foto || 0, imgs.length - 1)], t = box.querySelector(".q-prev-t");
+    const m = String(it.medida).match(/^(\d+)x(\d+)$/);
+    if (!src || !m) { box.classList.add("vacia"); t.textContent = !src ? (form.que.value === "Obra de Dsgn. Studio" ? "Elegí la obra para ver cómo queda" : "Subí una foto para ver cómo queda") : "Elegí la medida para ver cómo queda"; box.querySelector("canvas").getContext("2d").clearRect(0, 0, 9999, 9999); return; }
+    box.classList.remove("vacia"); t.textContent = "Así quedaría (vista aproximada)";
+    try {
+      const im = await cargar(src);
+      const a = Math.min(+m[1], +m[2]), b = Math.max(+m[1], +m[2]), hor = im.naturalWidth > im.naturalHeight;
+      const W = hor ? b : a, Hh = hor ? a : b, mat = it.paspartu === "Sin paspartú" ? 0 : Math.min(+it.ancho || 5, (Math.min(W, Hh) - 6) / 2);
+      const iw = W - 2 * mat, ih = Hh - 2 * mat, r = iw / ih, rr = im.naturalWidth / im.naturalHeight;
+      let sw = im.naturalWidth, sh = im.naturalHeight; if (rr > r) sw = sh * r; else sh = sw / r;   // recorte al centro con la proporción de la imagen
+      const k = Math.min(1, 1200 / Math.max(sw, sh)), cv = document.createElement("canvas");
+      cv.width = Math.round(sw * k); cv.height = Math.round(sh * k);
+      cv.getContext("2d").drawImage(im, (im.naturalWidth - sw) / 2, (im.naturalHeight - sh) / 2, sw, sh, 0, 0, cv.width, cv.height);
+      await DSFrame.draw(box.querySelector("canvas"), cv.toDataURL("image/jpeg", .9), { tipo: it.tipo.toLowerCase(), color: FMAP.color[it.color] || "natural", terminacion: FMAP.pas[it.paspartu] || "sin", mat: mat || undefined, largo: Math.max(W, Hh) });
+    } catch { box.classList.add("vacia"); t.textContent = "No pudimos mostrar esta foto, pero la recibimos igual"; }
+  }
+  let prevT; const prevAll = () => { clearTimeout(prevT); prevT = setTimeout(() => items.forEach((_, i) => prevItem(i)), 60); };
   $("qItems").addEventListener("input", (e) => { const s = e.target.closest("[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; } });
-  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida") drawItems(); } });
+  $("qItems").addEventListener("change", (e) => { const s = e.target.closest("select[data-k]"); if (s) { items[+s.dataset.i][s.dataset.k] = s.value; s.style.borderColor = ""; if (s.dataset.k === "medida" || s.dataset.k === "paspartu") drawItems(); else prevItem(+s.dataset.i); } });
   $("qItems").addEventListener("click", (e) => {
     const d = e.target.closest("button[data-d]");
     if (d) { const it = items[+d.dataset.i]; it.cant = Math.max(1, Math.min(99, it.cant + Number(d.dataset.d))); d.parentNode.querySelector("b").textContent = it.cant; }
@@ -185,7 +220,7 @@
   });
   $("qAdd").onclick = () => { const last = items[items.length - 1]; items.push({ ...last, medida: "", cant: 1, nota: "" }); drawItems(); };
   drawItems();
-  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida === "Más grande" ? "medida más grande (a consultar)" : it.medida + " cm"} · ${it.tipo} · ${it.color} · ${it.paspartu}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
+  const medidasTxt = () => items.filter((it) => it.medida).map((it) => `${it.cant} × ${it.medida === "Más grande" ? "medida más grande (a consultar)" : it.medida + " cm"} · ${it.tipo} · ${it.color} · ${it.paspartu}${it.paspartu !== "Sin paspartú" ? " de " + it.ancho + " cm" : ""}${it.nota.trim() ? " · " + it.nota.trim() : ""}`).join("\n");
 
   // ---- archivos (máx. 10). Se suben en su calidad original; la copia achicada es solo un respaldo para el formulario.
   const MAXF = 10; let files = [];
@@ -233,6 +268,7 @@
     $("qFileList").innerHTML = files.map((f, i) => `<li><span><b>Foto ${i + 1}</b> · ${DS.esc(f.name)}</span> <button type="button" data-rm="${i}" aria-label="Quitar">×</button></li>`).join("");
     document.querySelector(".q-drop span").textContent = files.length >= MAXF ? "Llegaste al máximo de 10 archivos" : "+ Adjuntar archivos";
     $("qFiles").disabled = files.length >= MAXF;
+    drawItems();
   };
   $("qFiles").addEventListener("change", async (e) => {
     const pick = [...e.target.files]; e.target.value = "";
@@ -269,6 +305,15 @@
     }
     const linksTxt = links.map((u, i) => (u ? `Foto ${i + 1} (${files[i].name}, ${peso(files[i].size)}) — descargar: ${u}?descargar` : "")).filter(Boolean).join("\n");
     fd.set("fotos_links", linksTxt);
+    // vistas previas: se suben como imagen para que Design Studio vea cómo lo quiere el cliente
+    const prevs = [];
+    for (let i = 0; i < items.length; i++) {
+      const box = document.querySelector(`[data-prev="${i}"]`); if (!box || box.classList.contains("vacia")) continue;
+      const blob = await new Promise((ok) => box.querySelector("canvas").toBlob(ok, "image/jpeg", 0.88)); if (!blob) continue;
+      const u = await subir(new File([blob], `vista-previa-cuadro-${i + 1}.jpg`, { type: "image/jpeg" })).catch(() => "");
+      if (u) prevs.push(`Cuadro ${i + 1}: ${u}`);
+    }
+    fd.set("previews", prevs.join("\n"));
     // al formulario solo va una copia chica de las que no se pudieron subir (respaldo)
     if (form.que.value === "Algo mío") {
       let k = 1;

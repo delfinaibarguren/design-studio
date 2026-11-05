@@ -42,6 +42,7 @@
       <div class="chips"><span class="chip e-${c.estado}">${EST[c.estado] || c.estado}</span>${c.presupuesto ? `<span class="chip">Presupuesto ${money(c.presupuesto.total)} · <a href="${esc(c.presupuesto.url)}" target="_blank" rel="noopener">ver</a></span>` : ""}</div>
       ${c.medidas ? `<pre>${esc(c.medidas)}</pre>` : ""}
       ${c.comentarios ? `<pre>“${esc(c.comentarios)}”</pre>` : ""}
+      ${c.previews && c.previews.length ? `<div class="fotos" title="Vista previa: cómo lo quiere el cliente">${c.previews.map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener" style="width:120px;height:120px"><img src="${esc(u)}" alt="Vista previa ${i + 1}"></a>`).join("")}</div><small class="sub">↑ Vista previa de cómo lo quiere</small>` : ""}
       ${fotos ? `<div class="fotos">${fotos}</div>` : ""}
       <div class="row2"><div><b>WhatsApp:</b> ${esc(c.whatsapp || "-")}</div>${c.email ? `<div><b>Email:</b> <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>${c.novedades ? " · acepta novedades" : ""}</div>` : ""}${c.entrega ? `<div><b>Entrega:</b> ${esc(c.entrega === "Retiro por el taller" ? "Retira por el taller" : `Envío · CP ${c.cp || "-"} · ${[c.localidad, c.provincia].filter(Boolean).join(", ")}`)}</div>` : ""}</div>
       <div class="est">Estado: <select data-est="${esc(c.id)}">${Object.entries(EST).map(([k, v]) => `<option value="${k}"${c.estado === k ? " selected" : ""}>${v}</option>`).join("")}</select></div>

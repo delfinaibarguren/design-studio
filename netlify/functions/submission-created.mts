@@ -24,6 +24,7 @@ export default async (req: Request) => {
     const t = tabla({
       "Qué quiere enmarcar": c.que === "Obra de Dsgn. Studio" ? `Obra: ${c.obra || "-"}` : c.objeto || "Algo suyo",
       "Medidas": c.medidas,
+      "Vista previa (cómo lo quiere)": (c.previews || []).join("\n"),
       "Fotos": c.fotos.map((f, i) => `Foto ${i + 1} (${f.nombre}): ${f.url}?descargar`).join("\n") || (c.fotosForm.length ? "Hay copias en Netlify → Forms → consulta" : ""),
       "Entrega": c.entrega === "Retiro por el taller" ? "Retira por el taller" : c.cp ? `Envío · CP ${c.cp} · ${[c.localidad, c.provincia].filter(Boolean).join(", ")}` : "",
       "Nombre": c.nombre, "WhatsApp": c.whatsapp, "Email": c.email, "Acepta novedades": c.novedades ? "Sí" : "No",
