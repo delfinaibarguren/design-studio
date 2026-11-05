@@ -716,3 +716,7 @@ canvas.cfg { width: 100%; height: 100%; display: block; aspect-ratio: 1; }
 .q-total .qt-tr, .q-total .qt-env { display: block; }
 .q-total .qt-tr b, .q-total .qt-env b { font-size: inherit; font-weight: 600; }
 .q-total .qt-bar { display: block; }
+@media (max-width: 900px) {
+  .hero-v2 .cta-row { justify-content: center; }
+  .hero-v2 .cta-row .hero-btn { font-size: .98rem; padding: 1rem 1.6rem; }
+}
